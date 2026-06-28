@@ -7,10 +7,10 @@ function createPrismaClient(): PrismaClient {
 
   // Use Turso/libsql adapter for cloud (production on Vercel)
   if (databaseUrl.startsWith('libsql://') || databaseUrl.startsWith('wss://')) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { createClient } = require('@libsql/client') as typeof import('@libsql/client')
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { PrismaLibSQL } = require('@prisma/adapter-libsql') as typeof import('@prisma/adapter-libsql')
+    /* eslint-disable */
+    const { createClient } = require('@libsql/client')
+    const { PrismaLibSQL } = require('@prisma/adapter-libsql')
+    /* eslint-enable */
 
     const libsql = createClient({
       url: databaseUrl,
@@ -18,8 +18,7 @@ function createPrismaClient(): PrismaClient {
     })
 
     const adapter = new PrismaLibSQL(libsql)
-    // @ts-expect-error adapter preview feature
-    return new PrismaClient({ adapter })
+    return new PrismaClient({ adapter } as any)
   }
 
   // Local development — plain SQLite
