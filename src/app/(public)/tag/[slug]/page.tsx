@@ -18,19 +18,7 @@ async function getTag(slug: string) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tag = await getTag(params.slug)
   if (!tag) return {}
-  return {
-    title: `#${tag.name} | GamePulse`,
-    description: `Articles and news tagged with #${tag.name} on GamePulse.`,
-    openGraph: {
-      title: `#${tag.name} | GamePulse`,
-      description: `Articles and news tagged with #${tag.name} on GamePulse.`,
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary',
-      title: `#${tag.name} | GamePulse`,
-    }
-  }
+  return { title: `#${tag.name} articles`, description: `Articles tagged with ${tag.name}` }
 }
 
 export default async function TagPage({ params }: Props) {

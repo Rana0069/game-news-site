@@ -1,34 +1,60 @@
-# dependencies
-/node_modules
-/.pnp
+# Dependencies
+node_modules/
+.pnp
 .pnp.js
 
-# testing
-/coverage
+# Next.js build output
+.next/
+out/
+build/
 
-# next.js
-/.next/
-/out/
+# Production
+dist/
 
-# production
-/build
+# Environment files — NEVER commit these
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# misc
-.DS_Store
-*.pem
+# SQLite database files (use Turso in production)
+prisma/dev.db
+prisma/*.db
+prisma/*.db-journal
+prisma/*.db-shm
+prisma/*.db-wal
 
-# debug
+# Prisma generated client
+# (re-generated on deploy automatically)
+# node_modules/.prisma/
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
-# local env files
-.env*.local
-.env
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
 
-# prisma local db
-prisma/*.db
-prisma/*.db-journal
+# Vercel
+.vercel
 
-# typescript
-*.tsbuildinfo
+# Uploads (store these in Cloudinary for production)
+# public/uploads/
+
+# Editor directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

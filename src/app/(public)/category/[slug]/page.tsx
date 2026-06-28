@@ -32,17 +32,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cat = await getCategory(params.slug)
   if (!cat) return {}
   return {
-    title: `${cat.name} – Gaming News | GamePulse`,
-    description: cat.description || `Latest ${cat.name} gaming news, reviews, and articles.`,
-    openGraph: {
-      title: `${cat.name} – Gaming News | GamePulse`,
-      description: cat.description || `Latest ${cat.name} gaming news, reviews, and articles.`,
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary',
-      title: `${cat.name} – Gaming News | GamePulse`,
-    }
+    title: `${cat.name} – Gaming News`,
+    description: cat.description || `Latest ${cat.name} news, reviews, and articles.`,
   }
 }
 

@@ -15,19 +15,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const game = await getGame(params.slug)
   if (!game) return {}
   return {
-    title: `${game.title} | GamePulse`,
-    description: game.description || `Discover ${game.title} on GamePulse. Developer: ${game.developer || 'Unknown'}.`,
-    openGraph: {
-      title: `${game.title} | GamePulse`,
-      description: game.description || '',
-      images: game.coverImage ? [{ url: game.coverImage }] : [],
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${game.title} | GamePulse`,
-      description: game.description || '',
-    }
+    title: game.title,
+    description: game.description || `${game.title} — ${game.developer}`,
   }
 }
 
@@ -39,33 +28,9 @@ export default async function GameDetailPage({ params }: Props) {
   const genres = safeJsonParse<string[]>(game.genres, [])
   const screenshots = safeJsonParse<string[]>(game.screenshots, [])
   const sysReq = safeJsonParse<Record<string, string>>(game.systemRequirements, {})
-  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'VideoGame',
-    name: game.title,
-    description: game.description || '',
-    image: game.coverImage ? [`${baseUrl}${game.coverImage}`] : [],
-    gamePlatform: platforms,
-    genre: genres,
-    publisher: game.publisher || game.developer || 'Unknown',
-    datePublished: game.releaseDate ? new Date(game.releaseDate).toISOString() : undefined,
-    aggregateRating: game.reviewScore ? {
-      '@type': 'AggregateRating',
-      ratingValue: game.reviewScore,
-      bestRating: '10',
-      worstRating: '1',
-      ratingCount: '1'
-    } : undefined
-  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
         {/* Left: Cover + Info */}
         <div>
