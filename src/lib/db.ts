@@ -5,11 +5,12 @@ const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 function createPrismaClient(): PrismaClient {
   const databaseUrl = process.env.DATABASE_URL || ''
 
-  // Use Turso/libsql adapter for cloud database (production)
+  // Use Turso/libsql adapter for cloud (production on Vercel)
   if (databaseUrl.startsWith('libsql://') || databaseUrl.startsWith('wss://')) {
-    // Dynamic import to avoid bundling issues in environments without libsql
-    const { createClient } = require('@libsql/client')
-    const { PrismaLibSQL } = require('@prisma/adapter-libsql')
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { createClient } = require('@libsql/client') as typeof import('@libsql/client')
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { PrismaLibSQL } = require('@prisma/adapter-libsql') as typeof import('@prisma/adapter-libsql')
 
     const libsql = createClient({
       url: databaseUrl,
@@ -17,13 +18,11 @@ function createPrismaClient(): PrismaClient {
     })
 
     const adapter = new PrismaLibSQL(libsql)
-    return new PrismaClient({
-      adapter,
-      log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
-    } as any)
+    // @ts-expect-error adapter preview feature
+    return new PrismaClient({ adapter })
   }
 
-  // Local SQLite (development)
+  // Local development — plain SQLite
   return new PrismaClient({
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   })
