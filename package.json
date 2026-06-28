@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.2",
-    "@libsql/client": "^0.14.0",
+    "@libsql/client": "^0.8.0",
     "@prisma/adapter-libsql": "^5.17.0",
     "@prisma/client": "^5.17.0",
     "@tiptap/core": "^2.5.9",
