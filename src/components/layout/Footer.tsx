@@ -1,4 +1,4 @@
-, 'use client'
+'use client'
 
 import Link from 'next/link'
 import { Gamepad2, Twitter, Youtube, Instagram, Facebook, MessageCircle, Twitch, Mail, Rss } from 'lucide-react'
