@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import Footer from '@/components/layout/Footer'
 import prisma from '@/lib/db'
 
@@ -7,7 +7,7 @@ import prisma from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 // Load Navbar without SSR to avoid session/theme hydration mismatches
-const Navbar = dynamic(() => import('@/components/layout/Navbar'), { ssr: false })
+const Navbar = nextDynamic(() => import('@/components/layout/Navbar'), { ssr: false })
 
 async function getSettings() {
   try {
