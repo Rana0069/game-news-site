@@ -1,0 +1,198 @@
+// This is your Prisma schema file
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  role          String    @default("author") // admin, editor, author
+  image         String?
+  bio           String?
+  twitter       String?
+  instagram     String?
+  website       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  posts         Post[]
+  comments      Comment[]
+  sessions      Session[]
+  accounts      Account[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Post {
+  id              String     @id @default(cuid())
+  title           String
+  slug            String     @unique
+  excerpt         String?
+  content         String
+  featuredImage   String?
+  images          String?    // JSON array of image URLs
+  youtubeUrls     String?    // JSON array of YouTube URLs
+  status          String     @default("draft") // draft, published, scheduled
+  publishAt       DateTime?
+  publishedAt     DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  readingTime     Int        @default(0)
+  views           Int        @default(0)
+  likes           Int        @default(0)
+  featured        Boolean    @default(false)
+  trending        Boolean    @default(false)
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String?
+  ogImage         String?
+  authorId        String
+  author          User       @relation(fields: [authorId], references: [id])
+  categoryId      String?
+  category        Category?  @relation(fields: [categoryId], references: [id])
+  tags            TagsOnPosts[]
+  comments        Comment[]
+  relatedPosts    String?    // JSON array of post IDs
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  icon        String?
+  color       String?
+  parentId    String?
+  createdAt   DateTime @default(now())
+  posts       Post[]
+}
+
+model Tag {
+  id        String        @id @default(cuid())
+  name      String
+  slug      String        @unique
+  createdAt DateTime      @default(now())
+  posts     TagsOnPosts[]
+}
+
+model TagsOnPosts {
+  postId    String
+  tagId     String
+  post      Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag       Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  @@id([postId, tagId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  status    String   @default("pending") // pending, approved, spam
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id])
+  guestName String?
+  guestEmail String?
+  createdAt DateTime @default(now())
+}
+
+model Game {
+  id               String   @id @default(cuid())
+  title            String
+  slug             String   @unique
+  description      String?
+  coverImage       String?
+  screenshots      String?  // JSON array
+  trailerUrl       String?
+  releaseDate      DateTime?
+  developer        String?
+  publisher        String?
+  platforms        String?  // JSON array
+  genres           String?  // JSON array
+  rating           String?  // ESRB, PEGI etc
+  reviewScore      Float?
+  systemRequirements String? // JSON object
+  featured         Boolean  @default(false)
+  upcoming         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  filename  String
+  url       String
+  mimeType  String
+  size      Int
+  folder    String   @default("general")
+  altText   String?
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id            String   @id @default("site")
+  siteName      String   @default("GamePulse")
+  siteTagline   String   @default("Your Ultimate Gaming Destination")
+  logo          String?
+  favicon       String?
+  accentColor   String   @default("#00d4ff")
+  accentColor2  String   @default("#a855f7")
+  accentColor3  String   @default("#22c55e")
+  footerText    String?
+  twitterUrl    String?
+  facebookUrl   String?
+  instagramUrl  String?
+  youtubeUrl    String?
+  discordUrl    String?
+  twitchUrl     String?
+  contactEmail  String?
+  aboutText     String?
+  analyticsId   String?
+  updatedAt     DateTime @updatedAt
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  @@unique([identifier, token])
+}
