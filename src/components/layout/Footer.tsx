@@ -94,9 +94,9 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
 
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
           {/* Brand */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-12 lg:col-span-5">
             <Link href="/" className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center">
                 <Gamepad2 size={22} className="text-black" />
@@ -127,7 +127,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
           </div>
 
           {/* Categories */}
-          <div>
+          <div className="md:col-span-4 lg:col-span-3">
             <h4 className="font-display font-bold text-sm text-white uppercase tracking-wider mb-4">Categories</h4>
             <ul className="space-y-2">
               {footerLinks.categories.map((link) => (
@@ -141,7 +141,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
           </div>
 
           {/* Site links */}
-          <div>
+          <div className="md:col-span-4 lg:col-span-2">
             <h4 className="font-display font-bold text-sm text-white uppercase tracking-wider mb-4">Site</h4>
             <ul className="space-y-2">
               {footerLinks.site.map((link) => (
@@ -155,7 +155,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="md:col-span-4 lg:col-span-2">
             <h4 className="font-display font-bold text-sm text-white uppercase tracking-wider mb-4">Contact</h4>
             {settings?.contactEmail && (
               <a
