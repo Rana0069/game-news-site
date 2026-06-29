@@ -26,12 +26,20 @@ export default function AdminDashboard() {
   const [data, setData] = useState<Analytics | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  const loadData = () => {
     fetch('/api/analytics')
       .then((r) => r.json())
       .then(setData)
       .finally(() => setLoading(false))
-  }, [])
+  }
+
+  useEffect(() => { loadData() }, [])
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Delete this post? This cannot be undone.')) return
+    await fetch(`/api/posts/${id}`, { method: 'DELETE' })
+    loadData()
+  }
 
   if (loading) {
     return (
@@ -152,12 +160,19 @@ export default function AdminDashboard() {
                   </td>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-2 justify-end">
-                      <Link href={`/admin/posts/${post.id}/edit`} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-blue transition-colors">
+                      <Link href={`/admin/posts/${post.id}/edit`} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-blue transition-colors" title="Edit">
                         <Edit size={12} />
                       </Link>
-                      <Link href={`/article/${post.slug}`} target="_blank" className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-green transition-colors">
+                      <Link href={`/article/${post.slug}`} target="_blank" className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-green transition-colors" title="View">
                         <ExternalLink size={12} />
                       </Link>
+                      <button
+                        onClick={() => handleDelete(post.id)}
+                        className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-colors"
+                        title="Delete"
+                      >
+                        <Trash2 size={12} />
+                      </button>
                     </div>
                   </td>
                 </tr>

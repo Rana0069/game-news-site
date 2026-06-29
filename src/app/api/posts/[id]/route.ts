@@ -69,9 +69,17 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  const session = await getServerSession(authOptions)
-  if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  try {
+    const session = await getServerSession(authOptions)
+    if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  await prisma.post.delete({ where: { id: params.id } })
-  return NextResponse.json({ success: true })
+    // Delete related records first to avoid FK constraint errors
+    await prisma.tagsOnPosts.deleteMany({ where: { postId: params.id } })
+    await prisma.comment.deleteMany({ where: { postId: params.id } })
+    await prisma.post.delete({ where: { id: params.id } })
+    return NextResponse.json({ success: true })
+  } catch (error: any) {
+    console.error('DELETE /api/posts/[id] error:', error)
+    return NextResponse.json({ error: error.message || 'Delete failed' }, { status: 500 })
+  }
 }

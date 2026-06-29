@@ -360,9 +360,12 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
                 <button
                   type="button"
                   onClick={() => updateForm('featured', !form.featured)}
-                  className={`w-10 h-5 rounded-full transition-colors relative ${form.featured ? 'bg-neon-blue' : 'bg-dark-600'}`}
+                  className={`relative w-10 h-5 rounded-full transition-colors ${form.featured ? 'bg-neon-blue' : 'bg-dark-600'}`}
                 >
-                  <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform ${form.featured ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                  <span
+                    className="absolute top-[2px] w-4 h-4 rounded-full bg-white shadow transition-all duration-150"
+                    style={{ left: form.featured ? '22px' : '2px' }}
+                  />
                 </button>
               </div>
               <div className="flex items-center justify-between">
@@ -370,9 +373,12 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
                 <button
                   type="button"
                   onClick={() => updateForm('trending', !form.trending)}
-                  className={`w-10 h-5 rounded-full transition-colors relative ${form.trending ? 'bg-neon-purple' : 'bg-dark-600'}`}
+                  className={`relative w-10 h-5 rounded-full transition-colors ${form.trending ? 'bg-neon-purple' : 'bg-dark-600'}`}
                 >
-                  <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform ${form.trending ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                  <span
+                    className="absolute top-[2px] w-4 h-4 rounded-full bg-white shadow transition-all duration-150"
+                    style={{ left: form.trending ? '22px' : '2px' }}
+                  />
                 </button>
               </div>
             </div>
