@@ -120,7 +120,10 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
         body: JSON.stringify(payload),
       })
 
-      if (!res.ok) throw new Error('Save failed')
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}))
+        throw new Error(errData.error || `Server error ${res.status}`)
+      }
 
       const data = await res.json()
       setLastSaved(new Date())
@@ -130,12 +133,13 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
           router.push(`/admin/posts/${data.id}/edit`)
         }
       }
-    } catch (err) {
-      if (!silent) alert('Failed to save post')
+    } catch (err: any) {
+      if (!silent) alert(`Failed to save post: ${err.message}`)
     } finally {
       setSaving(false)
     }
   }, [form, postId, router])
+
 
   const addYoutubeUrl = () => {
     const url = prompt('Enter YouTube URL:')
@@ -382,7 +386,8 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
             </h3>
             {form.featuredImage ? (
               <div className="relative">
-                <Image src={form.featuredImage} alt="Featured" width={300} height={169} className="w-full rounded-xl object-cover" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={form.featuredImage} alt="Featured" className="w-full rounded-xl object-cover max-h-48" />
                 <button
                   type="button"
                   onClick={() => updateForm('featuredImage', '')}
@@ -398,6 +403,16 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
                 <input type="file" accept="image/*" className="hidden" onChange={handleFeaturedImageUpload} />
               </label>
             )}
+            {/* URL paste option */}
+            <div className="mt-3 flex gap-2">
+              <input
+                type="url"
+                placeholder="Or paste image URL..."
+                className="input-dark text-xs flex-1"
+                onBlur={(e) => { if (e.target.value) { updateForm('featuredImage', e.target.value); e.target.value = '' } }}
+                onKeyDown={(e) => { if (e.key === 'Enter') { const v = (e.target as HTMLInputElement).value; if (v) { updateForm('featuredImage', v);(e.target as HTMLInputElement).value = '' } } }}
+              />
+            </div>
           </div>
 
           {/* Category */}
