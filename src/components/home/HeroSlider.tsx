@@ -45,7 +45,7 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
   const post = posts[current]
 
   return (
-    <div className="relative w-full h-[70vh] min-h-[500px] max-h-[800px] overflow-hidden rounded-2xl">
+    <div className="relative w-full h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[500px] max-h-[800px] overflow-hidden rounded-2xl">
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
@@ -151,7 +151,7 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
       </AnimatePresence>
 
       {/* Slide indicators */}
-      <div className="absolute bottom-6 right-6 flex items-center gap-3 z-10">
+      <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 sm:gap-3 z-10">
         {/* Autoplay toggle */}
         <button
           onClick={() => setPlaying(!playing)}
@@ -178,7 +178,7 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
       </div>
 
       {/* Dots */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-10">
         {posts.map((_, i) => (
           <button
             key={i}

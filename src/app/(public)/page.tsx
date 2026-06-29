@@ -317,7 +317,7 @@ export default async function HomePage() {
 
           {/* ── NEWSLETTER CTA ── */}
           <section className="mb-12">
-            <div className="relative overflow-hidden rounded-2xl p-8 sm:p-12 text-center"
+            <div className="relative overflow-hidden rounded-2xl p-6 sm:p-12 text-center"
               style={{ background: 'linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(168,85,247,0.08) 100%)', border: '1px solid rgba(0,212,255,0.15)' }}
             >
               {/* Decorative orbs */}

@@ -219,7 +219,7 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="lg:hidden bg-dark-900/98 backdrop-blur-xl border-t border-white/5">
+          <div className="lg:hidden bg-dark-900/98 backdrop-blur-xl border-t border-white/5 max-h-[80vh] overflow-y-auto">
             <div className="px-4 py-4 space-y-1">
               <Link href="/" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5" onClick={() => setMobileOpen(false)}>Home</Link>
               <div className="px-3 py-1 text-xs font-bold text-gray-500 uppercase tracking-wider mt-2">Categories</div>

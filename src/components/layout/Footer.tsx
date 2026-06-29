@@ -63,7 +63,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
               <p className="text-gray-400 mt-1">Get the latest gaming news delivered to your inbox.</p>
             </div>
             <form
-              className="flex gap-3 w-full md:w-auto"
+              className="flex flex-col sm:flex-row gap-3 w-full md:w-auto mt-4 md:mt-0"
               onSubmit={(e) => {
                 e.preventDefault()
                 const input = e.currentTarget.querySelector('input')
@@ -81,10 +81,10 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="input-dark w-64"
+                className="input-dark w-full sm:w-64"
                 required
               />
-              <button type="submit" className="btn-neon whitespace-nowrap">
+              <button type="submit" className="btn-neon w-full sm:w-auto whitespace-nowrap">
                 Subscribe
               </button>
             </form>

@@ -132,8 +132,8 @@ export default function ArticleCard({ post, variant = 'default' }: ArticleCardPr
   // ── HORIZONTAL variant ─────────────────────────────────────────────────────
   if (variant === 'horizontal') {
     return (
-      <Link href={`/article/${post.slug}`} className="flex gap-4 group glass-card p-4">
-        <div className="w-32 h-24 rounded-xl overflow-hidden flex-shrink-0 bg-dark-800">
+      <Link href={`/article/${post.slug}`} className="flex gap-3 sm:gap-4 group glass-card p-3 sm:p-4">
+        <div className="w-24 h-20 sm:w-32 sm:h-24 rounded-xl overflow-hidden flex-shrink-0 bg-dark-800">
           <FallbackImage
             src={post.featuredImage}
             alt={post.title}
