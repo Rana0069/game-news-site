@@ -2,9 +2,8 @@ import nextDynamic from 'next/dynamic'
 import Footer from '@/components/layout/Footer'
 import prisma from '@/lib/db'
 
-// Prevent static generation — all public pages are rendered on-demand
-// so Prisma queries only run when a real user visits, not at build time
-export const dynamic = 'force-dynamic'
+// Allow pages to opt-in to static generation or ISR.
+// We handle build-time empty DBs gracefully via try/catch in fetch functions.
 
 // Load Navbar without SSR to avoid session/theme hydration mismatches
 const Navbar = nextDynamic(() => import('@/components/layout/Navbar'), { ssr: false })
