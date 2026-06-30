@@ -128,7 +128,10 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
                 onMouseEnter={() => setMegaMenuOpen(true)}
                 onMouseLeave={() => setMegaMenuOpen(false)}
               >
-                <button className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
+                <button 
+                  onClick={() => setMegaMenuOpen(!megaMenuOpen)}
+                  className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all"
+                >
                   Categories
                   <ChevronDown size={14} className={`transition-transform ${megaMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -142,6 +145,7 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
                           <Link
                             key={cat.slug}
                             href={`/category/${cat.slug}`}
+                            onClick={() => setMegaMenuOpen(false)}
                             className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-all group"
                           >
                             <div

@@ -1,3 +1,5 @@
+export const revalidate = 60 // Revalidate cache every 60 seconds to drastically improve FCP/LCP
+
 import { Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
