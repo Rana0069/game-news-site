@@ -44,8 +44,9 @@ export default async function Sidebar() {
         </h3>
         <div className="space-y-4">
           {recentPosts.map((post) => (
-            <Link key={post.id} href={`/article/${post.slug}`} className="flex gap-3 group">
-              <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-dark-700">
+            <article key={post.id}>
+              <Link href={`/article/${post.slug}`} className="flex gap-3 group">
+                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-dark-700">
                 {post.featuredImage ? (
                   <Image src={post.featuredImage} alt={post.title} width={64} height={64} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                 ) : (
@@ -64,6 +65,7 @@ export default async function Sidebar() {
                 </p>
               </div>
             </Link>
+            </article>
           ))}
         </div>
       </div>
@@ -76,8 +78,9 @@ export default async function Sidebar() {
         </h3>
         <div className="space-y-4">
           {popularPosts.map((post, index) => (
-            <Link key={post.id} href={`/article/${post.slug}`} className="flex gap-3 group">
-              <div className="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center font-display font-black text-sm"
+            <article key={post.id}>
+              <Link href={`/article/${post.slug}`} className="flex gap-3 group">
+                <div className="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center font-display font-black text-sm"
                 style={{
                   background: index === 0 ? 'rgba(0,212,255,0.15)' : index === 1 ? 'rgba(168,85,247,0.15)' : 'rgba(255,255,255,0.05)',
                   color: index === 0 ? '#00d4ff' : index === 1 ? '#a855f7' : '#6b7280',
@@ -95,6 +98,7 @@ export default async function Sidebar() {
                 </p>
               </div>
             </Link>
+            </article>
           ))}
         </div>
       </div>
