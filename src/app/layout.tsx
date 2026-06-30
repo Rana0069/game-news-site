@@ -3,6 +3,7 @@ import { Inter, Outfit } from 'next/font/google'
 import '../styles/globals.css'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { SessionProvider } from '@/components/providers/SessionProvider'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' })
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SessionProvider>
           <ThemeProvider>
             {children}
+            <Analytics />
           </ThemeProvider>
         </SessionProvider>
       </body>
