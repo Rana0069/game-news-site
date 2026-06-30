@@ -56,6 +56,7 @@
     "@tiptap/react": "^2.5.9",
     "@tiptap/starter-kit": "^2.5.9",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "framer-motion": "^11.3.19",
     "isomorphic-dompurify": "^2.15.0",

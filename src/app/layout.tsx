@@ -4,6 +4,7 @@ import '../styles/globals.css'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { SessionProvider } from '@/components/providers/SessionProvider'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' })
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider>
             {children}
             <Analytics />
+            <SpeedInsights />
           </ThemeProvider>
         </SessionProvider>
       </body>
