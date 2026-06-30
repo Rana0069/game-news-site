@@ -98,7 +98,7 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {latestPosts.slice(0, 5).map((post, i) => (
                 <div key={post.id} className={i === 0 ? 'md:col-span-2' : ''}>
-                  <ArticleCard post={post} variant={i === 0 ? 'featured' : 'default'} />
+                  <ArticleCard post={post} variant={i === 0 ? 'featured' : 'default'} priority={i < 2} />
                 </div>
               ))}
             </div>

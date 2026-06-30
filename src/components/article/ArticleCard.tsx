@@ -27,6 +27,7 @@ interface Post {
 interface ArticleCardProps {
   post: Post
   variant?: 'default' | 'featured' | 'compact' | 'horizontal'
+  priority?: boolean
 }
 
 /** Gradient placeholder shown when image is missing or fails to load */
@@ -44,7 +45,7 @@ function ImagePlaceholder({ color }: { color?: string | null }) {
   )
 }
 
-export default function ArticleCard({ post, variant = 'default' }: ArticleCardProps) {
+export default function ArticleCard({ post, variant = 'default', priority }: ArticleCardProps) {
   const catColor = post.category?.color || '#00d4ff'
 
   // ── FEATURED variant ───────────────────────────────────────────────────────
@@ -59,6 +60,7 @@ export default function ArticleCard({ post, variant = 'default' }: ArticleCardPr
             sizes="(max-width: 768px) 100vw, 66vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             catColor={catColor}
+            priority={priority}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/50 to-transparent" />
 
@@ -110,6 +112,7 @@ export default function ArticleCard({ post, variant = 'default' }: ArticleCardPr
             height={64}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             catColor={catColor}
+            priority={priority}
           />
         </div>
         <div className="flex-1 min-w-0">
@@ -141,6 +144,7 @@ export default function ArticleCard({ post, variant = 'default' }: ArticleCardPr
             height={96}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             catColor={catColor}
+            priority={priority}
           />
         </div>
         <div className="flex-1 min-w-0">
@@ -171,6 +175,7 @@ export default function ArticleCard({ post, variant = 'default' }: ArticleCardPr
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           catColor={catColor}
+          priority={priority}
         />
 
         {/* Badges overlay */}
@@ -235,9 +240,10 @@ interface FallbackImageProps {
   width?: number
   height?: number
   sizes?: string
+  priority?: boolean
 }
 
-function FallbackImage({ src, alt, catColor, fill, width, height, sizes, className }: FallbackImageProps) {
+function FallbackImage({ src, alt, catColor, fill, width, height, sizes, className, priority }: FallbackImageProps) {
   const [errored, setErrored] = useState(false)
 
   if (!src || errored) {
@@ -252,6 +258,7 @@ function FallbackImage({ src, alt, catColor, fill, width, height, sizes, classNa
         fill
         sizes={sizes}
         className={className}
+        priority={priority}
         onError={() => setErrored(true)}
       />
     )
@@ -264,6 +271,7 @@ function FallbackImage({ src, alt, catColor, fill, width, height, sizes, classNa
       width={width!}
       height={height!}
       className={className}
+      priority={priority}
       onError={() => setErrored(true)}
     />
   )
