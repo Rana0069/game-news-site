@@ -264,7 +264,7 @@ export default async function HomePage() {
           )}
 
           {/* ── YOUTUBE VIDEOS ── */}
-          <section className="mb-12">
+          <section className="mb-12" aria-label="Gaming Videos">
             <div className="flex items-center justify-between mb-6">
               <h2 className="section-title">
                 <Tv size={20} className="text-red-500" />
@@ -276,7 +276,7 @@ export default async function HomePage() {
               <div className="youtube-embed-wrapper sm:col-span-2 max-w-3xl mx-auto w-full">
                 <iframe
                   src="https://www.youtube.com/embed/videoseries?list=PLREl6yOh7JkiprePJanCexkMC3Bn_O7fL"
-                  title="Gaming Videos"
+                  title="Gaming Videos Playlist"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />

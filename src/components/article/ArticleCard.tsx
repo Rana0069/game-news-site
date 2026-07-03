@@ -51,8 +51,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
   // ── FEATURED variant ───────────────────────────────────────────────────────
   if (variant === 'featured') {
     return (
-      <article className="h-full">
-        <Link href={`/article/${post.slug}`} className="group block relative overflow-hidden rounded-2xl h-full min-h-[320px]">
+      <Link href={`/article/${post.slug}`} className="group block relative overflow-hidden rounded-2xl h-full min-h-[320px]">
         <div className="absolute inset-0 bg-dark-800">
           <FallbackImage
             src={post.featuredImage}
@@ -104,8 +103,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
   // ── COMPACT variant ────────────────────────────────────────────────────────
   if (variant === 'compact') {
     return (
-      <article>
-        <Link href={`/article/${post.slug}`} className="flex gap-3 group">
+      <Link href={`/article/${post.slug}`} className="flex gap-3 group">
         <div className="w-20 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-dark-800">
           <FallbackImage
             src={post.featuredImage}
@@ -137,8 +135,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
   // ── HORIZONTAL variant ─────────────────────────────────────────────────────
   if (variant === 'horizontal') {
     return (
-      <article>
-        <Link href={`/article/${post.slug}`} className="flex gap-3 sm:gap-4 group glass-card p-3 sm:p-4">
+      <Link href={`/article/${post.slug}`} className="flex gap-3 sm:gap-4 group glass-card p-3 sm:p-4">
         <div className="w-24 h-20 sm:w-32 sm:h-24 rounded-xl overflow-hidden flex-shrink-0 bg-dark-800">
           <FallbackImage
             src={post.featuredImage}
@@ -169,8 +166,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
 
   // ── DEFAULT card ───────────────────────────────────────────────────────────
   return (
-    <article className="h-full">
-      <Link href={`/article/${post.slug}`} className="group flex flex-col h-full glass-card overflow-hidden">
+    <Link href={`/article/${post.slug}`} className="group flex flex-col h-full glass-card overflow-hidden">
       <div className="relative aspect-[16/9] w-full flex-shrink-0 overflow-hidden bg-dark-800">
         <FallbackImage
           src={post.featuredImage}
@@ -230,8 +226,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
           </div>
         </div>
       </div>
-      </Link>
-    </article>
+    </Link>
   )
 }
 

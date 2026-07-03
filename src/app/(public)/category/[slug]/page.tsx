@@ -1,3 +1,6 @@
+// Cache category pages for 60 seconds
+export const revalidate = 60
+
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'

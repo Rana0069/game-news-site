@@ -55,7 +55,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
   return (
     <footer className="bg-dark-900 border-t border-white/5 mt-20">
       {/* Newsletter section */}
-      <div className="border-b border-white/5">
+      <section className="border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
@@ -78,7 +78,9 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
                 }
               }}
             >
+              <label htmlFor="footer-email" className="sr-only">Email address</label>
               <input
+                id="footer-email"
                 type="email"
                 placeholder="Enter your email"
                 className="input-dark w-full sm:w-64"
@@ -90,7 +92,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
             </form>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">

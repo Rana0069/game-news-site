@@ -392,31 +392,33 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
           </form>
 
           {/* Comments list */}
-          <div className="space-y-4">
+          <ol className="space-y-4">
             {comments.map((comment) => (
-              <div key={comment.id} className="glass-card p-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-neon-blue/30 to-neon-purple/30 flex items-center justify-center flex-shrink-0">
-                    <User size={16} className="text-neon-blue" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="font-semibold text-sm text-white">
-                        {comment.author?.name || comment.guestName || 'Anonymous'}
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        {new Date(comment.createdAt).toLocaleDateString()}
-                      </span>
+              <li key={comment.id}>
+                <article className="glass-card p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-neon-blue/30 to-neon-purple/30 flex items-center justify-center flex-shrink-0">
+                      <User size={16} className="text-neon-blue" />
                     </div>
-                    <p className="text-gray-300 text-sm leading-relaxed">{comment.content}</p>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-1">
+                        <span className="font-semibold text-sm text-white">
+                          {comment.author?.name || comment.guestName || 'Anonymous'}
+                        </span>
+                        <time className="text-xs text-gray-500" dateTime={comment.createdAt}>
+                          {new Date(comment.createdAt).toLocaleDateString()}
+                        </time>
+                      </div>
+                      <p className="text-gray-300 text-sm leading-relaxed">{comment.content}</p>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </article>
+              </li>
             ))}
             {comments.length === 0 && (
-              <p className="text-gray-500 text-center py-8">No comments yet. Be the first!</p>
+              <li><p className="text-gray-500 text-center py-8">No comments yet. Be the first!</p></li>
             )}
-          </div>
+          </ol>
         </section>
       </article>
     </>

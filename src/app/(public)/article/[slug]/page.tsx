@@ -1,3 +1,6 @@
+// Cache article pages for 60 seconds — avoids DB wait on every article visit
+export const revalidate = 60
+
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'

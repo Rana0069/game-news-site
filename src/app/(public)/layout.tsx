@@ -1,9 +1,10 @@
+// Cache site settings for 1 hour — avoids a DB round-trip on every page load.
+// Settings rarely change, so 3600s is safe and dramatically improves TTFB.
+export const revalidate = 3600
+
 import nextDynamic from 'next/dynamic'
 import Footer from '@/components/layout/Footer'
 import prisma from '@/lib/db'
-
-// Allow pages to opt-in to static generation or ISR.
-// We handle build-time empty DBs gracefully via try/catch in fetch functions.
 
 // Load Navbar without SSR to avoid session/theme hydration mismatches
 const Navbar = nextDynamic(() => import('@/components/layout/Navbar'), { ssr: false })
