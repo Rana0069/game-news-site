@@ -57,14 +57,16 @@ export default function SearchContent() {
   const currentQuery = searchParams.get('q')
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <h1 className="font-display font-black text-3xl text-white mb-6">Search</h1>
 
       {/* Search bar */}
-      <form onSubmit={handleSearch} className="relative mb-8">
-        <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+      <form role="search" onSubmit={handleSearch} className="relative mb-8">
+        <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+        <label htmlFor="search-input" className="sr-only">Search articles</label>
         <input
-          type="text"
+          id="search-input"
+          type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search articles, games, reviews..."
@@ -78,19 +80,22 @@ export default function SearchContent() {
       {/* Filters */}
       <div className="flex flex-wrap gap-3 mb-8">
         <div className="flex items-center gap-2">
-          <Filter size={14} className="text-gray-500" />
+          <Filter size={14} className="text-gray-500" aria-hidden="true" />
           <span className="text-sm text-gray-500">Sort:</span>
           {sortOptions.map((opt) => (
             <button
               key={opt.value}
               onClick={() => setSort(opt.value)}
+              aria-pressed={sort === opt.value}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${sort === opt.value ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/30' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}
             >
               {opt.label}
             </button>
           ))}
         </div>
+        <label htmlFor="category-filter" className="sr-only">Filter by category</label>
         <select
+          id="category-filter"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="input-dark w-auto text-sm py-1.5"
@@ -104,30 +109,30 @@ export default function SearchContent() {
 
       {/* Results */}
       {loading ? (
-        <div className="flex items-center justify-center py-20">
+        <div className="flex items-center justify-center py-20" role="status" aria-label="Loading results">
           <Loader size={32} className="text-neon-blue animate-spin" />
         </div>
       ) : results.length > 0 ? (
-        <>
+        <section aria-label="Search results">
           <p className="text-gray-500 text-sm mb-6">{total} results for &quot;{currentQuery}&quot;</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {results.map((post) => (
-              <ArticleCard key={post.id} post={post} variant="default" />
+              <li key={post.id}><ArticleCard post={post} variant="default" /></li>
             ))}
-          </div>
-        </>
+          </ul>
+        </section>
       ) : query ? (
-        <div className="text-center py-20">
-          <Search size={48} className="text-gray-700 mx-auto mb-4" />
+        <div className="text-center py-20" role="status">
+          <Search size={48} className="text-gray-700 mx-auto mb-4" aria-hidden="true" />
           <h2 className="font-display font-bold text-xl text-white mb-2">No results found</h2>
           <p className="text-gray-500">Try different keywords or browse our categories.</p>
         </div>
       ) : (
         <div className="text-center py-20">
-          <Search size={48} className="text-gray-700 mx-auto mb-4" />
+          <Search size={48} className="text-gray-700 mx-auto mb-4" aria-hidden="true" />
           <p className="text-gray-500">Enter a search query to find articles.</p>
         </div>
       )}
-    </div>
+    </main>
   )
 }

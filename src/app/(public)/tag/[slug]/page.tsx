@@ -1,3 +1,6 @@
+// Cache tag pages for 60 seconds
+export const revalidate = 60
+
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -34,20 +37,24 @@ export default async function TagPage({ params }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-      <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
+      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-500 mb-6">
         <Link href="/" className="hover:text-neon-blue">Home</Link>
         <ChevronRight size={14} />
         <span className="text-neon-blue">#{tag.name}</span>
       </nav>
 
-      <h1 className="font-display font-black text-3xl text-white mb-2">#{tag.name}</h1>
-      <p className="text-gray-500 mb-8">{tag._count.posts} articles</p>
+      <header className="mb-8">
+        <h1 className="font-display font-black text-3xl text-white mb-2">#{tag.name}</h1>
+        <p className="text-gray-500">{tag._count.posts} articles</p>
+      </header>
 
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {posts.map((post) => <ArticleCard key={post.id} post={post} variant="default" />)}
-          {posts.length === 0 && <p className="text-gray-500 sm:col-span-2 py-16 text-center">No articles yet.</p>}
-        </div>
+        <section aria-label={`Articles tagged ${tag.name}`}>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {posts.map((post) => <li key={post.id}><ArticleCard post={post} variant="default" /></li>)}
+            {posts.length === 0 && <li><p className="text-gray-500 py-16 text-center">No articles yet.</p></li>}
+          </ul>
+        </section>
         <Sidebar />
       </div>
     </div>

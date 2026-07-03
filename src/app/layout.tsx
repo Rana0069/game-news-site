@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'sw
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXTAUTH_URL || 'https://game-news-site.vercel.app'),
   title: { default: 'GamePulse — Your Ultimate Gaming Destination', template: '%s | GamePulse' },
   description: 'GamePulse is your #1 source for gaming news, reviews, guides, and more.',
   keywords: ['gaming news', 'game reviews', 'esports', 'PC games', 'PlayStation', 'Xbox', 'Nintendo'],
@@ -23,13 +23,21 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     creator: '@gamepulse',
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+  },
   icons: { icon: '/favicon.ico', apple: '/apple-touch-icon.png' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body className={`${inter.variable} ${outfit.variable} bg-dark-950 text-gray-100 antialiased`}>
         <SessionProvider>
           <ThemeProvider>
