@@ -36,7 +36,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Preconnect to Google Fonts for faster font loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* DNS prefetch for image CDN */}
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
       </head>
       <body className={`${inter.variable} ${outfit.variable} bg-dark-950 text-gray-100 antialiased`}>
         <SessionProvider>

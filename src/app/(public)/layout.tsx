@@ -2,12 +2,12 @@
 // Settings rarely change, so 3600s is safe and dramatically improves TTFB.
 export const revalidate = 3600
 
-import nextDynamic from 'next/dynamic'
+import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import prisma from '@/lib/db'
 
-// Load Navbar without SSR to avoid session/theme hydration mismatches
-const Navbar = nextDynamic(() => import('@/components/layout/Navbar'), { ssr: false })
+// Load Navbar with SSR for faster FCP — session/theme-dependent elements
+// handle their own hydration inside the component via `mounted` state.
 
 async function getSettings() {
   try {
