@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTheme } from 'next-themes'
@@ -55,8 +55,18 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   // mounted prevents SSR/client hydration mismatch for session-dependent UI
   const [mounted, setMounted] = useState(false)
+
+  const handleMenuEnter = useCallback(() => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    setMegaMenuOpen(true)
+  }, [])
+
+  const handleMenuLeave = useCallback(() => {
+    closeTimer.current = setTimeout(() => setMegaMenuOpen(false), 200)
+  }, [])
   const { theme, setTheme } = useTheme()
   const router = useRouter()
   const searchRef = useRef<HTMLInputElement>(null)
@@ -125,8 +135,8 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
               {/* Categories mega menu */}
               <div
                 className="relative"
-                onMouseEnter={() => setMegaMenuOpen(true)}
-                onMouseLeave={() => setMegaMenuOpen(false)}
+                onMouseEnter={handleMenuEnter}
+                onMouseLeave={handleMenuLeave}
               >
                 <button
                   aria-expanded={megaMenuOpen}
@@ -137,14 +147,14 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
                   <ChevronDown size={14} className={`transition-transform duration-200 ${megaMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {/* Invisible bridge prevents gap from closing menu */}
-                <div className="absolute top-full left-0 right-0 h-3" />
-
+                {/* Dropdown — always in DOM, toggled via opacity so hover bridge works */}
                 <div
-                  className={`absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-[720px] glass-card p-6 rounded-2xl shadow-2xl border border-white/10 transition-all duration-200 ${
+                  onMouseEnter={handleMenuEnter}
+                  onMouseLeave={handleMenuLeave}
+                  className={`absolute top-[calc(100%+6px)] left-1/2 -translate-x-1/2 w-[720px] glass-card p-6 rounded-2xl shadow-2xl border border-white/10 transition-all duration-200 ${
                     megaMenuOpen
                       ? 'opacity-100 pointer-events-auto translate-y-0'
-                      : 'opacity-0 pointer-events-none -translate-y-2'
+                      : 'opacity-0 pointer-events-none -translate-y-1'
                   }`}
                   role="menu"
                   aria-label="Categories menu"
