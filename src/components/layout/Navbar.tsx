@@ -128,41 +128,52 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
                 onMouseEnter={() => setMegaMenuOpen(true)}
                 onMouseLeave={() => setMegaMenuOpen(false)}
               >
-                <button 
-                  onClick={() => setMegaMenuOpen(!megaMenuOpen)}
+                <button
+                  aria-expanded={megaMenuOpen}
+                  aria-haspopup="true"
                   className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all"
                 >
                   Categories
-                  <ChevronDown size={14} className={`transition-transform ${megaMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={14} className={`transition-transform duration-200 ${megaMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {megaMenuOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[700px] glass-card p-6 rounded-2xl shadow-2xl border border-white/10">
-                    <div className="grid grid-cols-3 gap-3">
-                      {categories.map((cat) => {
-                        const Icon = cat.icon
-                        return (
-                          <Link
-                            key={cat.slug}
-                            href={`/category/${cat.slug}`}
-                            onClick={() => setMegaMenuOpen(false)}
-                            className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-all group"
+                {/* Invisible bridge prevents gap from closing menu */}
+                <div className="absolute top-full left-0 right-0 h-3" />
+
+                <div
+                  className={`absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-[720px] glass-card p-6 rounded-2xl shadow-2xl border border-white/10 transition-all duration-200 ${
+                    megaMenuOpen
+                      ? 'opacity-100 pointer-events-auto translate-y-0'
+                      : 'opacity-0 pointer-events-none -translate-y-2'
+                  }`}
+                  role="menu"
+                  aria-label="Categories menu"
+                >
+                  <div className="grid grid-cols-3 gap-2">
+                    {categories.map((cat) => {
+                      const Icon = cat.icon
+                      return (
+                        <Link
+                          key={cat.slug}
+                          href={`/category/${cat.slug}`}
+                          role="menuitem"
+                          onClick={() => setMegaMenuOpen(false)}
+                          className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-all group"
+                        >
+                          <div
+                            className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
+                            style={{ background: `${cat.color}22`, border: `1px solid ${cat.color}44` }}
                           >
-                            <div
-                              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                              style={{ background: `${cat.color}22`, border: `1px solid ${cat.color}44` }}
-                            >
-                              <Icon size={14} style={{ color: cat.color }} />
-                            </div>
-                            <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
-                              {cat.name}
-                            </span>
-                          </Link>
-                        )
-                      })}
-                    </div>
+                            <Icon size={14} style={{ color: cat.color }} />
+                          </div>
+                          <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+                            {cat.name}
+                          </span>
+                        </Link>
+                      )
+                    })}
                   </div>
-                )}
+                </div>
               </div>
 
               <Link href="/games" className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
