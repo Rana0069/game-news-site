@@ -72,14 +72,21 @@ export default async function HomePage() {
   // YouTube videos section (mock — from posts with youtubeUrls)
   const videoPost = latestPosts.find((p) => p.youtubeUrls)
 
+  // Hero posts for the slider
+  const heroPosts = featuredPosts.length > 0 ? featuredPosts : latestPosts
+  // Preload the first hero image so the browser starts downloading it with the HTML
+  const heroImageUrl = heroPosts[0]?.featuredImage
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      {/* Preload the LCP image — browser starts fetching it alongside the HTML */}
+      {heroImageUrl && (
+        <link rel="preload" as="image" href={heroImageUrl} fetchPriority="high" />
+      )}
 
       {/* ── HERO SLIDER ── */}
       <section className="mb-12">
-        <Suspense fallback={<div className="w-full h-[70vh] skeleton rounded-2xl" />}>
-          <HeroSlider posts={featuredPosts.length > 0 ? featuredPosts : latestPosts} />
-        </Suspense>
+        <HeroSlider posts={heroPosts} />
       </section>
 
       {/* ── MAIN CONTENT + SIDEBAR ── */}
