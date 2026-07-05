@@ -1,28 +1,53 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { Save, ImageIcon, Palette, X } from 'lucide-react'
+import { Save, ImageIcon, Palette, X, ShieldX } from 'lucide-react'
 
 const ACCENT_PRESETS = [
   { name: 'Neon Blue', value: '#00d4ff' },
-  { name: 'Purple', value: '#a855f7' },
-  { name: 'Green', value: '#22c55e' },
-  { name: 'Pink', value: '#f72585' },
-  { name: 'Orange', value: '#f97316' },
-  { name: 'Cyan', value: '#06b6d4' },
-  { name: 'Gold', value: '#eab308' },
-  { name: 'Red', value: '#ef4444' },
+  { name: 'Purple',   value: '#a855f7' },
+  { name: 'Green',    value: '#22c55e' },
+  { name: 'Pink',     value: '#f72585' },
+  { name: 'Orange',   value: '#f97316' },
+  { name: 'Cyan',     value: '#06b6d4' },
+  { name: 'Gold',     value: '#eab308' },
+  { name: 'Red',      value: '#ef4444' },
 ]
 
 export default function AdminSettings() {
+  const { data: session } = useSession()
+  const router = useRouter()
   const [settings, setSettings] = useState<any>({})
-  const [saving, setSaving] = useState(false)
-  const [saved, setSaved] = useState(false)
+  const [saving, setSaving]     = useState(false)
+  const [saved, setSaved]       = useState(false)
+
+  const role = (session?.user as any)?.role
+
+  // Client-side guard — API also enforces this server-side
+  if (session && role !== 'admin') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-center">
+        <div className="w-14 h-14 rounded-2xl bg-red-500/15 flex items-center justify-center">
+          <ShieldX size={28} className="text-red-400" />
+        </div>
+        <div>
+          <h2 className="font-display font-bold text-xl text-white mb-1">Access Denied</h2>
+          <p className="text-gray-500 text-sm">Only admins can access Site Settings.</p>
+        </div>
+        <button onClick={() => router.push('/admin')} className="btn-neon text-sm px-5 py-2">
+          Back to Dashboard
+        </button>
+      </div>
+    )
+  }
 
   useEffect(() => {
     fetch('/api/settings').then((r) => r.json()).then(setSettings)
   }, [])
+
 
   const update = (key: string, value: string) => setSettings((s: any) => ({ ...s, [key]: value }))
 
