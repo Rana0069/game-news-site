@@ -14,10 +14,10 @@ const nextConfig = {
     unoptimized: process.env.NODE_ENV === 'development',
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
-  // Reduce JS bundle size — tree-shakes large icon/animation libraries
+  // Reduce JS bundle size — tree-shakes large icon libraries
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizePackageImports: ['lucide-react'],
   },
   // Security headers fix Lighthouse Best Practices red !
   async headers() {

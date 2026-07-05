@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Clock, Eye, Pause, Play } from 'lucide-react'
 import { formatViewCount } from '@/lib/utils'
 import RelativeTime from '@/components/ui/RelativeTime'
@@ -42,30 +41,27 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
 
   if (!posts.length) return null
 
-  const post = posts[current]
-
   return (
     <div className="relative w-full h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[500px] max-h-[800px] overflow-hidden rounded-2xl">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={current}
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.96 }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className="absolute inset-0"
+      {/* Slides — all rendered in DOM, CSS opacity transition handles switching */}
+      {posts.map((post, i) => (
+        <article
+          key={post.id}
+          aria-hidden={i !== current}
+          className="absolute inset-0 transition-opacity duration-500"
+          style={{ opacity: i === current ? 1 : 0, pointerEvents: i === current ? 'auto' : 'none' }}
         >
           {/* Background image */}
           <div className="absolute inset-0 bg-dark-900">
-            {post.featuredImage && !imgErrors[current] ? (
+            {post.featuredImage && !imgErrors[i] ? (
               <Image
                 src={post.featuredImage}
                 alt={post.title}
                 fill
-                priority
+                priority={i === 0}
                 sizes="100vw"
                 className="object-cover"
-                onError={() => setImgErrors((prev) => ({ ...prev, [current]: true }))}
+                onError={() => setImgErrors((prev) => ({ ...prev, [i]: true }))}
               />
             ) : (
               <div
@@ -84,11 +80,12 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
           {/* Content */}
           <div className="absolute inset-0 flex items-end">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-              <motion.div
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.5 }}
-                className="max-w-2xl"
+              <div
+                className="max-w-2xl transition-all duration-500"
+                style={{
+                  transform: i === current ? 'translateY(0)' : 'translateY(20px)',
+                  opacity: i === current ? 1 : 0,
+                }}
               >
                 {post.category && (
                   <Link href={`/category/${post.category.slug}`}>
@@ -106,9 +103,9 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
                 )}
 
                 <Link href={`/article/${post.slug}`}>
-                  <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white leading-tight mb-4 hover:text-neon-blue transition-colors">
+                  <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white leading-tight mb-4 hover:text-neon-blue transition-colors">
                     {post.title}
-                  </h1>
+                  </h2>
                 </Link>
 
                 {post.excerpt && (
@@ -123,16 +120,16 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
                   )}
                   {post.publishedAt && (
                     <span className="flex items-center gap-1">
-                      <Clock size={13} />
+                      <Clock size={13} aria-hidden="true" />
                       <RelativeTime date={post.publishedAt} />
                     </span>
                   )}
                   <span className="flex items-center gap-1">
-                    <Eye size={13} />
+                    <Eye size={13} aria-hidden="true" />
                     {formatViewCount(post.views)}
                   </span>
                   <span className="flex items-center gap-1">
-                    <Clock size={13} />
+                    <Clock size={13} aria-hidden="true" />
                     {post.readingTime}min read
                   </span>
                 </div>
@@ -144,23 +141,21 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
                   Read Article
                   <ChevronRight size={16} />
                 </Link>
-              </motion.div>
+              </div>
             </div>
           </div>
-        </motion.div>
-      </AnimatePresence>
+        </article>
+      ))}
 
-      {/* Slide indicators */}
+      {/* Controls */}
       <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 sm:gap-3 z-10">
-        {/* Autoplay toggle */}
         <button
           onClick={() => setPlaying(!playing)}
+          aria-label={playing ? 'Pause slideshow' : 'Play slideshow'}
           className="w-8 h-8 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white transition-colors"
         >
           {playing ? <Pause size={12} /> : <Play size={12} />}
         </button>
-
-        {/* Prev/Next */}
         <button
           onClick={prev}
           className="w-8 h-8 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white transition-colors"
