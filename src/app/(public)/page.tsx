@@ -77,15 +77,29 @@ export default async function HomePage() {
   const heroPosts = featuredPosts.length > 0 ? featuredPosts : latestPosts
   const lcpImageUrl = heroPosts[0]?.featuredImage
 
+  // CRITICAL: Next.js serves images via /_next/image?url=...&w=...&q=...
+  // We must preload the SAME URL Next.js will request, not the raw Cloudinary URL.
+  // HeroSlider uses fill + sizes="100vw" — Next.js picks w=3840 on wide screens.
+  const lcpPreloadUrl = lcpImageUrl
+    ? `/_next/image?url=${encodeURIComponent(lcpImageUrl)}&w=3840&q=75`
+    : null
+
   return (
     <>
-      {/* LCP image preload — server-injected so browser fetches before JS loads */}
-      {lcpImageUrl && (
+      {/* LCP image preload — must match Next.js optimized URL exactly */}
+      {lcpPreloadUrl && (
         <link
           rel="preload"
           as="image"
-          href={lcpImageUrl}
-          // @ts-expect-error fetchpriority is valid but not in older TS types
+          href={lcpPreloadUrl}
+          imageSrcSet={[
+            `/_next/image?url=${encodeURIComponent(lcpImageUrl!)}&w=828&q=75 828w`,
+            `/_next/image?url=${encodeURIComponent(lcpImageUrl!)}&w=1200&q=75 1200w`,
+            `/_next/image?url=${encodeURIComponent(lcpImageUrl!)}&w=1920&q=75 1920w`,
+            `/_next/image?url=${encodeURIComponent(lcpImageUrl!)}&w=3840&q=75 3840w`,
+          ].join(', ')}
+          imageSizes="100vw"
+          // @ts-expect-error fetchpriority is valid HTML but not in older TS defs
           fetchpriority="high"
         />
       )}
