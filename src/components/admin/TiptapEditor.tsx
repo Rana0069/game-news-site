@@ -16,12 +16,12 @@ import TableHeader from '@tiptap/extension-table-header'
 import Placeholder from '@tiptap/extension-placeholder'
 import CharacterCount from '@tiptap/extension-character-count'
 import Youtube from '@tiptap/extension-youtube'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import {
   Bold, Italic, UnderlineIcon, Strikethrough, Code, AlignLeft, AlignCenter, AlignRight,
   List, ListOrdered, Quote, Minus, Link as LinkIcon, Image as ImageIcon,
   Heading1, Heading2, Heading3, Table as TableIcon, Youtube as YoutubeIcon,
-  Undo, Redo, Highlighter, Palette
+  Undo, Redo, Highlighter, Palette, Upload, Globe, X as XIcon
 } from 'lucide-react'
 
 interface TiptapEditorProps {
@@ -53,6 +53,9 @@ const ToolbarDivider = () => <div className="w-px h-6 bg-white/10 mx-1 self-cent
 
 export default function TiptapEditor({ content, onChange, onImageUpload }: TiptapEditorProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [showImagePanel, setShowImagePanel] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
+  const [uploading, setUploading] = useState(false)
 
   const editor = useEditor({
     extensions: [
@@ -99,22 +102,35 @@ export default function TiptapEditor({ content, onChange, onImageUpload }: Tipta
     const formData = new FormData()
     formData.append('file', file)
     formData.append('folder', 'posts')
-
+    setUploading(true)
     try {
       const res = await fetch('/api/media', { method: 'POST', body: formData })
       const data = await res.json()
       if (data.url && editor) {
-        editor.chain().focus().setImage({ src: data.url }).run()
+        editor.chain().focus().setImage({ src: data.url, alt: file.name }).run()
         onImageUpload?.(data.url)
+        setShowImagePanel(false)
       }
     } catch (err) {
       console.error('Upload failed:', err)
+    } finally {
+      setUploading(false)
     }
   }, [editor, onImageUpload])
+
+  const insertImageByUrl = useCallback(() => {
+    if (imageUrl && editor) {
+      editor.chain().focus().setImage({ src: imageUrl, alt: 'Inline image' }).run()
+      setImageUrl('')
+      setShowImagePanel(false)
+      onImageUpload?.(imageUrl)
+    }
+  }, [editor, imageUrl, onImageUpload])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) handleImageUpload(file)
+    e.target.value = ''
   }
 
   if (!editor) return <div className="h-96 skeleton rounded-xl" />
@@ -235,10 +251,76 @@ export default function TiptapEditor({ content, onChange, onImageUpload }: Tipta
         <ToolbarButton onClick={addLink} active={editor.isActive('link')} title="Add Link">
           <LinkIcon size={14} />
         </ToolbarButton>
-        <ToolbarButton onClick={() => fileInputRef.current?.click()} title="Upload Image">
-          <ImageIcon size={14} />
-        </ToolbarButton>
-        <ToolbarButton onClick={addYoutube} title="Embed YouTube">
+
+        {/* Image button — opens inline panel */}
+        <div className="relative">
+          <ToolbarButton
+            onClick={() => setShowImagePanel(!showImagePanel)}
+            active={showImagePanel}
+            title="Insert Image into post"
+          >
+            <ImageIcon size={14} />
+          </ToolbarButton>
+
+          {/* Image insert panel */}
+          {showImagePanel && (
+            <div className="absolute top-10 left-0 z-50 w-72 bg-dark-900 border border-white/10 rounded-xl shadow-2xl p-4">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-semibold text-white">Insert Image</span>
+                <button onClick={() => setShowImagePanel(false)} className="text-gray-500 hover:text-white">
+                  <XIcon size={14} />
+                </button>
+              </div>
+
+              {/* Upload from device */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="w-full flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-neon-blue/10 border border-white/8 hover:border-neon-blue/30 transition-all text-left mb-3"
+              >
+                <div className="w-8 h-8 rounded-lg bg-neon-blue/15 flex items-center justify-center flex-shrink-0">
+                  <Upload size={14} className="text-neon-blue" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white">{uploading ? 'Uploading...' : 'Upload from device'}</p>
+                  <p className="text-xs text-gray-500">JPG, PNG, GIF, WebP</p>
+                </div>
+              </button>
+
+              {/* Paste URL */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <Globe size={11} />
+                  Or paste an image URL
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="url"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && insertImageByUrl()}
+                    placeholder="https://example.com/image.jpg"
+                    className="input-dark text-xs flex-1"
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    onClick={insertImageByUrl}
+                    disabled={!imageUrl}
+                    className="px-3 py-1.5 rounded-lg bg-neon-blue/15 text-neon-blue text-xs font-medium hover:bg-neon-blue/25 disabled:opacity-40 transition-colors"
+                  >
+                    Insert
+                  </button>
+                </div>
+              </div>
+
+              <p className="text-xs text-gray-600 mt-3 text-center">💡 You can also drag &amp; drop images anywhere</p>
+            </div>
+          )}
+        </div>
+
+        <ToolbarButton onClick={addYoutube} title="Embed YouTube video">
           <YoutubeIcon size={14} />
         </ToolbarButton>
 
@@ -269,7 +351,7 @@ export default function TiptapEditor({ content, onChange, onImageUpload }: Tipta
       {/* Footer: character/word count */}
       <div className="flex items-center justify-between px-4 py-2 border-t border-white/5 bg-dark-900">
         <span className="text-xs text-gray-600">
-          Drag & drop images to upload
+          📷 Click the image icon in toolbar to insert images &nbsp;·&nbsp; Drag &amp; drop also works
         </span>
         <span className="text-xs text-gray-600">
           {editor.storage.characterCount.words()} words · {editor.storage.characterCount.characters()} chars
