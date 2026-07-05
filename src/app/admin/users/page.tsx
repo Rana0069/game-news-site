@@ -54,6 +54,7 @@ interface User {
   role: string
   bio: string | null
   createdAt: string
+  isOwner: boolean
   _count: { posts: number }
 }
 
@@ -270,9 +271,15 @@ export default function AdminUsersPage() {
                           {(user.name || user.email).charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-200 flex items-center gap-1">
+                          <p className="text-sm font-medium text-gray-200 flex items-center gap-1.5">
                             {user.name || 'Unnamed'}
                             {isMe && <span className="text-xs text-neon-blue">(you)</span>}
+                            {user.isOwner && (
+                              <span className="inline-flex items-center gap-1 text-xs px-1.5 py-0.5 rounded-md" style={{ background: '#f59e0b18', color: '#f59e0b', border: '1px solid #f59e0b30' }}>
+                                <Crown size={9} />
+                                Owner
+                              </span>
+                            )}
                           </p>
                           {user.bio && <p className="text-xs text-gray-600 line-clamp-1 max-w-[160px]">{user.bio}</p>}
                         </div>
@@ -335,25 +342,32 @@ export default function AdminUsersPage() {
                     {isAdmin && (
                       <td className="px-5 py-4 text-right">
                         <div className="flex items-center gap-1.5 justify-end">
-                          {!isMe && !isEditing && (
-                            <button
-                              onClick={() => startEdit(user)}
-                              title="Change role"
-                              className="w-8 h-8 rounded-lg bg-white/5 text-gray-400 hover:bg-neon-blue/15 hover:text-neon-blue flex items-center justify-center transition-colors"
-                            >
-                              <Edit2 size={13} />
-                            </button>
+                          {/* Owner is fully protected — hide all action buttons */}
+                          {user.isOwner ? (
+                            <span className="text-xs text-gray-700 pr-1" title="Site owner — protected">🔒</span>
+                          ) : (
+                            <>
+                              {!isMe && !isEditing && (
+                                <button
+                                  onClick={() => startEdit(user)}
+                                  title="Change role"
+                                  className="w-8 h-8 rounded-lg bg-white/5 text-gray-400 hover:bg-neon-blue/15 hover:text-neon-blue flex items-center justify-center transition-colors"
+                                >
+                                  <Edit2 size={13} />
+                                </button>
+                              )}
+                              {!isMe && (
+                                <button
+                                  onClick={() => setDeleteId(user.id)}
+                                  title="Remove member"
+                                  className="w-8 h-8 rounded-lg bg-white/5 text-gray-400 hover:bg-red-500/15 hover:text-red-400 flex items-center justify-center transition-colors"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              )}
+                              {isMe && <span className="text-xs text-gray-700 pr-1">—</span>}
+                            </>
                           )}
-                          {!isMe && (
-                            <button
-                              onClick={() => setDeleteId(user.id)}
-                              title="Remove member"
-                              className="w-8 h-8 rounded-lg bg-white/5 text-gray-400 hover:bg-red-500/15 hover:text-red-400 flex items-center justify-center transition-colors"
-                            >
-                              <Trash2 size={13} />
-                            </button>
-                          )}
-                          {isMe && <span className="text-xs text-gray-700 pr-1">—</span>}
                         </div>
                       </td>
                     )}

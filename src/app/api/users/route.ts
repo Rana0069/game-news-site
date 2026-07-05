@@ -5,7 +5,7 @@ import { authOptions } from '@/lib/auth'
 import prisma from '@/lib/db'
 import bcrypt from 'bcryptjs'
 
-// GET all users — any logged-in admin/editor can view
+// GET all users — admin/editor only
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -13,15 +13,36 @@ export async function GET(req: NextRequest) {
   if (!['admin', 'editor'].includes(role))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
+  // Identify the owner (oldest admin or pinned by OWNER_EMAIL)
+  let ownerId: string | null = null
+  if (process.env.OWNER_EMAIL) {
+    const pinned = await prisma.user.findUnique({
+      where: { email: process.env.OWNER_EMAIL },
+      select: { id: true },
+    })
+    ownerId = pinned?.id ?? null
+  }
+  if (!ownerId) {
+    const oldest = await prisma.user.findFirst({
+      where: { role: 'admin' },
+      orderBy: { createdAt: 'asc' },
+      select: { id: true },
+    })
+    ownerId = oldest?.id ?? null
+  }
+
   const users = await prisma.user.findMany({
     select: {
       id: true, name: true, email: true, role: true,
       image: true, bio: true, createdAt: true,
       _count: { select: { posts: true } },
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: 'asc' },
   })
-  return NextResponse.json(users)
+
+  // Attach isOwner flag so the UI can show the crown and hide action buttons
+  const result = users.map((u) => ({ ...u, isOwner: u.id === ownerId }))
+  return NextResponse.json(result)
 }
 
 // POST — create a new team member (admin only)
