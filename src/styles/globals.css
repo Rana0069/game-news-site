@@ -348,6 +348,20 @@ body {
     color: var(--text-muted);
   }
 
+  /* Fix white dropdown options on Windows/Chrome —
+     native <select> dropdowns use OS rendering; force dark bg */
+  select.input-dark,
+  select {
+    background-color: #0d1224;
+    color-scheme: dark;
+  }
+
+  select option,
+  select optgroup {
+    background-color: #0d1224;
+    color: #f9fafb;
+  }
+
   /* Score badge */
   .score-badge {
     width: 48px;

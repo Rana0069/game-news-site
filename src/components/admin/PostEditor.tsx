@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { Save, Eye, Send, X, Plus, ImageIcon, Youtube, Clock, Search } from 'lucide-react'
+import { Save, Eye, Send, X, Plus, ImageIcon, Youtube, Clock, Search, Check } from 'lucide-react'
 import TiptapEditor from '@/components/admin/TiptapEditor'
 import { generateSlug, extractYouTubeId } from '@/lib/utils'
 
@@ -26,11 +26,16 @@ interface PostEditorProps {
 export default function PostEditor({ postId, initialData }: PostEditorProps) {
   const router = useRouter()
   const [saving, setSaving] = useState(false)
-  const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
   const [categories, setCategories] = useState<Category[]>([])
   const [allTags, setAllTags] = useState<Tag[]>([])
   const [tagSearch, setTagSearch] = useState('')
+  const [toast, setToast] = useState<string | null>(null)
+
+  // Track the live post ID in a ref so auto-save always uses the latest value
+  // even inside the memoised handleSave callback.
+  // On new posts this starts as undefined; after first save it gets the DB id.
+  const livePostIdRef = useRef<string | undefined>(postId)
 
   const [form, setForm] = useState({
     title: initialData?.title || '',
@@ -50,16 +55,25 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
     selectedTags: (initialData?.tags?.map((t: any) => t.tagId) || []) as string[],
   })
 
+  // Keep a ref to form so auto-save closure always reads latest values
+  const formRef = useRef(form)
+  useEffect(() => { formRef.current = form }, [form])
+
   const updateForm = (key: string, value: any) => {
     setForm((f) => ({ ...f, [key]: value }))
   }
 
-  // Auto-generate slug from title
+  const showToast = (msg: string) => {
+    setToast(msg)
+    setTimeout(() => setToast(null), 3000)
+  }
+
+  // Auto-generate slug from title (new posts only)
   useEffect(() => {
-    if (!postId && form.title) {
+    if (!livePostIdRef.current && form.title) {
       updateForm('slug', generateSlug(form.title))
     }
-  }, [form.title, postId])
+  }, [form.title])
 
   // Load categories and tags
   useEffect(() => {
@@ -67,52 +81,29 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
     fetch('/api/tags').then((r) => r.json()).then(setAllTags)
   }, [])
 
-  // Auto-save drafts every 30 seconds
-  useEffect(() => {
-    if (autoSaveTimer) clearTimeout(autoSaveTimer)
-    const timer = setTimeout(() => {
-      if (form.title && form.content && form.status === 'draft') {
-        handleSave('draft', true)
-      }
-    }, 30000)
-    setAutoSaveTimer(timer)
-    return () => clearTimeout(timer)
-  }, [form.title, form.content])
-
-  const handleImageUpload = async (file: File): Promise<string> => {
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('folder', 'featured')
-    const res = await fetch('/api/media', { method: 'POST', body: formData })
-    const data = await res.json()
-    return data.url || ''
-  }
-
-  const handleFeaturedImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const url = await handleImageUpload(file)
-    if (url) updateForm('featuredImage', url)
-  }
-
+  // ── Core save function ──────────────────────────────────────────────────────
   const handleSave = useCallback(async (status?: string, silent?: boolean) => {
-    if (!form.title) {
+    const currentForm = formRef.current
+    if (!currentForm.title) {
       if (!silent) alert('Title is required')
       return
     }
 
+    // Use the ref so we always have the latest id even when called from auto-save
+    const currentId = livePostIdRef.current
+
     setSaving(true)
     try {
       const payload = {
-        ...form,
-        status: status || form.status,
-        tags: form.selectedTags,
-        youtubeUrls: form.youtubeUrls.filter(Boolean),
-        publishAt: form.publishAt || null,
+        ...currentForm,
+        status: status || currentForm.status,
+        tags: currentForm.selectedTags,
+        youtubeUrls: currentForm.youtubeUrls.filter(Boolean),
+        publishAt: currentForm.publishAt || null,
       }
 
-      const url = postId ? `/api/posts/${postId}` : '/api/posts'
-      const method = postId ? 'PUT' : 'POST'
+      const url    = currentId ? `/api/posts/${currentId}` : '/api/posts'
+      const method = currentId ? 'PUT' : 'POST'
 
       const res = await fetch(url, {
         method,
@@ -128,9 +119,23 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
       const data = await res.json()
       setLastSaved(new Date())
 
+      // If this was the first save (no id yet), store the new id in the ref
+      // so ALL future saves (including auto-saves) update the same post.
+      if (!currentId && data.id) {
+        livePostIdRef.current = data.id
+      }
+
       if (!silent) {
-        if (!postId) {
+        const isPublishing = (status || currentForm.status) === 'published'
+        if (!currentId && data.id && !isPublishing) {
+          // New draft — navigate to edit page so subsequent saves update it
           router.push(`/admin/posts/${data.id}/edit`)
+        } else if (isPublishing) {
+          // Published — go back to posts list with success feedback
+          showToast('Post published!')
+          setTimeout(() => router.push('/admin/posts'), 800)
+        } else {
+          showToast('Draft saved!')
         }
       }
     } catch (err: any) {
@@ -138,8 +143,37 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
     } finally {
       setSaving(false)
     }
-  }, [form, postId, router])
+  }, [router]) // no form dependency — we read via formRef
 
+  // ── Auto-save: only drafts, only when there's content, no spam ─────────────
+  // Uses a debounce so it fires 30s after the LAST change, not on a fixed timer.
+  useEffect(() => {
+    if (!form.title || !form.content) return           // nothing to save yet
+    if (form.status !== 'draft') return                // don't auto-save published posts
+
+    const timer = setTimeout(() => {
+      handleSave('draft', true)  // silent = no redirect, no alert
+    }, 30_000)
+
+    return () => clearTimeout(timer)
+  }, [form.title, form.content, form.status, handleSave])
+
+  // ── Helper handlers ────────────────────────────────────────────────────────
+  const handleImageUpload = async (file: File): Promise<string> => {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('folder', 'featured')
+    const res = await fetch('/api/media', { method: 'POST', body: formData })
+    const data = await res.json()
+    return data.url || ''
+  }
+
+  const handleFeaturedImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const url = await handleImageUpload(file)
+    if (url) updateForm('featuredImage', url)
+  }
 
   const addYoutubeUrl = () => {
     const url = prompt('Enter YouTube URL:')
@@ -159,11 +193,20 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
 
   return (
     <div className="max-w-6xl mx-auto">
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed top-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-xl bg-dark-900 border border-green-500/30 text-green-400 text-sm font-medium shadow-2xl">
+          <Check size={15} />
+          {toast}
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display font-black text-2xl text-white">
-            {postId ? 'Edit Post' : 'New Post'}
+            {livePostIdRef.current ? 'Edit Post' : 'New Post'}
           </h1>
           {lastSaved && (
             <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
