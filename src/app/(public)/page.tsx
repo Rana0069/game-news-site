@@ -72,22 +72,32 @@ export default async function HomePage() {
   // YouTube videos section (mock — from posts with youtubeUrls)
   const videoPost = latestPosts.find((p) => p.youtubeUrls)
 
-  // Hero posts for the slider
+  // The first hero image is the LCP element. Preload it server-side so the
+  // browser fetches it immediately on HTML parse — before JS mounts HeroSlider.
   const heroPosts = featuredPosts.length > 0 ? featuredPosts : latestPosts
-  // Preload the first hero image so the browser starts downloading it with the HTML
-  const heroImageUrl = heroPosts[0]?.featuredImage
+  const lcpImageUrl = heroPosts[0]?.featuredImage
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-      {/* Preload the LCP image — browser starts fetching it alongside the HTML */}
-      {heroImageUrl && (
-        <link rel="preload" as="image" href={heroImageUrl} fetchPriority="high" />
+    <>
+      {/* LCP image preload — server-injected so browser fetches before JS loads */}
+      {lcpImageUrl && (
+        <link
+          rel="preload"
+          as="image"
+          href={lcpImageUrl}
+          // @ts-expect-error fetchpriority is valid but not in older TS types
+          fetchpriority="high"
+        />
       )}
 
-      {/* ── HERO SLIDER ── */}
-      <section className="mb-12">
-        <HeroSlider posts={heroPosts} />
-      </section>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+        {/* ── HERO SLIDER ── */}
+        <section className="mb-12" aria-label="Featured articles">
+          <Suspense fallback={<div className="w-full h-[70vh] skeleton rounded-2xl" />}>
+            <HeroSlider posts={heroPosts} />
+          </Suspense>
+        </section>
 
       {/* ── MAIN CONTENT + SIDEBAR ── */}
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-8">
@@ -363,6 +373,7 @@ export default async function HomePage() {
           <Sidebar />
         </Suspense>
       </div>
-    </div>
+      </main>
+    </>
   )
 }
