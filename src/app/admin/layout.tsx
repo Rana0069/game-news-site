@@ -1,3 +1,8 @@
+// Force dynamic — NEVER cache the admin layout.
+// getServerSession reads cookies which change per-user;
+// caching would return a stale null session and drop the sidebar.
+export const dynamic = 'force-dynamic'
+
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
@@ -6,15 +11,16 @@ import AdminSidebar from '@/components/admin/AdminSidebar'
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
 
-  // If no session, just render children (login page handles its own layout)
+  // No session → show children (handles /admin/login which has its own layout)
   if (!session?.user) {
     return <>{children}</>
   }
 
   const role = (session.user as any).role as string | undefined
 
-  // If logged in but not an admin/editor/author, redirect to homepage
-  if (!role || !['admin', 'editor', 'author'].includes(role)) {
+  // Allowed CMS roles — includes moderator added in team management feature
+  const allowedRoles = ['admin', 'editor', 'author', 'moderator']
+  if (!role || !allowedRoles.includes(role)) {
     redirect('/')
   }
 
