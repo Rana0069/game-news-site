@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Save, ShieldX, Check, Palette, Sparkles, Layout, CornerRadius, Globe, RefreshCw } from 'lucide-react'
+import { Save, ShieldX, Check, Palette, Sparkles } from 'lucide-react'
 
 // ─── Preset full themes ────────────────────────────────────────────────────
 const PRESETS = [
