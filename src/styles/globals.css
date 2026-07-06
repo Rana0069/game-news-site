@@ -13,27 +13,30 @@
   --accent-2: #a855f7;
   --accent-3: #22c55e;
 
-  /* Background hierarchy */
-  --bg-base: #030712;
-  --bg-surface: #0a0f1e;
-  --bg-card: #0d1224;
-  --bg-hover: #111827;
+  /* Background hierarchy — deep black aesthetic */
+  --bg-base:    #010409;
+  --bg-surface: #060b18;
+  --bg-card:    #090e1f;
+  --bg-hover:   #0d1224;
 
   /* Text */
-  --text-primary: #f9fafb;
+  --text-primary:   #f9fafb;
   --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-muted:     #6b7280;
 
   /* Border */
-  --border: rgba(255,255,255,0.07);
-  --border-hover: rgba(255,255,255,0.12);
+  --border:       rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.11);
 
   /* Glass */
-  --glass-bg: rgba(255,255,255,0.03);
-  --glass-border: rgba(255,255,255,0.08);
+  --glass-bg:     rgba(255,255,255,0.025);
+  --glass-border: rgba(255,255,255,0.07);
+
+  /* Button style — overridden by SiteThemeInjector (solid|gradient|outline|dark) */
+  --btn-style: solid;
 
   /* Transition */
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition:      all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -114,17 +117,17 @@ body {
   }
 
   .glass-card {
-    background: rgba(13, 18, 36, 0.8);
+    background: rgba(9, 14, 31, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;
     transition: var(--transition);
   }
 
   .glass-card:hover {
-    border-color: rgba(0, 212, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 212, 255, 0.1);
+    border-color: rgba(var(--accent-1-raw, 0, 212, 255), 0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 212, 255, 0.08);
     transform: translateY(-2px);
   }
 
@@ -147,9 +150,15 @@ body {
     background-clip: text;
   }
 
-  /* Neon button */
+  /* ==========================================================
+     BUTTON STYLES
+     Default: solid (accent-1 fill + glow). The data-btn-style
+     attribute on <html> overrides this to gradient/outline/dark.
+     ========================================================== */
+
+  /* ── Base (shared for all btn styles) ── */
   .btn-neon {
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    background: var(--accent-1);
     color: #000;
     font-weight: 700;
     padding: 0.625rem 1.5rem;
@@ -159,24 +168,52 @@ body {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
-  }
-
-  .btn-neon::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .btn-neon:hover::before {
-    opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .btn-neon:hover {
+    filter: brightness(1.12);
     transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4);
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--accent-1) 45%, transparent);
+  }
+
+  /* ── Gradient style ── */
+  [data-btn-style="gradient"] .btn-neon {
+    background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+  }
+  [data-btn-style="gradient"] .btn-neon:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 6px 28px color-mix(in srgb, var(--accent-1) 35%, transparent);
+  }
+
+  /* ── Outline style ── */
+  [data-btn-style="outline"] .btn-neon {
+    background: transparent;
+    color: var(--accent-1);
+    border: 1.5px solid var(--accent-1);
+    box-shadow: inset 0 0 0 0 var(--accent-1);
+  }
+  [data-btn-style="outline"] .btn-neon:hover {
+    background: color-mix(in srgb, var(--accent-1) 12%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--accent-1) 30%, transparent);
+    filter: none;
+    color: var(--accent-1);
+  }
+
+  /* ── Dark / stealth style ── */
+  [data-btn-style="dark"] .btn-neon {
+    background: #0d1224;
+    color: var(--accent-1);
+    border: 1px solid color-mix(in srgb, var(--accent-1) 25%, transparent);
+  }
+  [data-btn-style="dark"] .btn-neon:hover {
+    background: #111827;
+    border-color: color-mix(in srgb, var(--accent-1) 45%, transparent);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--accent-1) 20%, transparent);
+    filter: none;
+    color: var(--accent-1);
   }
 
   /* Ghost button */
@@ -192,8 +229,8 @@ body {
   }
 
   .btn-ghost:hover {
-    background: rgba(0, 212, 255, 0.1);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    background: color-mix(in srgb, var(--accent-1) 10%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--accent-1) 20%, transparent);
   }
 
   /* Category badge */

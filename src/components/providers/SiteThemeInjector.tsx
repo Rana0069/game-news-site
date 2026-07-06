@@ -11,11 +11,12 @@
 import { useEffect } from 'react'
 
 interface Settings {
-  accentColor?: string | null
+  accentColor?:  string | null
   accentColor2?: string | null
   accentColor3?: string | null
-  favicon?: string | null
-  siteName?: string | null
+  favicon?:      string | null
+  siteName?:     string | null
+  buttonStyle?:  string | null  // 'solid' | 'gradient' | 'outline' | 'dark'
 }
 
 export default function SiteThemeInjector({ settings }: { settings: Settings | null }) {
@@ -43,7 +44,15 @@ export default function SiteThemeInjector({ settings }: { settings: Settings | n
       root.style.setProperty('--neon-green', settings.accentColor3)
       root.style.setProperty('--color-neon-green', settings.accentColor3)
     }
-  }, [settings?.accentColor, settings?.accentColor2, settings?.accentColor3])
+
+    // ── Button style ────────────────────────────────────────────────────────────────
+    const style = settings.buttonStyle || 'solid'
+    if (style === 'solid') {
+      root.removeAttribute('data-btn-style')
+    } else {
+      root.setAttribute('data-btn-style', style)
+    }
+  }, [settings?.accentColor, settings?.accentColor2, settings?.accentColor3, settings?.buttonStyle])
 
   useEffect(() => {
     if (!settings?.favicon) return
