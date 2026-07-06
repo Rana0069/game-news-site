@@ -95,18 +95,51 @@
 
 /* Light mode overrides */
 .light {
-  --bg-base: #f0f4f8;
+  --bg-base:    #f0f4f8;
   --bg-surface: #ffffff;
-  --bg-card: #f8fafc;
-  --bg-hover: #f1f5f9;
-  --text-primary: #0f172a;
+  --bg-card:    #f8fafc;
+  --bg-hover:   #f1f5f9;
+  --text-primary:   #0f172a;
   --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --border: rgba(0,0,0,0.08);
+  --text-muted:     #94a3b8;
+  --border:       rgba(0,0,0,0.08);
   --border-hover: rgba(0,0,0,0.14);
-  --glass-bg: rgba(255,255,255,0.6);
+  --glass-bg:     rgba(255,255,255,0.6);
   --glass-border: rgba(0,0,0,0.06);
 }
+
+/* Light mode btn-neon — keep accent bg, use dark text for readability */
+.light .btn-neon {
+  color: #000 !important;
+}
+/* Outline/dark styles in light mode need text to stay visible */
+.light [data-btn-style="outline"] .btn-neon,
+.light [data-btn-style="dark"] .btn-neon {
+  color: var(--accent-1) !important;
+  background: transparent !important;
+}
+
+/* Light mode glass-card — use white card not dark */
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.07) !important;
+}
+.light .glass-card:hover {
+  border-color: color-mix(in srgb, var(--accent-1) 30%, transparent) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+}
+
+/* Light mode nav icon buttons — prevent btn-neon from styling them */
+.light nav button:not(.btn-neon),
+.light header button:not(.btn-neon) {
+  color: #374151;
+}
+.light nav button:not(.btn-neon):hover,
+.light header button:not(.btn-neon):hover {
+  color: #111827;
+  background: rgba(0,0,0,0.06);
+}
+
 
 /* ============================================
    BASE STYLES

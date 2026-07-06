@@ -70,6 +70,48 @@ type SelectionGrid<T extends string> = {
   preview: React.ReactNode
 }
 
+// OptionGrid MUST be defined outside AdminThemePage.
+// Defining components inside components causes React to create a new
+// component type on every render — this unmounts/remounts children and
+// triggers "Application error" client-side exceptions.
+function OptionGrid<T extends string>({
+  currentValue, defaultValue = '', options, onChange,
+}: {
+  currentValue: string | undefined | null
+  defaultValue?: string
+  options: SelectionGrid<T>[]
+  onChange: (v: T) => void
+}) {
+  const active = currentValue || defaultValue
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {options.map(({ value, label, desc, preview }) => (
+        <button
+          key={value}
+          type="button"
+          onClick={() => onChange(value)}
+          className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+            active === value
+              ? 'border-white/40 bg-white/5'
+              : 'border-transparent bg-white/[0.03] hover:border-white/15'
+          }`}
+        >
+          <div className="w-full flex items-center justify-center h-10">{preview}</div>
+          <div className="text-center">
+            <p className="text-sm font-semibold text-white">{label}</p>
+            <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
+          </div>
+          {active === value && (
+            <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-white flex items-center justify-center">
+              <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </div>
+          )}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export default function AdminThemePage() {
   const { data: session } = useSession()
   const router = useRouter()
@@ -77,42 +119,30 @@ export default function AdminThemePage() {
   const [saving, setSaving] = useState(false)
   const [toast, setToast] = useState('')
 
-  const role = (session?.user as any)?.role
-  if (session && role !== 'admin') {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-center">
-        <div className="w-14 h-14 rounded-2xl bg-red-500/15 flex items-center justify-center">
-          <ShieldX size={28} className="text-red-400" />
-        </div>
-        <h2 className="font-display font-bold text-xl text-white">Access Denied</h2>
-        <button onClick={() => router.push('/admin')} className="btn-neon text-sm px-5 py-2">Back</button>
-      </div>
-    )
-  }
-
+  // ALL hooks must be called before any conditional return
   useEffect(() => {
     fetch('/api/settings').then((r) => r.json()).then(setSettings)
   }, [])
 
+  const role = (session?.user as any)?.role
+
   const up = (key: string, value: any) => setSettings((s: any) => ({ ...s, [key]: value }))
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(''), 2500) }
 
   const applyPreset = (preset: typeof PRESETS[0]) => {
     setSettings((s: any) => ({ ...s, ...preset }))
     showToast(`Applied "${preset.name}" preset`)
-    // Live preview immediately
     const root = document.documentElement
     root.style.setProperty('--accent-1', preset.accentColor)
     root.style.setProperty('--accent-2', preset.accentColor2)
     root.style.setProperty('--accent-3', preset.accentColor3)
-    preset.buttonStyle === 'solid' ? root.removeAttribute('data-btn-style') : root.setAttribute('data-btn-style', preset.buttonStyle)
-    preset.cardStyle   === 'glass' ? root.removeAttribute('data-card-style') : root.setAttribute('data-card-style', preset.cardStyle)
-    preset.navStyle    === 'default' ? root.removeAttribute('data-nav-style') : root.setAttribute('data-nav-style', preset.navStyle)
+    preset.buttonStyle === 'solid'   ? root.removeAttribute('data-btn-style')  : root.setAttribute('data-btn-style',  preset.buttonStyle)
+    preset.cardStyle   === 'glass'   ? root.removeAttribute('data-card-style') : root.setAttribute('data-card-style', preset.cardStyle)
+    preset.navStyle    === 'default' ? root.removeAttribute('data-nav-style')  : root.setAttribute('data-nav-style',  preset.navStyle)
     const radMap: any = { sharp: '4px', default: '12px', rounded: '20px', pill: '9999px' }
     root.style.setProperty('--card-radius', radMap[preset.borderRadius] || '12px')
     preset.borderRadius === 'default' ? root.removeAttribute('data-radius') : root.setAttribute('data-radius', preset.borderRadius)
   }
-
-  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(''), 2500) }
 
   const handleSave = async () => {
     setSaving(true)
@@ -128,45 +158,22 @@ export default function AdminThemePage() {
     }
   }
 
+  // Guard after hooks — never before
+  if (session && role !== 'admin') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-center">
+        <div className="w-14 h-14 rounded-2xl bg-red-500/15 flex items-center justify-center">
+          <ShieldX size={28} className="text-red-400" />
+        </div>
+        <h2 className="font-display font-bold text-xl text-white">Access Denied</h2>
+        <button onClick={() => router.push('/admin')} className="btn-neon text-sm px-5 py-2">Back</button>
+      </div>
+    )
+  }
+
   const c1 = settings.accentColor  || '#00d4ff'
   const c2 = settings.accentColor2 || '#a855f7'
 
-  // ── Option picker helper ──────────────────────────────────────────────────
-  function OptionGrid<T extends string>({
-    currentValue, defaultValue = '', options, onChange,
-  }: {
-    currentValue: string | undefined | null
-    defaultValue?: string
-    options: SelectionGrid<T>[]
-    onChange: (v: T) => void
-  }) {
-    const active = currentValue || defaultValue
-    return (
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {options.map(({ value, label, desc, preview }) => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => onChange(value)}
-            className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
-              active === value
-                ? 'border-white/40 bg-white/5'
-                : 'border-transparent bg-white/3 hover:border-white/15'
-            }`}
-          >
-            <div className="w-full flex items-center justify-center h-10">{preview}</div>
-            <div className="text-center">
-              <p className="text-sm font-semibold text-white">{label}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
-            </div>
-            {active === value && (
-              <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-white flex items-center justify-center">
-                <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-            )}
-          </button>
-        ))}
-      </div>
     )
   }
 
