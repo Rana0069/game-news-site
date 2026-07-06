@@ -174,9 +174,6 @@ export default function AdminThemePage() {
   const c1 = settings.accentColor  || '#00d4ff'
   const c2 = settings.accentColor2 || '#a855f7'
 
-    )
-  }
-
   return (
     <div className="max-w-3xl space-y-8">
 
