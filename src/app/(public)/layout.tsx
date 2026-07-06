@@ -4,10 +4,8 @@ export const revalidate = 3600
 
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import SiteThemeInjector from '@/components/providers/SiteThemeInjector'
 import prisma from '@/lib/db'
-
-// Load Navbar with SSR for faster FCP — session/theme-dependent elements
-// handle their own hydration inside the component via `mounted` state.
 
 async function getSettings() {
   try {
@@ -22,6 +20,8 @@ export default async function PublicLayout({ children }: { children: React.React
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Injects dynamic accent colors + favicon from Settings into the DOM */}
+      <SiteThemeInjector settings={settings} />
       <Navbar settings={settings || undefined} />
       <main className="flex-1 pt-16">
         {children}

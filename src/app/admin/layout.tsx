@@ -1,15 +1,18 @@
 // Force dynamic — NEVER cache the admin layout.
-// getServerSession reads cookies which change per-user;
-// caching would return a stale null session and drop the sidebar.
 export const dynamic = 'force-dynamic'
 
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import AdminSidebar from '@/components/admin/AdminSidebar'
+import SiteThemeInjector from '@/components/providers/SiteThemeInjector'
+import prisma from '@/lib/db'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions)
+  const [session, settings] = await Promise.all([
+    getServerSession(authOptions),
+    prisma.siteSettings.findUnique({ where: { id: 'site' } }).catch(() => null),
+  ])
 
   // No session → show children (handles /admin/login which has its own layout)
   if (!session?.user) {
@@ -26,6 +29,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="min-h-screen bg-dark-950 flex">
+      <SiteThemeInjector settings={settings} />
       <AdminSidebar user={session.user as any} />
       <div className="flex-1 flex flex-col min-h-screen ml-0 lg:ml-64">
         {/* Admin header */}
