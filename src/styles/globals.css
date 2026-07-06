@@ -32,6 +32,10 @@
   --glass-bg:     rgba(255,255,255,0.025);
   --glass-border: rgba(255,255,255,0.07);
 
+  /* Radius — overridden by SiteThemeInjector */
+  --card-radius: 12px;
+  --btn-radius:  8px;
+
   /* Button style — overridden by SiteThemeInjector (solid|gradient|outline|dark) */
   --btn-style: solid;
 
@@ -39,6 +43,55 @@
   --transition:      all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ── Card style variants (data-card-style on <html>) ─────────────────────── */
+/* solid — opaque dark */
+[data-card-style="solid"] .glass-card {
+  background: #090e1f;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+/* bordered — transparent with stronger border */
+[data-card-style="bordered"] .glass-card {
+  background: transparent;
+  backdrop-filter: none;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+/* minimal — no border, very subtle bg */
+[data-card-style="minimal"] .glass-card {
+  background: rgba(255,255,255,0.018);
+  backdrop-filter: none;
+  border: none;
+}
+
+/* ── Border radius variants (data-radius on <html>) ──────────────────────── */
+[data-radius="sharp"]   .glass-card  { border-radius: 4px; }
+[data-radius="rounded"] .glass-card  { border-radius: 20px; }
+[data-radius="pill"]    .glass-card  { border-radius: 24px; }
+
+[data-radius="sharp"]   .btn-neon    { border-radius: 4px; }
+[data-radius="rounded"] .btn-neon    { border-radius: 12px; }
+[data-radius="pill"]    .btn-neon    { border-radius: 9999px; }
+
+[data-radius="sharp"]   .btn-ghost   { border-radius: 4px; }
+[data-radius="rounded"] .btn-ghost   { border-radius: 12px; }
+[data-radius="pill"]    .btn-ghost   { border-radius: 9999px; }
+
+[data-radius="sharp"]   .badge       { border-radius: 4px; }
+[data-radius="rounded"] .badge       { border-radius: 9999px; }
+[data-radius="pill"]    .badge       { border-radius: 9999px; }
+
+/* ── Nav style variants (data-nav-style on <html>) ───────────────────────── */
+[data-nav-style="transparent"] header,
+[data-nav-style="transparent"] nav { background: transparent !important; backdrop-filter: none !important; border-bottom-color: transparent !important; }
+
+[data-nav-style="solid"] header,
+[data-nav-style="solid"] nav { background: #060b18 !important; backdrop-filter: none !important; }
+
+[data-nav-style="blur"] header,
+[data-nav-style="blur"] nav { backdrop-filter: blur(28px) !important; -webkit-backdrop-filter: blur(28px) !important; }
+
 
 /* Light mode overrides */
 .light {

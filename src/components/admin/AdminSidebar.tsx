@@ -7,7 +7,7 @@ import { useState } from 'react'
 import {
   LayoutDashboard, FileText, Image, Tag, MessageSquare, Users,
   Gamepad2, Settings, LogOut, Menu, X, ChevronRight,
-  Plus, Zap, Crown, Shield, Feather, MessageCircle,
+  Plus, Zap, Crown, Shield, Feather, MessageCircle, Palette,
 } from 'lucide-react'
 
 // Role definitions — controls what each member sees in the sidebar
@@ -49,6 +49,7 @@ const NAV_ITEMS: NavItem[] = [
 
   // ─ Users / Settings — Admin only ─
   { href: '/admin/users',      label: 'Team',       icon: Users,          roles: ['admin'] },
+  { href: '/admin/theme',      label: 'Theme',      icon: Palette,        roles: ['admin'] },
   { href: '/admin/settings',   label: 'Settings',   icon: Settings,       roles: ['admin'] },
 ]
 

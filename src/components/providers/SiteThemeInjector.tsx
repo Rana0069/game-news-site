@@ -1,71 +1,78 @@
 'use client'
 
 /**
- * SiteThemeInjector — runs client-side to apply dynamic settings from the DB:
- * 1. Injects accent colors as CSS custom properties (--accent-1/2/3)
- * 2. Swaps the browser favicon to the one uploaded in Settings
- *
- * This is a client component so it can update the DOM after hydration
- * without blocking the initial server render.
+ * SiteThemeInjector — runs client-side to apply all dynamic theme settings:
+ * 1. Accent colors  → CSS custom properties (--accent-1/2/3)
+ * 2. Button style   → data-btn-style attribute on <html>
+ * 3. Card style     → data-card-style attribute on <html>
+ * 4. Border radius  → data-radius attribute on <html>
+ * 5. Nav style      → data-nav-style attribute on <html>
+ * 6. Favicon        → dynamic <link rel="icon"> in <head>
  */
 import { useEffect } from 'react'
 
-interface Settings {
+export interface ThemeSettings {
+  // Colors
   accentColor?:  string | null
   accentColor2?: string | null
   accentColor3?: string | null
+  // Styles
+  buttonStyle?:  string | null  // solid | gradient | outline | dark
+  cardStyle?:    string | null  // glass | solid | bordered | minimal
+  borderRadius?: string | null  // sharp | default | rounded | pill
+  navStyle?:     string | null  // default | transparent | solid | blur
+  // Branding
   favicon?:      string | null
   siteName?:     string | null
-  buttonStyle?:  string | null  // 'solid' | 'gradient' | 'outline' | 'dark'
 }
 
-export default function SiteThemeInjector({ settings }: { settings: Settings | null }) {
+export default function SiteThemeInjector({ settings }: { settings: ThemeSettings | null }) {
+
+  // ── Colors + style attributes ─────────────────────────────────────────────
   useEffect(() => {
     if (!settings) return
     const root = document.documentElement
 
-    // ── Accent colors ─────────────────────────────────────────────────────────
+    // Accent colors
     if (settings.accentColor)  root.style.setProperty('--accent-1', settings.accentColor)
     if (settings.accentColor2) root.style.setProperty('--accent-2', settings.accentColor2)
     if (settings.accentColor3) root.style.setProperty('--accent-3', settings.accentColor3)
+    // Tailwind alias vars
+    if (settings.accentColor)  { root.style.setProperty('--neon-blue', settings.accentColor);   root.style.setProperty('--color-neon-blue', settings.accentColor) }
+    if (settings.accentColor2) { root.style.setProperty('--neon-purple', settings.accentColor2); root.style.setProperty('--color-neon-purple', settings.accentColor2) }
+    if (settings.accentColor3) { root.style.setProperty('--neon-green', settings.accentColor3);  root.style.setProperty('--color-neon-green', settings.accentColor3) }
 
-    // Also update the neon-blue / neon-purple Tailwind aliases used in components
-    // These are CSS vars that map to Tailwind config, so setting them here
-    // makes all btn-neon / badge-neon etc. also pick up the new color.
-    if (settings.accentColor) {
-      root.style.setProperty('--neon-blue', settings.accentColor)
-      root.style.setProperty('--color-neon-blue', settings.accentColor)
-    }
-    if (settings.accentColor2) {
-      root.style.setProperty('--neon-purple', settings.accentColor2)
-      root.style.setProperty('--color-neon-purple', settings.accentColor2)
-    }
-    if (settings.accentColor3) {
-      root.style.setProperty('--neon-green', settings.accentColor3)
-      root.style.setProperty('--color-neon-green', settings.accentColor3)
-    }
+    // Button style
+    const btn = settings.buttonStyle || 'solid'
+    btn === 'solid' ? root.removeAttribute('data-btn-style') : root.setAttribute('data-btn-style', btn)
 
-    // ── Button style ────────────────────────────────────────────────────────────────
-    const style = settings.buttonStyle || 'solid'
-    if (style === 'solid') {
-      root.removeAttribute('data-btn-style')
-    } else {
-      root.setAttribute('data-btn-style', style)
-    }
-  }, [settings?.accentColor, settings?.accentColor2, settings?.accentColor3, settings?.buttonStyle])
+    // Card style
+    const card = settings.cardStyle || 'glass'
+    card === 'glass' ? root.removeAttribute('data-card-style') : root.setAttribute('data-card-style', card)
 
+    // Border radius
+    const radius = settings.borderRadius || 'default'
+    const radiusMap: Record<string, string> = { sharp: '4px', default: '12px', rounded: '20px', pill: '9999px' }
+    root.style.setProperty('--card-radius', radiusMap[radius] || '12px')
+    root.style.setProperty('--btn-radius',  radius === 'pill' ? '9999px' : radius === 'rounded' ? '12px' : radius === 'sharp' ? '4px' : '8px')
+    radius === 'default' ? root.removeAttribute('data-radius') : root.setAttribute('data-radius', radius)
+
+    // Nav style
+    const nav = settings.navStyle || 'default'
+    nav === 'default' ? root.removeAttribute('data-nav-style') : root.setAttribute('data-nav-style', nav)
+
+  }, [
+    settings?.accentColor, settings?.accentColor2, settings?.accentColor3,
+    settings?.buttonStyle, settings?.cardStyle, settings?.borderRadius, settings?.navStyle,
+  ])
+
+  // ── Favicon ───────────────────────────────────────────────────────────────
   useEffect(() => {
     if (!settings?.favicon) return
-
-    // ── Favicon ───────────────────────────────────────────────────────────────
-    // Remove all existing favicon links first
     document.querySelectorAll("link[rel~='icon']").forEach((el) => el.remove())
-
-    // Insert the dynamic favicon from Settings
     const link = document.createElement('link')
     link.rel  = 'icon'
     link.href = settings.favicon
-    // Auto-detect type based on URL extension
     if (settings.favicon.endsWith('.png'))  link.type = 'image/png'
     if (settings.favicon.endsWith('.svg'))  link.type = 'image/svg+xml'
     if (settings.favicon.endsWith('.ico'))  link.type = 'image/x-icon'
@@ -73,6 +80,5 @@ export default function SiteThemeInjector({ settings }: { settings: Settings | n
     document.head.appendChild(link)
   }, [settings?.favicon])
 
-  // This component renders nothing — it only manipulates <head> and <html>
   return null
 }

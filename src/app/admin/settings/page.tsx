@@ -168,136 +168,17 @@ export default function AdminSettings() {
         </div>
       </div>
 
-      {/* Accent Colors */}
-      <div className="glass-card p-6">
-        <h2 className="font-semibold text-white mb-5 text-lg flex items-center gap-2">
-          <Palette size={18} className="text-neon-purple" />
-          Accent Colors
-        </h2>
-
-        {/* Primary accent */}
-        <div className="space-y-4">
-          {[
-            { label: 'Primary Accent', key: 'accentColor', desc: 'Main neon accent (nav, buttons, links)' },
-            { label: 'Secondary Accent', key: 'accentColor2', desc: 'Secondary accent (tags, gradients)' },
-            { label: 'Tertiary Accent', key: 'accentColor3', desc: 'Third accent (success, scores)' },
-          ].map(({ label, key, desc }) => (
-            <div key={key}>
-              <label className="block text-sm text-gray-400 mb-2">{label}</label>
-              <p className="text-xs text-gray-600 mb-2">{desc}</p>
-              <div className="flex flex-wrap gap-2 mb-3">
-                {ACCENT_PRESETS.map((preset) => (
-                  <button
-                    key={preset.value}
-                    type="button"
-                    onClick={() => update(key, preset.value)}
-                    title={preset.name}
-                    className={`w-8 h-8 rounded-lg border-2 transition-all hover:scale-110 ${settings[key] === preset.value ? 'border-white scale-110' : 'border-transparent'}`}
-                    style={{ background: preset.value }}
-                  />
-                ))}
-                <label className="w-8 h-8 rounded-lg border-2 border-dashed border-white/20 flex items-center justify-center cursor-pointer overflow-hidden relative">
-                  <Palette size={12} className="text-gray-500" />
-                  <input
-                    type="color"
-                    className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                    value={settings[key] || '#00d4ff'}
-                    onChange={(e) => update(key, e.target.value)}
-                  />
-                </label>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg" style={{ background: settings[key] }} />
-                <span className="text-sm font-mono text-gray-400">{settings[key]}</span>
-              </div>
-            </div>
-          ))}
+      {/* Colors + Style → Theme Studio */}
+      <div className="glass-card p-6 flex items-center justify-between">
+        <div>
+          <h2 className="font-semibold text-white mb-1 text-lg flex items-center gap-2">
+            🎨 Colors &amp; Appearance
+          </h2>
+          <p className="text-sm text-gray-400">Accent colors, button style, card style, border radius, and nav style have moved to the dedicated Theme Studio.</p>
         </div>
-      </div>
-
-      {/* Button Style */}
-      <div className="glass-card p-6">
-        <h2 className="font-semibold text-white mb-1 text-lg flex items-center gap-2">
-          🎨 Button Style
-        </h2>
-        <p className="text-sm text-gray-500 mb-5">Choose how buttons look across the entire site.</p>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            {
-              value: 'solid',
-              label: 'Solid',
-              desc: 'Filled accent color',
-              preview: (color: string) => ({ background: color, color: '#000', border: 'none' }),
-            },
-            {
-              value: 'gradient',
-              label: 'Gradient',
-              desc: 'Accent color blend',
-              preview: (color: string, color2: string) => ({
-                background: `linear-gradient(135deg, ${color}, ${color2})`,
-                color: '#000',
-                border: 'none',
-              }),
-            },
-            {
-              value: 'outline',
-              label: 'Outline',
-              desc: 'Transparent + border',
-              preview: (color: string) => ({
-                background: 'transparent',
-                color,
-                border: `1.5px solid ${color}`,
-              }),
-            },
-            {
-              value: 'dark',
-              label: 'Dark',
-              desc: 'Stealth black',
-              preview: (color: string) => ({
-                background: '#0d1224',
-                color,
-                border: `1px solid ${color}44`,
-              }),
-            },
-          ].map(({ value, label, desc, preview }) => {
-            const c1 = settings.accentColor  || '#00d4ff'
-            const c2 = settings.accentColor2 || '#a855f7'
-            const isSelected = (settings.buttonStyle || 'solid') === value
-            const previewStyle = preview(c1, c2)
-            return (
-              <button
-                key={value}
-                type="button"
-                onClick={() => update('buttonStyle', value)}
-                className={`relative flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${
-                  isSelected
-                    ? 'border-white/40 bg-white/5'
-                    : 'border-transparent bg-white/3 hover:border-white/15'
-                }`}
-              >
-                {/* Preview button */}
-                <span
-                  className="px-4 py-1.5 rounded-lg text-xs font-bold transition-none pointer-events-none"
-                  style={previewStyle}
-                >
-                  Button
-                </span>
-                <div className="text-center">
-                  <p className="text-sm font-semibold text-white">{label}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
-                </div>
-                {isSelected && (
-                  <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-white flex items-center justify-center">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M2 5l2.5 2.5L8 3" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                )}
-              </button>
-            )
-          })}
-        </div>
+        <a href="/admin/theme" className="btn-neon text-sm flex-shrink-0 ml-6">
+          Open Theme Studio →
+        </a>
       </div>
 
       {/* Social Links */}
