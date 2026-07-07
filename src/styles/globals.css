@@ -93,8 +93,8 @@
 [data-nav-style="blur"] nav { backdrop-filter: blur(28px) !important; -webkit-backdrop-filter: blur(28px) !important; }
 
 
-/* Light mode overrides */
-.light {
+/* ── LIGHT MODE ─────────────────────────────────────────────────────────────── */
+[data-theme="light"] {
   --bg-base:    #f0f4f8;
   --bg-surface: #ffffff;
   --bg-card:    #f8fafc;
@@ -108,36 +108,84 @@
   --glass-border: rgba(0,0,0,0.06);
 }
 
-/* Light mode btn-neon — keep accent bg, use dark text for readability */
-.light .btn-neon {
+/* Light mode — body background & text */
+[data-theme="light"] body {
+  background-color: #f0f4f8;
+  color: #0f172a;
+}
+
+/* Light mode — glass card becomes white */
+[data-theme="light"] .glass-card {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.07) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+[data-theme="light"] .glass-card:hover {
+  border-color: color-mix(in srgb, var(--accent-1) 30%, transparent) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Light mode — btn-neon stays readable */
+[data-theme="light"] .btn-neon {
   color: #000 !important;
 }
-/* Outline/dark styles in light mode need text to stay visible */
-.light [data-btn-style="outline"] .btn-neon,
-.light [data-btn-style="dark"] .btn-neon {
+[data-theme="light"] [data-btn-style="outline"] .btn-neon,
+[data-theme="light"] [data-btn-style="dark"] .btn-neon {
   color: var(--accent-1) !important;
   background: transparent !important;
 }
 
-/* Light mode glass-card — use white card not dark */
-.light .glass-card {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border-color: rgba(0, 0, 0, 0.07) !important;
-}
-.light .glass-card:hover {
-  border-color: color-mix(in srgb, var(--accent-1) 30%, transparent) !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+/* Light mode — nav & header background */
+[data-theme="light"] nav,
+[data-theme="light"] header {
+  background: rgba(255,255,255,0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom-color: rgba(0,0,0,0.08) !important;
 }
 
-/* Light mode nav icon buttons — prevent btn-neon from styling them */
-.light nav button:not(.btn-neon),
-.light header button:not(.btn-neon) {
+/* Light mode — nav text & icon buttons */
+[data-theme="light"] nav a,
+[data-theme="light"] header a {
   color: #374151;
 }
-.light nav button:not(.btn-neon):hover,
-.light header button:not(.btn-neon):hover {
+[data-theme="light"] nav a:hover,
+[data-theme="light"] header a:hover {
+  color: #111827;
+}
+[data-theme="light"] nav button:not(.btn-neon),
+[data-theme="light"] header button:not(.btn-neon) {
+  color: #374151;
+}
+[data-theme="light"] nav button:not(.btn-neon):hover,
+[data-theme="light"] header button:not(.btn-neon):hover {
   color: #111827;
   background: rgba(0,0,0,0.06);
+}
+
+/* Light mode — sidebar */
+[data-theme="light"] aside {
+  background: #ffffff !important;
+  border-right-color: rgba(0,0,0,0.08) !important;
+}
+
+/* ── DARK MODE explicit (ensures switching back from light works) ─────────── */
+[data-theme="dark"] {
+  --bg-base:    #010409;
+  --bg-surface: #060b18;
+  --bg-card:    #090e1f;
+  --bg-hover:   #0d1224;
+  --text-primary:   #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-muted:     #6b7280;
+  --border:       rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.11);
+  --glass-bg:     rgba(255,255,255,0.025);
+  --glass-border: rgba(255,255,255,0.07);
+}
+
+[data-theme="dark"] body {
+  background-color: #010409;
+  color: #f9fafb;
 }
 
 
