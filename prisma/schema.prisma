@@ -162,25 +162,31 @@ model Media {
 }
 
 model SiteSettings {
-  id            String   @id @default("site")
-  siteName      String   @default("GamePulse")
-  siteTagline   String   @default("Your Ultimate Gaming Destination")
-  logo          String?
-  favicon       String?
-  accentColor   String   @default("#00d4ff")
-  accentColor2  String   @default("#a855f7")
-  accentColor3  String   @default("#22c55e")
-  footerText    String?
-  twitterUrl    String?
-  facebookUrl   String?
-  instagramUrl  String?
-  youtubeUrl    String?
-  discordUrl    String?
-  twitchUrl     String?
-  contactEmail  String?
-  aboutText     String?
-  analyticsId   String?
-  updatedAt     DateTime @updatedAt
+  id              String   @id @default("site")
+  siteName        String   @default("GamePulse")
+  siteTagline     String   @default("Your Ultimate Gaming Destination")
+  logo            String?
+  favicon         String?
+  accentColor     String   @default("#00d4ff")
+  accentColor2    String   @default("#a855f7")
+  accentColor3    String   @default("#22c55e")
+  // Theme Studio fields
+  buttonStyle     String   @default("solid")     // solid | gradient | outline | dark
+  cardStyle       String   @default("glass")     // glass | solid | bordered | minimal
+  borderRadius    String   @default("default")   // sharp | default | rounded | pill
+  navStyle        String   @default("default")   // default | solid | transparent | blur
+  // Contact / social
+  footerText      String?
+  twitterUrl      String?
+  facebookUrl     String?
+  instagramUrl    String?
+  youtubeUrl      String?
+  discordUrl      String?
+  twitchUrl       String?
+  contactEmail    String?
+  aboutText       String?
+  googleAnalyticsId String?
+  updatedAt       DateTime @updatedAt
 }
 
 model NewsletterSubscriber {

@@ -57,6 +57,33 @@ if (failed > 0) {
   process.exit(1)
 }
 
+// ── 1b. Apply column migrations (ALTER TABLE) ────────────────────────────────
+// These are safe to re-run — duplicate column errors are silently skipped.
+console.log('\n🔧 Applying column migrations...')
+const columnMigrations = [
+  `ALTER TABLE "SiteSettings" ADD COLUMN "buttonStyle"  TEXT NOT NULL DEFAULT 'solid'`,
+  `ALTER TABLE "SiteSettings" ADD COLUMN "cardStyle"    TEXT NOT NULL DEFAULT 'glass'`,
+  `ALTER TABLE "SiteSettings" ADD COLUMN "borderRadius" TEXT NOT NULL DEFAULT 'default'`,
+  `ALTER TABLE "SiteSettings" ADD COLUMN "navStyle"     TEXT NOT NULL DEFAULT 'default'`,
+  `ALTER TABLE "SiteSettings" ADD COLUMN "googleAnalyticsId" TEXT`,
+  `ALTER TABLE "User" ADD COLUMN "isOwner" INTEGER NOT NULL DEFAULT 0`,
+]
+let colOk = 0, colSkip = 0
+for (const sql of columnMigrations) {
+  try {
+    await db.execute(sql)
+    colOk++
+  } catch (e) {
+    const msg = e.message || ''
+    if (msg.includes('duplicate column') || msg.includes('already exists')) {
+      colSkip++
+    } else {
+      console.error('❌ Column migration failed:', sql.slice(0, 80), '-', msg)
+    }
+  }
+}
+console.log(`✅ Columns: ${colOk} added, ${colSkip} already existed`)
+
 // ── 2. Seed admin user ──────────────────────────────────────────────────────
 const bcrypt = await import('bcryptjs')
 const adminEmail = process.env.ADMIN_EMAIL || 'admin@gamepulse.com'
