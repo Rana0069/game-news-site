@@ -28,7 +28,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="min-h-screen bg-dark-950 flex">
+    <div data-theme="dark" style={{ colorScheme: 'dark' }} className="min-h-screen bg-dark-950 flex">
       <SiteThemeInjector settings={settings} />
       <AdminSidebar user={session.user as any} />
       <div className="flex-1 flex flex-col min-h-screen ml-0 lg:ml-64">

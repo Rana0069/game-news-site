@@ -181,11 +181,46 @@
   --border-hover: rgba(255,255,255,0.11);
   --glass-bg:     rgba(255,255,255,0.025);
   --glass-border: rgba(255,255,255,0.07);
-}
-
-[data-theme="dark"] body {
+  /* Apply directly so div-level data-theme="dark" overrides html-level light */
   background-color: #010409;
   color: #f9fafb;
+}
+
+/* Admin dark wrapper — override any html[data-theme="light"] leaking into admin */
+[data-theme="dark"] body,
+[data-theme="dark"] .glass-card {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* Explicitly reset glass-card to dark in admin dark wrapper */
+[data-theme="dark"] .glass-card {
+  background: rgba(9, 14, 31, 0.92) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+  color: #f9fafb;
+}
+[data-theme="dark"] .glass-card:hover {
+  border-color: rgba(0, 212, 255, 0.18) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+}
+
+/* Nav/header in admin dark wrapper */
+[data-theme="dark"] nav,
+[data-theme="dark"] header {
+  background: rgba(6,11,24,0.8) !important;
+  border-bottom-color: rgba(255,255,255,0.05) !important;
+}
+
+/* Text in dark wrapper */
+[data-theme="dark"] nav a,
+[data-theme="dark"] header a,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] li {
+  color: inherit;
 }
 
 
