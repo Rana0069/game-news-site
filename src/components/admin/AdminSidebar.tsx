@@ -103,7 +103,7 @@ export default function AdminSidebar({ user }: AdminSidebarProps) {
         {/* Logo */}
         <div className="h-16 flex items-center px-6 border-b border-white/5 flex-shrink-0">
           <Link href="/admin" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center">
               <Zap size={16} className="text-black" />
             </div>
             <span className="font-display font-black gradient-text">GamePulse CMS</span>
@@ -141,7 +141,7 @@ export default function AdminSidebar({ user }: AdminSidebarProps) {
                 onClick={() => setOpen(false)}
                 className={`admin-nav-item ${item.indent ? 'ml-4 text-xs' : ''} ${
                   active
-                    ? 'active bg-neon-blue/8 text-neon-blue border-l-2 border-neon-blue'
+                    ? 'active bg-neon-red/8 text-neon-red border-l-2 border-neon-red'
                     : ''
                 }`}
               >
@@ -176,3 +176,4 @@ export default function AdminSidebar({ user }: AdminSidebarProps) {
     </>
   )
 }
+

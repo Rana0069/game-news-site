@@ -28,3 +28,4 @@ export async function GET(req: NextRequest) {
   const subs = await prisma.newsletterSubscriber.findMany({ where: { active: true }, orderBy: { createdAt: 'desc' } })
   return NextResponse.json({ subscribers: subs, total: subs.length })
 }
+

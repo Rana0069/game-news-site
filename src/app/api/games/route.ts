@@ -50,3 +50,4 @@ export async function POST(req: NextRequest) {
   })
   return NextResponse.json(game, { status: 201 })
 }
+

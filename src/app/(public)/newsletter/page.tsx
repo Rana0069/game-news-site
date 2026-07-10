@@ -22,7 +22,7 @@ export default function NewsletterPage() {
 
       <div className="glass-card p-8 sm:p-12 relative overflow-hidden max-w-2xl mx-auto">
         {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-neon-blue/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-neon-red/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-neon-purple/10 rounded-full blur-3xl pointer-events-none" />
         
         <form className="relative z-10 flex flex-col gap-4" action="/api/newsletter" method="POST">
@@ -64,3 +64,4 @@ export default function NewsletterPage() {
     </div>
   )
 }
+

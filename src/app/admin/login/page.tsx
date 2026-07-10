@@ -36,14 +36,14 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-dark-950 flex items-center justify-center px-4">
       {/* Background glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-neon-blue/5 blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-neon-red/5 blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-neon-purple/5 blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center mx-auto mb-4 shadow-neon-blue">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center mx-auto mb-4 shadow-neon-red">
             <Gamepad2 size={32} className="text-black" />
           </div>
           <h1 className="font-display font-black text-3xl gradient-text">GamePulse</h1>
@@ -116,3 +116,4 @@ export default function AdminLogin() {
     </div>
   )
 }
+

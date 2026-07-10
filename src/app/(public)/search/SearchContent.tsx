@@ -87,7 +87,7 @@ export default function SearchContent() {
               key={opt.value}
               onClick={() => setSort(opt.value)}
               aria-pressed={sort === opt.value}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${sort === opt.value ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/30' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${sort === opt.value ? 'bg-neon-red/20 text-neon-red border border-neon-red/30' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}
             >
               {opt.label}
             </button>
@@ -110,7 +110,7 @@ export default function SearchContent() {
       {/* Results */}
       {loading ? (
         <div className="flex items-center justify-center py-20" role="status" aria-label="Loading results">
-          <Loader size={32} className="text-neon-blue animate-spin" />
+          <Loader size={32} className="text-neon-red animate-spin" />
         </div>
       ) : results.length > 0 ? (
         <section aria-label="Search results">
@@ -136,3 +136,4 @@ export default function SearchContent() {
     </main>
   )
 }
+

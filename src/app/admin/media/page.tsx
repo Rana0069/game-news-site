@@ -70,7 +70,7 @@ export default function AdminMediaPage() {
 
       {/* Upload drop zone */}
       <label
-        className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-white/10 rounded-2xl cursor-pointer hover:border-neon-blue/30 hover:bg-neon-blue/5 transition-all"
+        className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-white/10 rounded-2xl cursor-pointer hover:border-neon-red/30 hover:bg-neon-red/5 transition-all"
         onDrop={(e) => {
           e.preventDefault()
           const files = e.dataTransfer.files
@@ -97,7 +97,7 @@ export default function AdminMediaPage() {
             <div key={item.id} className="group relative aspect-square rounded-xl overflow-hidden bg-dark-800 border border-white/5">
               <Image src={item.url} alt={item.filename} fill className="object-cover" />
               <div className="absolute inset-0 bg-dark-950/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                <button onClick={() => copyUrl(item.url)} className="w-8 h-8 rounded-lg bg-neon-blue/20 border border-neon-blue/30 flex items-center justify-center text-neon-blue hover:bg-neon-blue/30 transition-all">
+                <button onClick={() => copyUrl(item.url)} className="w-8 h-8 rounded-lg bg-neon-red/20 border border-neon-red/30 flex items-center justify-center text-neon-red hover:bg-neon-red/30 transition-all">
                   <Copy size={12} />
                 </button>
                 <button onClick={() => handleDelete(item.id)} className="w-8 h-8 rounded-lg bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400 hover:bg-red-500/30 transition-all">
@@ -121,3 +121,4 @@ export default function AdminMediaPage() {
     </div>
   )
 }
+

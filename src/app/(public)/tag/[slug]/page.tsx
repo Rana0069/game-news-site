@@ -38,9 +38,9 @@ export default async function TagPage({ params }: Props) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
       <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:text-neon-blue">Home</Link>
+        <Link href="/" className="hover:text-neon-red">Home</Link>
         <ChevronRight size={14} />
-        <span className="text-neon-blue">#{tag.name}</span>
+        <span className="text-neon-red">#{tag.name}</span>
       </nav>
 
       <header className="mb-8">

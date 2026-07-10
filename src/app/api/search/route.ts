@@ -51,3 +51,4 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ posts, total, pages: Math.ceil(total / limit) })
 }
+

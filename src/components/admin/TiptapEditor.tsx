@@ -41,7 +41,7 @@ const ToolbarButton = ({
     title={title}
     className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all text-sm ${
       active
-        ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/30'
+        ? 'bg-neon-red/20 text-neon-red border border-neon-red/30'
         : 'text-gray-400 hover:text-white hover:bg-white/5'
     }`}
   >
@@ -61,7 +61,7 @@ export default function TiptapEditor({ content, onChange, onImageUpload }: Tipta
     extensions: [
       StarterKit.configure({ codeBlock: { HTMLAttributes: { class: 'hljs' } } }),
       Underline,
-      Link.configure({ openOnClick: false, HTMLAttributes: { class: 'text-neon-blue' } }),
+      Link.configure({ openOnClick: false, HTMLAttributes: { class: 'text-neon-red' } }),
       Image.configure({ HTMLAttributes: { class: 'rounded-xl max-w-full' } }),
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TextStyle,
@@ -277,10 +277,10 @@ export default function TiptapEditor({ content, onChange, onImageUpload }: Tipta
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="w-full flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-neon-blue/10 border border-white/8 hover:border-neon-blue/30 transition-all text-left mb-3"
+                className="w-full flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-neon-red/10 border border-white/8 hover:border-neon-red/30 transition-all text-left mb-3"
               >
-                <div className="w-8 h-8 rounded-lg bg-neon-blue/15 flex items-center justify-center flex-shrink-0">
-                  <Upload size={14} className="text-neon-blue" />
+                <div className="w-8 h-8 rounded-lg bg-neon-red/15 flex items-center justify-center flex-shrink-0">
+                  <Upload size={14} className="text-neon-red" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">{uploading ? 'Uploading...' : 'Upload from device'}</p>
@@ -308,7 +308,7 @@ export default function TiptapEditor({ content, onChange, onImageUpload }: Tipta
                     type="button"
                     onClick={insertImageByUrl}
                     disabled={!imageUrl}
-                    className="px-3 py-1.5 rounded-lg bg-neon-blue/15 text-neon-blue text-xs font-medium hover:bg-neon-blue/25 disabled:opacity-40 transition-colors"
+                    className="px-3 py-1.5 rounded-lg bg-neon-red/15 text-neon-red text-xs font-medium hover:bg-neon-red/25 disabled:opacity-40 transition-colors"
                   >
                     Insert
                   </button>
@@ -363,3 +363,4 @@ export default function TiptapEditor({ content, onChange, onImageUpload }: Tipta
     </div>
   )
 }
+

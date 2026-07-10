@@ -25,3 +25,4 @@ export default function RelativeTime({ date }: { date: Date | string | null | un
   if (!date || !text) return null
   return <span suppressHydrationWarning>{text}</span>
 }
+

@@ -77,7 +77,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
                 {post.category.name}
               </span>
             )}
-            <h2 className="font-display font-bold text-xl sm:text-2xl text-white leading-tight group-hover:text-neon-blue transition-colors line-clamp-2">
+            <h2 className="font-display font-bold text-xl sm:text-2xl text-white leading-tight group-hover:text-neon-red transition-colors line-clamp-2">
               {post.title}
             </h2>
             {post.excerpt && (
@@ -121,7 +121,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
               {post.category.name}
             </span>
           )}
-          <h3 className="text-sm font-semibold text-gray-200 group-hover:text-neon-blue transition-colors line-clamp-2 leading-tight mt-0.5">
+          <h3 className="text-sm font-semibold text-gray-200 group-hover:text-neon-red transition-colors line-clamp-2 leading-tight mt-0.5">
             {post.title}
           </h3>
           <span className="text-xs text-gray-500">
@@ -151,7 +151,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
           {post.category && (
             <span className="badge badge-neon text-xs mb-2 inline-block">{post.category.name}</span>
           )}
-          <h3 className="font-semibold text-gray-100 group-hover:text-neon-blue transition-colors line-clamp-2 leading-snug">
+          <h3 className="font-semibold text-gray-100 group-hover:text-neon-red transition-colors line-clamp-2 leading-snug">
             {post.title}
           </h3>
           <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
@@ -201,7 +201,7 @@ export default function ArticleCard({ post, variant = 'default', priority }: Art
           </Link>
         )}
 
-        <h3 className="font-display font-bold text-gray-100 group-hover:text-neon-blue transition-colors leading-snug line-clamp-2 mb-2">
+        <h3 className="font-display font-bold text-gray-100 group-hover:text-neon-red transition-colors leading-snug line-clamp-2 mb-2">
           {post.title}
         </h3>
 
@@ -276,3 +276,4 @@ function FallbackImage({ src, alt, catColor, fill, width, height, sizes, classNa
     />
   )
 }
+

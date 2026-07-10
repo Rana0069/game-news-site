@@ -42,7 +42,7 @@ export default async function Sidebar() {
       {/* Recent Posts */}
       <section className="glass-card p-5">
         <h3 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
-          <Clock size={16} className="text-neon-blue" />
+          <Clock size={16} className="text-neon-red" />
           Recent Posts
         </h3>
         <ol className="space-y-4">
@@ -53,13 +53,13 @@ export default async function Sidebar() {
                   {post.featuredImage ? (
                     <Image src={post.featuredImage} alt={post.title} width={64} height={64} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 flex items-center justify-center">
-                      <Bookmark size={16} className="text-neon-blue" />
+                    <div className="w-full h-full bg-gradient-to-br from-neon-red/20 to-red-700/20 flex items-center justify-center">
+                      <Bookmark size={16} className="text-neon-red" />
                     </div>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-semibold text-gray-200 group-hover:text-neon-blue transition-colors line-clamp-2 leading-tight">
+                  <h4 className="text-sm font-semibold text-gray-200 group-hover:text-neon-red transition-colors line-clamp-2 leading-tight">
                     {post.title}
                   </h4>
                   <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
@@ -78,7 +78,7 @@ export default async function Sidebar() {
       {/* Popular Posts */}
       <section className="glass-card p-5">
         <h3 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
-          <TrendingUp size={16} className="text-neon-purple" />
+          <TrendingUp size={16} className="text-red-400" />
           Popular Posts
         </h3>
         <ol className="space-y-4">
@@ -94,7 +94,7 @@ export default async function Sidebar() {
                   {index + 1}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-semibold text-gray-200 group-hover:text-neon-blue transition-colors line-clamp-2 leading-tight">
+                  <h4 className="text-sm font-semibold text-gray-200 group-hover:text-neon-red transition-colors line-clamp-2 leading-tight">
                     {post.title}
                   </h4>
                   <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
@@ -119,7 +119,7 @@ export default async function Sidebar() {
             <Link
               key={tag.id}
               href={`/tag/${tag.slug}`}
-              className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-400 hover:bg-neon-blue/10 hover:border-neon-blue/30 hover:text-neon-blue transition-all"
+              className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-400 hover:bg-neon-red/10 hover:border-neon-red/30 hover:text-neon-red transition-all"
             >
               #{tag.name}
               <span className="ml-1 text-gray-600">({tag._count.posts})</span>
@@ -129,7 +129,7 @@ export default async function Sidebar() {
       </section>
 
       {/* Newsletter mini */}
-      <section className="glass-card p-5 bg-gradient-to-br from-neon-blue/5 to-neon-purple/5">
+      <section className="glass-card p-5 bg-gradient-to-br from-neon-red/5 to-red-700/5">
         <h3 className="font-display font-bold text-lg text-white mb-2">🎮 Stay Updated</h3>
         <p className="text-gray-400 text-sm mb-4">Get gaming news in your inbox weekly.</p>
         <form action="/api/newsletter" method="POST">
@@ -141,4 +141,5 @@ export default async function Sidebar() {
     </aside>
   )
 }
+
 

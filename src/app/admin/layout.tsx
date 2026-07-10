@@ -31,13 +31,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <div data-theme="dark" style={{ colorScheme: 'dark' }} className="min-h-screen bg-dark-950 flex">
       <SiteThemeInjector settings={settings} />
       <AdminSidebar user={session.user as any} />
-      <div className="flex-1 flex flex-col min-h-screen ml-0 lg:ml-64">
+      <div className="flex-1 flex flex-col min-h-screen ml-0 lg:ml-64 border-l border-neon-red/20">
         {/* Admin header */}
-        <header className="sticky top-0 z-30 h-16 bg-dark-900/80 backdrop-blur-xl border-b border-white/5 flex items-center px-6 gap-4">
+        <header className="sticky top-0 z-30 h-16 bg-black/80 backdrop-blur-xl border-b border-neon-red/20 flex items-center px-6 gap-4">
           <div className="flex-1" />
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center">
-              <span className="text-black font-bold text-xs">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center">
+              <span className="text-white font-bold text-xs">
                 {((session.user as any).name || 'A').charAt(0).toUpperCase()}
               </span>
             </div>
@@ -55,3 +55,4 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     </div>
   )
 }
+

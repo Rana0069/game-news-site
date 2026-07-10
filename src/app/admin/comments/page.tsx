@@ -40,7 +40,7 @@ export default function AdminCommentsPage() {
           <button
             key={s}
             onClick={() => setFilter(s)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium capitalize transition-all ${filter === s ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/30' : 'bg-white/5 text-gray-400'}`}
+            className={`px-4 py-2 rounded-xl text-sm font-medium capitalize transition-all ${filter === s ? 'bg-neon-red/20 text-neon-red border border-neon-red/30' : 'bg-white/5 text-gray-400'}`}
           >
             {s}
           </button>
@@ -90,3 +90,4 @@ export default function AdminCommentsPage() {
     </div>
   )
 }
+

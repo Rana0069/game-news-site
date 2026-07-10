@@ -106,7 +106,7 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-dark-900/95 backdrop-blur-xl border-b border-white/5 shadow-2xl'
+            ? 'bg-black/95 backdrop-blur-xl border-b border-neon-red/20 shadow-2xl'
             : 'bg-transparent'
         }`}
       >
@@ -117,7 +117,7 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
               {settings?.logo ? (
                 <Image src={settings.logo} alt={siteName} width={36} height={36} className="rounded-lg" />
               ) : (
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center shadow-neon-blue group-hover:shadow-neon-purple transition-all duration-300">
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center shadow-neon-red group-hover:shadow-neon-red transition-all duration-300">
                   <Gamepad2 size={20} className="text-black" />
                 </div>
               )}
@@ -265,7 +265,7 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
               <Link href="/contact" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5" onClick={() => setMobileOpen(false)}>Contact</Link>
               {/* Admin link in mobile — only for admins, only after mount */}
               {isAdmin && (
-                <Link href="/admin" className="block px-3 py-2 rounded-lg text-sm font-bold text-neon-blue" onClick={() => setMobileOpen(false)}>⚙ Admin Panel</Link>
+                <Link href="/admin" className="block px-3 py-2 rounded-lg text-sm font-bold text-neon-red" onClick={() => setMobileOpen(false)}>⚙ Admin Panel</Link>
               )}
             </div>
           </div>
@@ -287,7 +287,7 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search articles, games, reviews..."
-                className="w-full bg-dark-800 border border-neon-blue/30 rounded-2xl pl-12 pr-12 py-4 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-neon-blue focus:shadow-neon-blue"
+                className="w-full bg-dark-800 border border-neon-red/30 rounded-2xl pl-12 pr-12 py-4 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-neon-red focus:shadow-neon-red"
               />
               <button
                 type="button"
@@ -304,3 +304,4 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
     </>
   )
 }
+

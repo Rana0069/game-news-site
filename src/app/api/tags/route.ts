@@ -22,3 +22,4 @@ export async function POST(req: NextRequest) {
   const tag = await prisma.tag.create({ data: { name, slug } })
   return NextResponse.json(tag, { status: 201 })
 }
+

@@ -156,11 +156,11 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
       <article>
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-          <Link href="/" className="hover:text-neon-blue transition-colors">Home</Link>
+          <Link href="/" className="hover:text-neon-red transition-colors">Home</Link>
           <ChevronRight size={14} />
           {post.category && (
             <>
-              <Link href={`/category/${post.category.slug}`} className="hover:text-neon-blue transition-colors" style={{ color: post.category.color || undefined }}>
+              <Link href={`/category/${post.category.slug}`} className="hover:text-neon-red transition-colors" style={{ color: post.category.color || undefined }}>
                 {post.category.name}
               </Link>
               <ChevronRight size={14} />
@@ -190,7 +190,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
             {post.author.image ? (
               <Image src={post.author.image} alt={post.author.name || ''} width={28} height={28} className="rounded-full" />
             ) : (
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center">
                 <User size={14} className="text-black" />
               </div>
             )}
@@ -224,7 +224,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
 
         {/* Excerpt */}
         {post.excerpt && (
-          <p className="text-lg text-gray-300 leading-relaxed mb-8 p-4 border-l-4 border-neon-blue/50 bg-neon-blue/5 rounded-r-xl">
+          <p className="text-lg text-gray-300 leading-relaxed mb-8 p-4 border-l-4 border-neon-red/50 bg-neon-red/5 rounded-r-xl">
             {post.excerpt}
           </p>
         )}
@@ -273,7 +273,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
           <div className="flex flex-wrap gap-2 mb-8">
             <Tag size={14} className="text-gray-500 mt-1" />
             {post.tags.map(({ tag }) => (
-              <Link key={tag.slug} href={`/tag/${tag.slug}`} className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-gray-400 hover:bg-neon-blue/10 hover:border-neon-blue/30 hover:text-neon-blue transition-all">
+              <Link key={tag.slug} href={`/tag/${tag.slug}`} className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-gray-400 hover:bg-neon-red/10 hover:border-neon-red/30 hover:text-neon-red transition-all">
                 #{tag.name}
               </Link>
             ))}
@@ -293,7 +293,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
 
             <button
               onClick={handleBookmark}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all ${bookmarked ? 'border-neon-blue/50 bg-neon-blue/10 text-neon-blue' : 'border-white/10 bg-white/5 text-gray-400 hover:text-neon-blue hover:border-neon-blue/30'}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all ${bookmarked ? 'border-neon-red/50 bg-neon-red/10 text-neon-red' : 'border-white/10 bg-white/5 text-gray-400 hover:text-neon-red hover:border-neon-red/30'}`}
             >
               <Bookmark size={16} className={bookmarked ? 'fill-current' : ''} />
               <span className="text-sm font-medium">{bookmarked ? 'Saved' : 'Save'}</span>
@@ -308,7 +308,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
             <button onClick={() => handleShare('facebook')} className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#1877f2] hover:border-[#1877f2]/30 transition-all" aria-label="Share on Facebook">
               <Facebook size={14} />
             </button>
-            <button onClick={() => handleShare('copy')} className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-neon-blue hover:border-neon-blue/30 transition-all" aria-label="Copy link">
+            <button onClick={() => handleShare('copy')} className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-neon-red hover:border-neon-red/30 transition-all" aria-label="Copy link">
               <LinkIcon size={14} />
             </button>
           </div>
@@ -322,7 +322,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
               {post.author.image ? (
                 <Image src={post.author.image} alt={post.author.name || ''} width={60} height={60} className="rounded-full flex-shrink-0" />
               ) : (
-                <div className="w-15 h-15 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center flex-shrink-0">
+                <div className="w-15 h-15 rounded-full bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center flex-shrink-0">
                   <User size={28} className="text-black" />
                 </div>
               )}
@@ -330,7 +330,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
                 <h4 className="font-bold text-white">{post.author.name}</h4>
                 <p className="text-gray-400 text-sm mt-1">{post.author.bio}</p>
                 {post.author.twitter && (
-                  <a href={`https://twitter.com/${post.author.twitter}`} className="text-neon-blue text-sm mt-2 inline-flex items-center gap-1 hover:underline" target="_blank">
+                  <a href={`https://twitter.com/${post.author.twitter}`} className="text-neon-red text-sm mt-2 inline-flex items-center gap-1 hover:underline" target="_blank">
                     <Twitter size={12} /> @{post.author.twitter}
                   </a>
                 )}
@@ -354,7 +354,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
         {/* Comments */}
         <section>
           <h2 className="section-title mb-6">
-            <MessageSquare size={20} className="text-neon-blue" />
+            <MessageSquare size={20} className="text-neon-red" />
             Comments ({comments.length})
           </h2>
 
@@ -397,8 +397,8 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
               <li key={comment.id}>
                 <article className="glass-card p-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-neon-blue/30 to-neon-purple/30 flex items-center justify-center flex-shrink-0">
-                      <User size={16} className="text-neon-blue" />
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-neon-red/30 to-red-700/30 flex items-center justify-center flex-shrink-0">
+                      <User size={16} className="text-neon-red" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-1">
@@ -424,3 +424,4 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
     </>
   )
 }
+

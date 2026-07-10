@@ -105,7 +105,7 @@ export default function AdminCategoriesPage() {
                 </td>
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-2 justify-end">
-                    <button onClick={() => startEdit(cat)} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-blue">
+                    <button onClick={() => startEdit(cat)} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-red">
                       <Edit size={12} />
                     </button>
                     <button onClick={() => handleDelete(cat.id)} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-red-400">
@@ -121,3 +121,4 @@ export default function AdminCategoriesPage() {
     </div>
   )
 }
+

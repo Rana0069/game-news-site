@@ -56,3 +56,4 @@ export async function DELETE(req: NextRequest) {
   await prisma.comment.delete({ where: { id } })
   return NextResponse.json({ success: true })
 }
+

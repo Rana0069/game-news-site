@@ -184,7 +184,7 @@ export default function AdminUsersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         <div>
           <h1 className="font-display font-black text-2xl text-white flex items-center gap-2">
-            <Users size={24} className="text-neon-blue" />
+            <Users size={24} className="text-neon-red" />
             Team Members
           </h1>
           <p className="text-gray-500 text-sm mt-1">{users.length} member{users.length !== 1 ? 's' : ''} • Manage who can access the CMS</p>
@@ -233,7 +233,7 @@ export default function AdminUsersPage() {
       <div className="glass-card overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <Loader size={24} className="text-neon-blue animate-spin" />
+            <Loader size={24} className="text-neon-red animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 text-gray-500">
@@ -260,7 +260,7 @@ export default function AdminUsersPage() {
                 const isEditing = editingId === user.id
 
                 return (
-                  <tr key={user.id} className={`border-b border-white/5 transition-colors hover:bg-white/2 ${isMe ? 'bg-neon-blue/3' : ''}`}>
+                  <tr key={user.id} className={`border-b border-white/5 transition-colors hover:bg-white/2 ${isMe ? 'bg-neon-red/3' : ''}`}>
                     {/* Member */}
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
@@ -273,7 +273,7 @@ export default function AdminUsersPage() {
                         <div>
                           <p className="text-sm font-medium text-gray-200 flex items-center gap-1.5">
                             {user.name || 'Unnamed'}
-                            {isMe && <span className="text-xs text-neon-blue">(you)</span>}
+                            {isMe && <span className="text-xs text-neon-red">(you)</span>}
                             {user.isOwner && (
                               <span className="inline-flex items-center gap-1 text-xs px-1.5 py-0.5 rounded-md" style={{ background: '#f59e0b18', color: '#f59e0b', border: '1px solid #f59e0b30' }}>
                                 <Crown size={9} />
@@ -351,7 +351,7 @@ export default function AdminUsersPage() {
                                 <button
                                   onClick={() => startEdit(user)}
                                   title="Change role"
-                                  className="w-8 h-8 rounded-lg bg-white/5 text-gray-400 hover:bg-neon-blue/15 hover:text-neon-blue flex items-center justify-center transition-colors"
+                                  className="w-8 h-8 rounded-lg bg-white/5 text-gray-400 hover:bg-neon-red/15 hover:text-neon-red flex items-center justify-center transition-colors"
                                 >
                                   <Edit2 size={13} />
                                 </button>
@@ -388,7 +388,7 @@ export default function AdminUsersPage() {
           <div className="w-full max-w-lg glass-card p-6 rounded-2xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display font-bold text-xl text-white flex items-center gap-2">
-                <UserPlus size={20} className="text-neon-blue" />
+                <UserPlus size={20} className="text-neon-red" />
                 Add Team Member
               </h2>
               <button onClick={() => setShowInvite(false)} className="text-gray-500 hover:text-white">
@@ -540,3 +540,4 @@ export default function AdminUsersPage() {
     </div>
   )
 }
+

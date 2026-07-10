@@ -40,10 +40,10 @@ export default async function ContactPage() {
           {settings?.contactEmail && (
             <div className="glass-card p-6">
               <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <Mail size={18} className="text-neon-blue" />
+                <Mail size={18} className="text-neon-red" />
                 Email Us
               </h3>
-              <a href={`mailto:${settings.contactEmail}`} className="text-neon-blue hover:underline">
+              <a href={`mailto:${settings.contactEmail}`} className="text-neon-red hover:underline">
                 {settings.contactEmail}
               </a>
             </div>
@@ -76,3 +76,4 @@ export default async function ContactPage() {
     </div>
   )
 }
+

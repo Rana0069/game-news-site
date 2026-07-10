@@ -34,3 +34,4 @@ export const config = {
   // Only run middleware on /admin routes — never block public pages
   matcher: ['/admin/:path*'],
 }
+

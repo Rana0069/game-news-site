@@ -121,10 +121,10 @@ export default async function HomePage() {
           <section className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <h2 className="section-title">
-                <Zap size={20} className="text-neon-blue" />
+                <Zap size={20} className="text-neon-red" />
                 Latest Gaming News
               </h2>
-              <Link href="/category/gaming-news" className="flex items-center gap-1 text-sm text-neon-blue hover:underline">
+              <Link href="/category/gaming-news" className="flex items-center gap-1 text-sm text-neon-red hover:underline">
                 View All <ChevronRight size={14} />
               </Link>
             </div>
@@ -166,7 +166,7 @@ export default async function HomePage() {
                         </Link>
                       )}
                       <Link href={`/article/${post.slug}`}>
-                        <h3 className="font-semibold text-gray-100 hover:text-neon-blue transition-colors leading-snug mt-1 line-clamp-2">
+                        <h3 className="font-semibold text-gray-100 hover:text-neon-red transition-colors leading-snug mt-1 line-clamp-2">
                           {post.title}
                         </h3>
                       </Link>
@@ -184,7 +184,7 @@ export default async function HomePage() {
           <section className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <h2 className="section-title">
-                <Star size={20} className="text-neon-purple" />
+                <Star size={20} className="text-red-400" />
                 Popular Articles
               </h2>
             </div>
@@ -203,7 +203,7 @@ export default async function HomePage() {
                   <Gamepad2 size={20} className="text-neon-green" />
                   New Game Releases
                 </h2>
-                <Link href="/games" className="flex items-center gap-1 text-sm text-neon-blue hover:underline">
+                <Link href="/games" className="flex items-center gap-1 text-sm text-neon-red hover:underline">
                   All Games <ChevronRight size={14} />
                 </Link>
               </div>
@@ -216,8 +216,8 @@ export default async function HomePage() {
                         {game.coverImage ? (
                           <Image src={game.coverImage} alt={game.title} fill className="object-cover group-hover:scale-105 transition-transform duration-400" />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-neon-blue/10 to-neon-purple/10 flex items-center justify-center">
-                            <Gamepad2 size={40} className="text-neon-blue/20" />
+                          <div className="w-full h-full bg-gradient-to-br from-neon-red/10 to-red-700/10 flex items-center justify-center">
+                            <Gamepad2 size={40} className="text-neon-red/20" />
                           </div>
                         )}
                         {game.reviewScore && (
@@ -227,7 +227,7 @@ export default async function HomePage() {
                         )}
                       </div>
                       <div className="p-3">
-                        <h3 className="font-semibold text-sm text-gray-200 group-hover:text-neon-blue transition-colors line-clamp-1">
+                        <h3 className="font-semibold text-sm text-gray-200 group-hover:text-neon-red transition-colors line-clamp-1">
                           {game.title}
                         </h3>
                         <div className="flex flex-wrap gap-1 mt-1">
@@ -248,10 +248,10 @@ export default async function HomePage() {
             <section className="mb-12">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="section-title">
-                  <Rocket size={20} className="text-neon-blue" />
+                  <Rocket size={20} className="text-neon-red" />
                   Upcoming Games
                 </h2>
-                <Link href="/games?filter=upcoming" className="flex items-center gap-1 text-sm text-neon-blue hover:underline">
+                <Link href="/games?filter=upcoming" className="flex items-center gap-1 text-sm text-neon-red hover:underline">
                   View All <ChevronRight size={14} />
                 </Link>
               </div>
@@ -265,12 +265,12 @@ export default async function HomePage() {
                         {game.coverImage ? (
                           <Image src={game.coverImage} alt={game.title} width={80} height={112} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-neon-blue/10 to-neon-purple/10" />
+                          <div className="w-full h-full bg-gradient-to-br from-neon-red/10 to-red-700/10" />
                         )}
                       </div>
                       <div>
                         <span className="badge badge-neon text-xs mb-2">Upcoming</span>
-                        <h3 className="font-display font-bold text-gray-100 group-hover:text-neon-blue transition-colors">
+                        <h3 className="font-display font-bold text-gray-100 group-hover:text-neon-red transition-colors">
                           {game.title}
                         </h3>
                         <p className="text-sm text-gray-500 mt-1">
@@ -354,7 +354,7 @@ export default async function HomePage() {
               style={{ background: 'linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(168,85,247,0.08) 100%)', border: '1px solid rgba(0,212,255,0.15)' }}
             >
               {/* Decorative orbs */}
-              <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full bg-neon-blue/10 blur-3xl pointer-events-none" />
+              <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full bg-neon-red/10 blur-3xl pointer-events-none" />
               <div className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-neon-purple/10 blur-3xl pointer-events-none" />
 
               <div className="relative">
@@ -391,3 +391,4 @@ export default async function HomePage() {
     </>
   )
 }
+

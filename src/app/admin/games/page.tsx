@@ -91,8 +91,8 @@ export default function AdminGamesPage() {
                 {game.coverImage ? (
                   <Image src={game.coverImage} alt={game.title} fill className="object-cover" />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-neon-blue/10 to-neon-purple/10 flex items-center justify-center">
-                    <Gamepad2 size={24} className="text-neon-blue/30" />
+                  <div className="w-full h-full bg-gradient-to-br from-neon-red/10 to-red-700/10 flex items-center justify-center">
+                    <Gamepad2 size={24} className="text-neon-red/30" />
                   </div>
                 )}
                 {game.reviewScore && (
@@ -110,7 +110,7 @@ export default function AdminGamesPage() {
                       setEditId(game.id)
                       setShowForm(true)
                     }}
-                    className="w-8 h-8 rounded-lg bg-neon-blue/20 flex items-center justify-center text-neon-blue"
+                    className="w-8 h-8 rounded-lg bg-neon-red/20 flex items-center justify-center text-neon-red"
                   >
                     <Edit size={12} />
                   </button>
@@ -134,3 +134,4 @@ export default function AdminGamesPage() {
     </div>
   )
 }
+

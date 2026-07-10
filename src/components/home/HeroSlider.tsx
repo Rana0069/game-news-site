@@ -103,7 +103,7 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
                 )}
 
                 <Link href={`/article/${post.slug}`}>
-                  <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white leading-tight mb-4 hover:text-neon-blue transition-colors">
+                  <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white leading-tight mb-4 hover:text-neon-red transition-colors">
                     {post.title}
                   </h2>
                 </Link>
@@ -158,14 +158,14 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
         </button>
         <button
           onClick={prev}
-          className="w-8 h-8 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+          className="w-8 h-8 rounded-full glass border border-white/10 flex items-center justify-center text-gray-400 hover:text-neon-red hover:border-neon-red/40 transition-all"
           aria-label="Previous slide"
         >
           <ChevronLeft size={16} />
         </button>
         <button
           onClick={next}
-          className="w-8 h-8 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+          className="w-8 h-8 rounded-full glass border border-white/10 flex items-center justify-center text-gray-400 hover:text-neon-red hover:border-neon-red/40 transition-all"
           aria-label="Next slide"
         >
           <ChevronRight size={16} />
@@ -179,7 +179,7 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
             key={i}
             onClick={() => setCurrent(i)}
             className={`h-1 rounded-full transition-all duration-300 ${
-              i === current ? 'w-8 bg-neon-blue' : 'w-2 bg-white/20 hover:bg-white/40'
+              i === current ? 'w-8 bg-neon-red' : 'w-2 bg-white/20 hover:bg-white/40'
             }`}
             aria-label={`Go to slide ${i + 1}`}
           />
@@ -188,3 +188,4 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
     </div>
   )
 }
+

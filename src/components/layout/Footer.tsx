@@ -100,7 +100,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
           {/* Brand */}
           <div className="md:col-span-12 lg:col-span-5">
             <Link href="/" className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center">
                 <Gamepad2 size={22} className="text-black" />
               </div>
               <span className="font-display font-black text-xl gradient-text">{siteName}</span>
@@ -118,7 +118,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-neon-blue hover:border-neon-blue/30 hover:bg-neon-blue/5 transition-all"
+                    className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-neon-red hover:border-neon-red/30 hover:bg-neon-red/5 transition-all"
                     aria-label={label}
                   >
                     <Icon size={16} />
@@ -134,7 +134,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
             <ul className="space-y-2">
               {footerLinks.categories.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-500 hover:text-neon-blue transition-colors">
+                  <Link href={link.href} className="text-sm text-gray-500 hover:text-neon-red transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -148,7 +148,7 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
             <ul className="space-y-2">
               {footerLinks.site.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-500 hover:text-neon-blue transition-colors">
+                  <Link href={link.href} className="text-sm text-gray-500 hover:text-neon-red transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -162,13 +162,13 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
             {settings?.contactEmail && (
               <a
                 href={`mailto:${settings.contactEmail}`}
-                className="flex items-center gap-2 text-sm text-gray-500 hover:text-neon-blue transition-colors mb-4"
+                className="flex items-center gap-2 text-sm text-gray-500 hover:text-neon-red transition-colors mb-4"
               >
                 <Mail size={14} />
                 {settings.contactEmail}
               </a>
             )}
-            <a href="/rss.xml" className="flex items-center gap-2 text-sm text-gray-500 hover:text-neon-blue transition-colors">
+            <a href="/rss.xml" className="flex items-center gap-2 text-sm text-gray-500 hover:text-neon-red transition-colors">
               <Rss size={14} />
               RSS Feed
             </a>
@@ -189,3 +189,4 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
     </footer>
   )
 }
+

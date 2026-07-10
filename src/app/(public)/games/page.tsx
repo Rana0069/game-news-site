@@ -51,7 +51,7 @@ export default async function GamesPage({ searchParams }: { searchParams: { filt
             href={tab.value ? `/games?filter=${tab.value}` : '/games'}
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
               searchParams.filter === tab.value
-                ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/30'
+                ? 'bg-neon-red/20 text-neon-red border border-neon-red/30'
                 : 'bg-white/5 text-gray-400 hover:bg-white/10'
             }`}
           >
@@ -76,8 +76,8 @@ export default async function GamesPage({ searchParams }: { searchParams: { filt
                       className="object-cover group-hover:scale-105 transition-transform duration-400"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-neon-blue/10 to-neon-purple/10 flex items-center justify-center">
-                      <Gamepad2 size={32} className="text-neon-blue/20" />
+                    <div className="w-full h-full bg-gradient-to-br from-neon-red/10 to-red-700/10 flex items-center justify-center">
+                      <Gamepad2 size={32} className="text-neon-red/20" />
                     </div>
                   )}
                   {game.reviewScore && (
@@ -92,7 +92,7 @@ export default async function GamesPage({ searchParams }: { searchParams: { filt
                   )}
                 </div>
                 <div className="p-3">
-                  <h2 className="font-semibold text-sm text-gray-200 group-hover:text-neon-blue transition-colors line-clamp-1 mb-1">
+                  <h2 className="font-semibold text-sm text-gray-200 group-hover:text-neon-red transition-colors line-clamp-1 mb-1">
                     {game.title}
                   </h2>
                   {game.releaseDate && (
@@ -124,3 +124,4 @@ export default async function GamesPage({ searchParams }: { searchParams: { filt
     </div>
   )
 }
+

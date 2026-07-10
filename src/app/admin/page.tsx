@@ -103,11 +103,11 @@ export default function AdminDashboard() {
       {/* Quick stats row */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <div className="glass-card p-4 text-center">
-          <div className="text-2xl font-bold text-neon-blue">{data?.published}</div>
+          <div className="text-2xl font-bold text-neon-red">{data?.published}</div>
           <div className="text-xs text-gray-500 mt-1">Published</div>
         </div>
         <div className="glass-card p-4 text-center">
-          <div className="text-2xl font-bold text-neon-purple">{data?.drafts}</div>
+          <div className="text-2xl font-bold text-red-400">{data?.drafts}</div>
           <div className="text-xs text-gray-500 mt-1">Drafts</div>
         </div>
         <div className="glass-card p-4 text-center col-span-2 sm:col-span-1">
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
       <div className="glass-card overflow-hidden">
         <div className="flex items-center justify-between p-5 border-b border-white/5">
           <h2 className="font-display font-bold text-lg text-white">Recent Posts</h2>
-          <Link href="/admin/posts" className="text-sm text-neon-blue hover:underline">View All</Link>
+          <Link href="/admin/posts" className="text-sm text-neon-red hover:underline">View All</Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -160,7 +160,7 @@ export default function AdminDashboard() {
                   </td>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-2 justify-end">
-                      <Link href={`/admin/posts/${post.id}/edit`} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-blue transition-colors" title="Edit">
+                      <Link href={`/admin/posts/${post.id}/edit`} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-red transition-colors" title="Edit">
                         <Edit size={12} />
                       </Link>
                       <Link href={`/article/${post.slug}`} target="_blank" className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-green transition-colors" title="View">
@@ -212,3 +212,4 @@ export default function AdminDashboard() {
     </div>
   )
 }
+

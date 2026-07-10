@@ -22,3 +22,4 @@ export async function requireRole(allowedRoles: string[]) {
 export function can(userRole: string | undefined, allowedRoles: string[]): boolean {
   return !!userRole && allowedRoles.includes(userRole)
 }
+

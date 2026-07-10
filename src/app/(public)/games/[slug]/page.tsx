@@ -67,9 +67,9 @@ export default async function GameDetailPage({ params }: Props) {
 
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:text-neon-blue transition-colors">Home</Link>
+        <Link href="/" className="hover:text-neon-red transition-colors">Home</Link>
         <ChevronRight size={14} />
-        <Link href="/games" className="hover:text-neon-blue transition-colors">Games</Link>
+        <Link href="/games" className="hover:text-neon-red transition-colors">Games</Link>
         <ChevronRight size={14} />
         <span className="text-gray-400 line-clamp-1">{game.title}</span>
       </nav>
@@ -81,8 +81,8 @@ export default async function GameDetailPage({ params }: Props) {
             {game.coverImage ? (
               <Image src={game.coverImage} alt={`${game.title} cover art`} fill priority className="object-cover" />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-neon-blue/10 to-neon-purple/10 flex items-center justify-center">
-                <Gamepad2 size={64} className="text-neon-blue/20" />
+              <div className="w-full h-full bg-gradient-to-br from-neon-red/10 to-red-700/10 flex items-center justify-center">
+                <Gamepad2 size={64} className="text-neon-red/20" />
               </div>
             )}
             {game.reviewScore && (

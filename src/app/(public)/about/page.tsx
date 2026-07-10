@@ -29,7 +29,7 @@ export default async function AboutPage() {
     <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       {/* Hero */}
       <header className="text-center mb-16">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center mx-auto mb-6 shadow-neon-blue" aria-hidden="true">
+        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center mx-auto mb-6 shadow-neon-red" aria-hidden="true">
           <Gamepad2 size={40} className="text-black" />
         </div>
         <h1 className="font-display font-black text-5xl gradient-text mb-4">{siteName}</h1>
@@ -64,11 +64,11 @@ export default async function AboutPage() {
         <ul className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {team.map((member) => (
             <li key={member.name} className="glass-card p-5 text-center">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 flex items-center justify-center mx-auto mb-3 text-3xl" aria-hidden="true">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-neon-red/20 to-red-700/20 flex items-center justify-center mx-auto mb-3 text-3xl" aria-hidden="true">
                 {member.emoji}
               </div>
               <h3 className="font-semibold text-white text-sm">{member.name}</h3>
-              <p className="text-neon-blue text-xs mt-1">{member.role}</p>
+              <p className="text-neon-red text-xs mt-1">{member.role}</p>
               <p className="text-gray-600 text-xs mt-1">{member.specialty}</p>
             </li>
           ))}
@@ -95,3 +95,4 @@ export default async function AboutPage() {
     </main>
   )
 }
+

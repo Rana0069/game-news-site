@@ -10,3 +10,4 @@ export async function POST(req: NextRequest) {
   console.log('Contact form submission:', { name, email, subject, message })
   return NextResponse.json({ success: true })
 }
+

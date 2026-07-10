@@ -187,7 +187,7 @@ export default function AdminPostsPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1.5 justify-end">
-                        <Link href={`/admin/posts/${post.id}/edit`} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-blue transition-colors">
+                        <Link href={`/admin/posts/${post.id}/edit`} className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-red transition-colors">
                           <Edit size={12} />
                         </Link>
                         <Link href={`/article/${post.slug}`} target="_blank" className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-green transition-colors">
@@ -208,3 +208,4 @@ export default function AdminPostsPage() {
     </div>
   )
 }
+

@@ -293,7 +293,7 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
               <button
                 type="button"
                 onClick={addYoutubeUrl}
-                className="flex items-center gap-1 text-xs text-neon-blue hover:underline"
+                className="flex items-center gap-1 text-xs text-neon-red hover:underline"
               >
                 <Plus size={12} />
                 Add Video
@@ -403,7 +403,7 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
                 <button
                   type="button"
                   onClick={() => updateForm('featured', !form.featured)}
-                  className={`relative w-10 h-5 rounded-full transition-colors ${form.featured ? 'bg-neon-blue' : 'bg-dark-600'}`}
+                  className={`relative w-10 h-5 rounded-full transition-colors ${form.featured ? 'bg-neon-red' : 'bg-dark-600'}`}
                 >
                   <span
                     className="absolute top-[2px] w-4 h-4 rounded-full bg-white shadow transition-all duration-150"
@@ -430,7 +430,7 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
           {/* Featured image */}
           <div className="glass-card p-5">
             <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-              <ImageIcon size={16} className="text-neon-blue" />
+              <ImageIcon size={16} className="text-neon-red" />
               Featured Image
             </h3>
             {form.featuredImage ? (
@@ -446,7 +446,7 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
                 </button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-white/10 rounded-xl cursor-pointer hover:border-neon-blue/30 hover:bg-neon-blue/5 transition-all">
+              <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-white/10 rounded-xl cursor-pointer hover:border-neon-red/30 hover:bg-neon-red/5 transition-all">
                 <ImageIcon size={24} className="text-gray-600 mb-2" />
                 <span className="text-sm text-gray-500">Upload image</span>
                 <input type="file" accept="image/*" className="hidden" onChange={handleFeaturedImageUpload} />
@@ -502,8 +502,8 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
                     onClick={() => toggleTag(tag.id)}
                     className={`text-xs px-3 py-1 rounded-full border transition-all ${
                       selected
-                        ? 'bg-neon-blue/20 border-neon-blue/40 text-neon-blue'
-                        : 'bg-white/5 border-white/10 text-gray-400 hover:border-neon-blue/20'
+                        ? 'bg-neon-red/20 border-neon-red/40 text-neon-red'
+                        : 'bg-white/5 border-white/10 text-gray-400 hover:border-neon-red/20'
                     }`}
                   >
                     #{tag.name}
@@ -517,3 +517,4 @@ export default function PostEditor({ postId, initialData }: PostEditorProps) {
     </div>
   )
 }
+

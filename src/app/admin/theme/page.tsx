@@ -188,7 +188,7 @@ export default function AdminThemePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display font-black text-2xl text-white flex items-center gap-2">
-            <Palette size={22} className="text-neon-purple" /> Theme Studio
+            <Palette size={22} className="text-red-400" /> Theme Studio
           </h1>
           <p className="text-gray-400 text-sm mt-1">Customize colors, styles, and layout across your entire site.</p>
         </div>
@@ -226,7 +226,7 @@ export default function AdminThemePage() {
       {/* ── Accent Colors ────────────────────────────────────────────────────── */}
       <div className="glass-card p-6">
         <h2 className="font-semibold text-white mb-5 text-lg flex items-center gap-2">
-          <Palette size={16} className="text-neon-purple" /> Accent Colors
+          <Palette size={16} className="text-red-400" /> Accent Colors
         </h2>
         <div className="space-y-6">
           {[
@@ -411,3 +411,4 @@ export default function AdminThemePage() {
     </div>
   )
 }
+
