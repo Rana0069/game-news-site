@@ -5,38 +5,38 @@
 @tailwind utilities;
 
 /* ============================================
-   CSS CUSTOM PROPERTIES (Design Tokens)
+   CSS CUSTOM PROPERTIES — RED NEON THEME
    ============================================ */
 :root {
-  /* Accent colors — overridden from SiteSettings */
-  --accent-1: #00d4ff;
-  --accent-2: #a855f7;
-  --accent-3: #22c55e;
+  /* Accent colors — red neon palette */
+  --accent-1: #ff1a1a;   /* primary — vivid red */
+  --accent-2: #cc0000;   /* secondary — deep red */
+  --accent-3: #ff4d6d;   /* tertiary — red-pink */
 
-  /* Background hierarchy — deep black aesthetic */
-  --bg-base:    #010409;
-  --bg-surface: #060b18;
-  --bg-card:    #090e1f;
-  --bg-hover:   #0d1224;
+  /* Background hierarchy — pure black */
+  --bg-base:    #000000;
+  --bg-surface: #080000;
+  --bg-card:    #0f0000;
+  --bg-hover:   #140000;
 
   /* Text */
   --text-primary:   #f9fafb;
   --text-secondary: #9ca3af;
   --text-muted:     #6b7280;
 
-  /* Border */
-  --border:       rgba(255,255,255,0.06);
-  --border-hover: rgba(255,255,255,0.11);
+  /* Border — red-tinted */
+  --border:       rgba(255, 26, 26, 0.10);
+  --border-hover: rgba(255, 26, 26, 0.22);
 
   /* Glass */
-  --glass-bg:     rgba(255,255,255,0.025);
-  --glass-border: rgba(255,255,255,0.07);
+  --glass-bg:     rgba(255, 26, 26, 0.03);
+  --glass-border: rgba(255, 26, 26, 0.10);
 
   /* Radius — overridden by SiteThemeInjector */
   --card-radius: 12px;
   --btn-radius:  8px;
 
-  /* Button style — overridden by SiteThemeInjector (solid|gradient|outline|dark) */
+  /* Button style — overridden by SiteThemeInjector */
   --btn-style: solid;
 
   /* Transition */
@@ -87,7 +87,8 @@
 [data-nav-style="transparent"] nav { background: transparent !important; backdrop-filter: none !important; border-bottom-color: transparent !important; }
 
 [data-nav-style="solid"] header,
-[data-nav-style="solid"] nav { background: #060b18 !important; backdrop-filter: none !important; }
+[data-nav-style="solid"] nav { background: #000000 !important; backdrop-filter: none !important; }
+
 
 [data-nav-style="blur"] header,
 [data-nav-style="blur"] nav { backdrop-filter: blur(28px) !important; -webkit-backdrop-filter: blur(28px) !important; }
@@ -168,23 +169,23 @@
   border-right-color: rgba(0,0,0,0.08) !important;
 }
 
-/* ── DARK MODE explicit (ensures switching back from light works) ─────────── */
+/* ── DARK MODE explicit block ─────────────────────────────────────────────── */
 [data-theme="dark"] {
-  --bg-base:    #010409;
-  --bg-surface: #060b18;
-  --bg-card:    #090e1f;
-  --bg-hover:   #0d1224;
+  --bg-base:    #000000;
+  --bg-surface: #080000;
+  --bg-card:    #0f0000;
+  --bg-hover:   #140000;
   --text-primary:   #f9fafb;
   --text-secondary: #9ca3af;
   --text-muted:     #6b7280;
-  --border:       rgba(255,255,255,0.06);
-  --border-hover: rgba(255,255,255,0.11);
-  --glass-bg:     rgba(255,255,255,0.025);
-  --glass-border: rgba(255,255,255,0.07);
-  /* Apply directly so div-level data-theme="dark" overrides html-level light */
-  background-color: #010409;
+  --border:       rgba(255, 26, 26, 0.10);
+  --border-hover: rgba(255, 26, 26, 0.22);
+  --glass-bg:     rgba(255, 26, 26, 0.03);
+  --glass-border: rgba(255, 26, 26, 0.10);
+  background-color: #000000;
   color: #f9fafb;
 }
+
 
 /* Admin dark wrapper — override any html[data-theme="light"] leaking into admin */
 [data-theme="dark"] body,
@@ -286,34 +287,34 @@ body {
   }
 
   .glass-card {
-    background: rgba(9, 14, 31, 0.92);
+    background: rgba(15, 0, 0, 0.94);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 26, 26, 0.10);
     border-radius: 16px;
     transition: var(--transition);
   }
 
   .glass-card:hover {
-    border-color: rgba(var(--accent-1-raw, 0, 212, 255), 0.18);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 212, 255, 0.08);
+    border-color: rgba(255, 26, 26, 0.28);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 24px rgba(255, 26, 26, 0.08);
     transform: translateY(-2px);
   }
 
   /* Neon text */
   .neon-text {
     color: var(--accent-1);
-    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    text-shadow: 0 0 20px rgba(255, 26, 26, 0.6), 0 0 40px rgba(255, 26, 26, 0.3);
   }
 
   .neon-text-purple {
     color: var(--accent-2);
-    text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    text-shadow: 0 0 20px rgba(204, 0, 0, 0.6);
   }
 
-  /* Gradient text */
+  /* Gradient text — red neon */
   .gradient-text {
-    background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+    background: linear-gradient(135deg, #ff1a1a 0%, #ff4d6d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -321,14 +322,12 @@ body {
 
   /* ==========================================================
      BUTTON STYLES
-     Default: solid (accent-1 fill + glow). The data-btn-style
-     attribute on <html> overrides this to gradient/outline/dark.
      ========================================================== */
 
-  /* ── Base (shared for all btn styles) ── */
+  /* ── Base (solid red) ── */
   .btn-neon {
     background: var(--accent-1);
-    color: #000;
+    color: #fff;
     font-weight: 700;
     padding: 0.625rem 1.5rem;
     border-radius: 8px;
@@ -340,21 +339,22 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
   }
 
   .btn-neon:hover {
-    filter: brightness(1.12);
+    filter: brightness(1.15);
     transform: translateY(-1px);
-    box-shadow: 0 6px 24px color-mix(in srgb, var(--accent-1) 45%, transparent);
+    box-shadow: 0 6px 24px rgba(255, 26, 26, 0.5), 0 0 40px rgba(255, 26, 26, 0.2);
   }
 
   /* ── Gradient style ── */
   [data-btn-style="gradient"] .btn-neon {
-    background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+    background: linear-gradient(135deg, #ff1a1a 0%, #cc0000 100%);
   }
   [data-btn-style="gradient"] .btn-neon:hover {
-    filter: brightness(1.08);
-    box-shadow: 0 6px 28px color-mix(in srgb, var(--accent-1) 35%, transparent);
+    filter: brightness(1.1);
+    box-shadow: 0 6px 28px rgba(255, 26, 26, 0.45);
   }
 
   /* ── Outline style ── */
@@ -362,25 +362,26 @@ body {
     background: transparent;
     color: var(--accent-1);
     border: 1.5px solid var(--accent-1);
-    box-shadow: inset 0 0 0 0 var(--accent-1);
+    text-shadow: none;
   }
   [data-btn-style="outline"] .btn-neon:hover {
-    background: color-mix(in srgb, var(--accent-1) 12%, transparent);
-    box-shadow: 0 0 20px color-mix(in srgb, var(--accent-1) 30%, transparent);
+    background: rgba(255, 26, 26, 0.10);
+    box-shadow: 0 0 20px rgba(255, 26, 26, 0.30);
     filter: none;
     color: var(--accent-1);
   }
 
   /* ── Dark / stealth style ── */
   [data-btn-style="dark"] .btn-neon {
-    background: #0d1224;
+    background: #0f0000;
     color: var(--accent-1);
-    border: 1px solid color-mix(in srgb, var(--accent-1) 25%, transparent);
+    border: 1px solid rgba(255, 26, 26, 0.25);
+    text-shadow: none;
   }
   [data-btn-style="dark"] .btn-neon:hover {
-    background: #111827;
-    border-color: color-mix(in srgb, var(--accent-1) 45%, transparent);
-    box-shadow: 0 0 18px color-mix(in srgb, var(--accent-1) 20%, transparent);
+    background: #140000;
+    border-color: rgba(255, 26, 26, 0.45);
+    box-shadow: 0 0 18px rgba(255, 26, 26, 0.20);
     filter: none;
     color: var(--accent-1);
   }
@@ -398,8 +399,8 @@ body {
   }
 
   .btn-ghost:hover {
-    background: color-mix(in srgb, var(--accent-1) 10%, transparent);
-    box-shadow: 0 0 20px color-mix(in srgb, var(--accent-1) 20%, transparent);
+    background: rgba(255, 26, 26, 0.10);
+    box-shadow: 0 0 20px rgba(255, 26, 26, 0.20);
   }
 
   /* Category badge */
@@ -415,28 +416,29 @@ body {
     letter-spacing: 0.05em;
   }
 
+  /* Badges — all red-family */
   .badge-neon {
-    background: rgba(0, 212, 255, 0.15);
-    color: var(--accent-1);
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    background: rgba(255, 26, 26, 0.15);
+    color: #ff4d6d;
+    border: 1px solid rgba(255, 26, 26, 0.30);
   }
 
   .badge-purple {
-    background: rgba(168, 85, 247, 0.15);
-    color: var(--accent-2);
-    border: 1px solid rgba(168, 85, 247, 0.3);
+    background: rgba(255, 26, 26, 0.10);
+    color: #ff6680;
+    border: 1px solid rgba(255, 26, 26, 0.20);
   }
 
   .badge-green {
-    background: rgba(34, 197, 94, 0.15);
-    color: var(--accent-3);
-    border: 1px solid rgba(34, 197, 94, 0.3);
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.25);
   }
 
   .badge-yellow {
-    background: rgba(245, 158, 11, 0.15);
+    background: rgba(245, 158, 11, 0.12);
     color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    border: 1px solid rgba(245, 158, 11, 0.25);
   }
 
   /* Section heading */
@@ -455,8 +457,9 @@ body {
     content: '';
     width: 4px;
     height: 100%;
-    background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+    background: linear-gradient(180deg, #ff1a1a, #cc0000);
     border-radius: 2px;
+    box-shadow: 0 0 8px rgba(255, 26, 26, 0.5);
   }
 
   /* Article card image */
@@ -483,19 +486,19 @@ body {
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    background: linear-gradient(90deg, #ff1a1a, #ff4d6d);
     z-index: 9999;
     transition: width 0.1s ease;
-    box-shadow: 0 0 10px var(--accent-1);
+    box-shadow: 0 0 10px rgba(255, 26, 26, 0.7);
   }
 
   /* Skeleton loading */
   .skeleton {
     background: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.04) 25%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.04) 75%
+      rgba(255, 26, 26, 0.04) 25%,
+      rgba(255, 26, 26, 0.08) 50%,
+      rgba(255, 26, 26, 0.04) 75%
     );
     background-size: 1000px 100%;
     animation: shimmer 2s linear infinite;
