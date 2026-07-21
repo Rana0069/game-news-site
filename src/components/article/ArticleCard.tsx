@@ -32,7 +32,7 @@ interface ArticleCardProps {
 
 /** Gradient placeholder shown when image is missing or fails to load */
 function ImagePlaceholder({ color }: { color?: string | null }) {
-  const c = color || '#00d4ff'
+  const c = '#ff1a1a'  // always use red neon — ignore DB category color for theme consistency
   return (
     <div
       className="w-full h-full flex items-center justify-center"
@@ -46,7 +46,7 @@ function ImagePlaceholder({ color }: { color?: string | null }) {
 }
 
 export default function ArticleCard({ post, variant = 'default', priority }: ArticleCardProps) {
-  const catColor = post.category?.color || '#00d4ff'
+  const catColor = '#ff1a1a'  // force red neon — overrides any legacy DB category color
 
   // ── FEATURED variant ───────────────────────────────────────────────────────
   if (variant === 'featured') {

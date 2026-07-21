@@ -1,5 +1,5 @@
-// Cache category pages for 60 seconds
-export const revalidate = 60
+// Cache category pages for 1 hour — reduces ISR writes significantly
+export const revalidate = 3600
 
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -52,13 +52,13 @@ export default async function CategoryPage({ params }: Props) {
       <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
         <Link href="/" className="hover:text-neon-red">Home</Link>
         <ChevronRight size={14} />
-        <span style={{ color: category.color || '#00d4ff' }}>{category.name}</span>
+        <span className="text-neon-red">{category.name}</span>
       </nav>
 
       {/* Category header */}
       <div className="mb-8 pb-6 border-b border-white/5">
         <div className="flex items-center gap-4 mb-2">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ background: `${category.color || '#00d4ff'}15` }}>
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ background: 'rgba(255,26,26,0.15)', border: '1px solid rgba(255,26,26,0.25)' }}>
             {category.icon || '🎮'}
           </div>
           <div>

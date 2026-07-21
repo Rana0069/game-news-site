@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter, Outfit } from 'next/font/google'
+import { Inter, Outfit, Orbitron } from 'next/font/google'
 import '../styles/globals.css'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { SessionProvider } from '@/components/providers/SessionProvider'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' })
+const inter    = Inter({ subsets: ['latin'], variable: '--font-inter',    display: 'swap' })
+const outfit   = Outfit({ subsets: ['latin'], variable: '--font-outfit',   display: 'swap' })
+const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron', display: 'swap', weight: ['400','500','700','900'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXTAUTH_URL || 'https://game-news-site.vercel.app'),
@@ -42,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* DNS prefetch for image CDN */}
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
       </head>
-      <body className={`${inter.variable} ${outfit.variable} bg-dark-950 text-gray-100 antialiased`}>
+      <body className={`${inter.variable} ${outfit.variable} ${orbitron.variable} bg-dark-950 text-gray-100 antialiased`}>
         <SessionProvider>
           <ThemeProvider>
             {children}

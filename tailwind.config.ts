@@ -35,9 +35,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans:    ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Outfit', 'Inter', 'sans-serif'],
-        mono:    ['JetBrains Mono', 'monospace'],
+        sans:     ['Inter', 'system-ui', 'sans-serif'],
+        display:  ['Outfit', 'Inter', 'sans-serif'],
+        mono:     ['JetBrains Mono', 'monospace'],
+        orbitron: ['var(--font-orbitron)', 'Orbitron', 'Outfit', 'sans-serif'],
       },
       backgroundImage: {
         'neon-gradient':  'linear-gradient(135deg, #ff1a1a 0%, #cc0000 50%, #ff4d6d 100%)',
@@ -53,13 +54,14 @@ const config: Config = {
         'card':        '0 4px 24px rgba(0,0,0,0.7)',
       },
       animation: {
-        'gradient-x':  'gradient-x 15s ease infinite',
-        'pulse-neon':  'pulse-neon 2s ease-in-out infinite',
-        'slide-up':    'slide-up 0.5s ease-out',
-        'fade-in':     'fade-in 0.3s ease-out',
-        'shimmer':     'shimmer 2s linear infinite',
-        'float':       'float 6s ease-in-out infinite',
-        'glow':        'glow 2s ease-in-out infinite alternate',
+        'gradient-x':       'gradient-x 15s ease infinite',
+        'pulse-neon':       'pulse-neon 2.2s ease-in-out infinite',
+        'slide-up':         'slide-up 0.5s ease-out',
+        'fade-in':          'fade-in 0.3s ease-out',
+        'shimmer':          'shimmer 2s linear infinite',
+        'float':            'float 6s ease-in-out infinite',
+        'glow':             'glow 2s ease-in-out infinite alternate',
+        'neon-border-spin': 'neon-border-spin 3s ease infinite',
       },
       keyframes: {
         'gradient-x': {
@@ -67,8 +69,13 @@ const config: Config = {
           '50%':      { backgroundPosition: '100% 50%' },
         },
         'pulse-neon': {
-          '0%, 100%': { opacity: '1', boxShadow: '0 0 20px rgba(255,26,26,0.6)' },
-          '50%':      { opacity: '0.8', boxShadow: '0 0 50px rgba(255,26,26,0.9)' },
+          '0%, 100%': { boxShadow: '0 0 18px rgba(255,26,26,0.5)' },
+          '50%':      { boxShadow: '0 0 36px rgba(255,26,26,0.85), 0 0 72px rgba(255,26,26,0.3)' },
+        },
+        'neon-border-spin': {
+          '0%':   { backgroundPosition: '0% 50%' },
+          '50%':  { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
         },
         'slide-up': {
           '0%':   { transform: 'translateY(20px)', opacity: '0' },

@@ -1,5 +1,5 @@
-// Cache games list for 5 minutes
-export const revalidate = 300
+// This page uses searchParams (filter tabs) so it must be dynamic — no ISR writes are generated
+export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import Image from 'next/image'

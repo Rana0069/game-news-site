@@ -22,7 +22,9 @@ export default async function PublicLayout({ children }: { children: React.React
     <div className="min-h-screen flex flex-col">
       {/* Injects dynamic accent colors + favicon from Settings into the DOM */}
       <SiteThemeInjector settings={settings} />
-      <Navbar settings={settings || undefined} />
+      <header>
+        <Navbar settings={settings || undefined} />
+      </header>
       <main className="flex-1 pt-16">
         {children}
       </main>

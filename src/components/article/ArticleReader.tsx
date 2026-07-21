@@ -172,7 +172,7 @@ export default function ArticleReader({ post, relatedPosts }: { post: Post; rela
         {/* Category badge */}
         {post.category && (
           <Link href={`/category/${post.category.slug}`}>
-            <span className="badge mb-4 inline-block" style={{ background: `${post.category.color}22`, color: post.category.color || '#00d4ff', border: `1px solid ${post.category.color}44` }}>
+            <span className="badge mb-4 inline-block" style={{ background: 'rgba(255,26,26,0.18)', color: '#ff4d6d', border: '1px solid rgba(255,26,26,0.40)' }}>
               {post.category.name}
             </span>
           </Link>

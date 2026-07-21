@@ -1,4 +1,5 @@
-export const dynamic = 'force-dynamic'
+// Regenerate sitemap once per day — no need to rebuild on every crawler request
+export const revalidate = 86400
 import { MetadataRoute } from 'next'
 import prisma from '@/lib/db'
 

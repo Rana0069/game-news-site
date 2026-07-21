@@ -1,4 +1,4 @@
-export const revalidate = 60 // Revalidate cache every 60 seconds to drastically improve FCP/LCP
+export const revalidate = 3600 // Revalidate cache every 1 hour — avoids burning ISR write quota
 
 import { Suspense } from 'react'
 import Link from 'next/link'
@@ -99,8 +99,6 @@ export default async function HomePage() {
             `/_next/image?url=${encodeURIComponent(lcpImageUrl!)}&w=3840&q=75 3840w`,
           ].join(', ')}
           imageSizes="100vw"
-          // @ts-expect-error fetchpriority is valid HTML but not in older TS defs
-          fetchpriority="high"
         />
       )}
 
@@ -142,7 +140,7 @@ export default async function HomePage() {
             <section className="mb-12">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="section-title">
-                  <Flame size={20} className="text-neon-pink" />
+                  <Flame size={20} className="text-neon-red" />
                   Trending Now
                 </h2>
               </div>
@@ -151,8 +149,8 @@ export default async function HomePage() {
                   <div key={post.id} className="flex gap-4 glass-card p-4 items-start">
                     <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-display font-black text-lg"
                       style={{
-                        background: i === 0 ? 'rgba(247,37,133,0.15)' : 'rgba(168,85,247,0.15)',
-                        color: i === 0 ? '#f72585' : '#a855f7',
+                        background: i === 0 ? 'rgba(255,26,26,0.20)' : 'rgba(255,77,109,0.15)',
+                        color:      i === 0 ? '#ff1a1a'              : '#ff4d6d',
                       }}
                     >
                       {i + 1}
@@ -160,7 +158,7 @@ export default async function HomePage() {
                     <div>
                       {post.category && (
                         <Link href={`/category/${post.category.slug}`}>
-                          <span className="text-xs font-bold uppercase tracking-wider" style={{ color: post.category.color || '#00d4ff' }}>
+                          <span className="text-xs font-bold uppercase tracking-wider" style={{ color: post.category.color || '#ff1a1a' }}>
                             {post.category.name}
                           </span>
                         </Link>
@@ -216,7 +214,7 @@ export default async function HomePage() {
                         {game.coverImage ? (
                           <Image src={game.coverImage} alt={game.title} fill className="object-cover group-hover:scale-105 transition-transform duration-400" />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-neon-red/10 to-red-700/10 flex items-center justify-center">
+                          <div className="w-full h-full bg-gradient-to-br from-neon-red/10 to-red-900/10 flex items-center justify-center">
                             <Gamepad2 size={40} className="text-neon-red/20" />
                           </div>
                         )}
@@ -298,20 +296,22 @@ export default async function HomePage() {
           <section className="mb-12" aria-label="Gaming Videos">
             <div className="flex items-center justify-between mb-6">
               <h2 className="section-title">
-                <Tv size={20} className="text-red-500" />
+                <Tv size={20} className="text-neon-red" />
                 Gaming Videos
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Featured video */}
-              <div className="youtube-embed-wrapper sm:col-span-2 max-w-3xl mx-auto w-full">
+              <figure className="youtube-embed-wrapper sm:col-span-2 max-w-3xl mx-auto w-full">
                 <iframe
                   src="https://www.youtube.com/embed/videoseries?list=PLREl6yOh7JkiprePJanCexkMC3Bn_O7fL"
                   title="Gaming Videos Playlist"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  loading="lazy"
                 />
-              </div>
+                <figcaption className="sr-only">Gaming Videos Playlist</figcaption>
+              </figure>
             </div>
           </section>
 
@@ -330,15 +330,15 @@ export default async function HomePage() {
                     key={cat.id}
                     href={`/category/${cat.slug}`}
                     className="glass-card p-4 text-center group hover:border-opacity-50 transition-all"
-                    style={{ borderColor: `${cat.color || '#00d4ff'}20` }}
+                    style={{ borderColor: `${cat.color || '#ff1a1a'}25` }}
                   >
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 text-xl"
-                      style={{ background: `${cat.color || '#00d4ff'}15` }}
+                      style={{ background: `${cat.color || '#ff1a1a'}15` }}
                     >
-                      {cat.icon || <Icon size={20} style={{ color: cat.color || '#00d4ff' }} />}
+                      {cat.icon || <Icon size={20} style={{ color: cat.color || '#ff1a1a' }} />}
                     </div>
-                    <h3 className="font-semibold text-sm text-gray-200 group-hover:text-white transition-colors">
+                    <h3 className="font-semibold text-sm text-gray-200 group-hover:text-neon-red transition-colors">
                       {cat.name}
                     </h3>
                     <p className="text-xs text-gray-600 mt-1">{cat._count.posts} posts</p>
@@ -350,23 +350,29 @@ export default async function HomePage() {
 
           {/* ── NEWSLETTER CTA ── */}
           <section className="mb-12">
-            <div className="relative overflow-hidden rounded-2xl p-6 sm:p-12 text-center"
-              style={{ background: 'linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(168,85,247,0.08) 100%)', border: '1px solid rgba(0,212,255,0.15)' }}
+            <div
+              className="relative overflow-hidden rounded-2xl p-6 sm:p-12 text-center neon-border-animated"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255,26,26,0.08) 0%, rgba(0,0,0,0.95) 60%, rgba(204,0,0,0.06) 100%)',
+                border: '1px solid rgba(255,26,26,0.18)',
+              }}
             >
               {/* Decorative orbs */}
               <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full bg-neon-red/10 blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-neon-purple/10 blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-red-900/15 blur-3xl pointer-events-none" />
 
               <div className="relative">
                 <span className="badge badge-neon mb-4">📧 Newsletter</span>
-                <h2 className="font-display font-black text-3xl sm:text-4xl text-white mb-3">
+                <h2 className="font-orbitron font-black text-3xl sm:text-4xl text-white mb-3 tracking-wide">
                   Never Miss a Beat
                 </h2>
                 <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
                   Join 50,000+ gamers who get the latest news, reviews, and exclusive deals delivered every week.
                 </p>
                 <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <label htmlFor="newsletter-cta-email" className="sr-only">Email address</label>
                   <input
+                    id="newsletter-cta-email"
                     type="email"
                     placeholder="your@email.com"
                     className="input-dark flex-1"

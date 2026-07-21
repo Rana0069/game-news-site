@@ -1,5 +1,5 @@
-// Cache article pages for 60 seconds — avoids DB wait on every article visit
-export const revalidate = 60
+// Cache article pages for 24 hours — articles rarely change after publishing
+export const revalidate = 86400
 
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'

@@ -1,5 +1,5 @@
-// Cache tag pages for 60 seconds
-export const revalidate = 60
+// Cache tag pages for 1 hour — reduces ISR writes significantly
+export const revalidate = 3600
 
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'

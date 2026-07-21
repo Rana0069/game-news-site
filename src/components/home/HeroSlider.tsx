@@ -42,7 +42,9 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
   if (!posts.length) return null
 
   return (
-    <div className="relative w-full h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[500px] max-h-[800px] overflow-hidden rounded-2xl">
+    <figure className="relative w-full h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[500px] max-h-[800px] overflow-hidden rounded-2xl scanlines"
+      style={{ boxShadow: '0 0 60px rgba(255,26,26,0.12), 0 0 120px rgba(255,26,26,0.05)' }}
+    >
       {/* Slides — all rendered in DOM, CSS opacity transition handles switching */}
       {posts.map((post, i) => (
         <article
@@ -67,15 +69,17 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
               <div
                 className="w-full h-full"
                 style={{
-                  background: `linear-gradient(135deg, ${post.category?.color || '#00d4ff'}22 0%, #0a0f1e 60%, #030712 100%)`,
+                  background: `linear-gradient(135deg, ${post.category?.color || '#ff1a1a'}22 0%, #0a0000 60%, #000000 100%)`,
                 }}
               />
             )}
           </div>
 
-          {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-dark-950/95 via-dark-950/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark-950/80 via-transparent to-dark-950/20" />
+          {/* Gradient overlays — red-tinted */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/65 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/25" />
+          {/* Red neon bottom glow */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-neon-red/5 to-transparent pointer-events-none" />
 
           {/* Content */}
           <div className="absolute inset-0 flex items-end">
@@ -92,9 +96,9 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
                     <span
                       className="badge mb-4 inline-block"
                       style={{
-                        background: `${post.category.color || '#00d4ff'}22`,
-                        color: post.category.color || '#00d4ff',
-                        border: `1px solid ${post.category.color || '#00d4ff'}44`,
+                        background: 'rgba(255, 26, 26, 0.18)',
+                        color: '#ff4d6d',
+                        border: '1px solid rgba(255, 26, 26, 0.40)',
                       }}
                     >
                       {post.category.name}
@@ -173,19 +177,23 @@ export default function HeroSlider({ posts }: { posts: Post[] }) {
       </div>
 
       {/* Dots */}
-      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-10">
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-10" role="tablist" aria-label="Hero slides">
         {posts.map((_, i) => (
           <button
             key={i}
+            role="tab"
+            aria-selected={i === current}
             onClick={() => setCurrent(i)}
-            className={`h-1 rounded-full transition-all duration-300 ${
-              i === current ? 'w-8 bg-neon-red' : 'w-2 bg-white/20 hover:bg-white/40'
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              i === current
+                ? 'w-8 bg-neon-red shadow-[0_0_10px_rgba(255,26,26,0.8)]'
+                : 'w-2 bg-white/15 hover:bg-white/35'
             }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
       </div>
-    </div>
+    </figure>
   )
 }
 

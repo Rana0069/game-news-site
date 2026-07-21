@@ -43,9 +43,9 @@ export default async function AboutPage() {
         <h2 id="mission-heading" className="sr-only">Our Mission</h2>
         <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
-            { icon: Target, title: 'Our Mission', desc: 'To deliver accurate, engaging, and timely gaming content that helps players make informed decisions.', color: '#00d4ff' },
-            { icon: Globe, title: 'Global Coverage', desc: 'We cover gaming news from around the world — PC, console, mobile, and esports.', color: '#a855f7' },
-            { icon: Users, title: 'Community First', desc: 'Built by gamers, for gamers. Our community of readers drives everything we do.', color: '#22c55e' },
+            { icon: Target, title: 'Our Mission', desc: 'To deliver accurate, engaging, and timely gaming content that helps players make informed decisions.', color: '#ff1a1a' },
+            { icon: Globe, title: 'Global Coverage', desc: 'We cover gaming news from around the world — PC, console, mobile, and esports.', color: '#ff4d6d' },
+            { icon: Users, title: 'Community First', desc: 'Built by gamers, for gamers. Our community of readers drives everything we do.', color: '#cc0000' },
           ].map(({ icon: Icon, title, desc, color }) => (
             <li key={title} className="glass-card p-6 text-center" style={{ borderColor: `${color}20` }}>
               <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ background: `${color}15` }} aria-hidden="true">

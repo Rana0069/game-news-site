@@ -13,18 +13,18 @@ import {
 } from 'lucide-react'
 
 const categories = [
-  { name: 'Gaming News', slug: 'gaming-news', icon: Zap, color: '#00d4ff' },
-  { name: 'PC Games', slug: 'pc-games', icon: Monitor, color: '#a855f7' },
-  { name: 'PlayStation', slug: 'playstation', icon: Gamepad2, color: '#003791' },
-  { name: 'Xbox', slug: 'xbox', icon: Gamepad2, color: '#107c10' },
-  { name: 'Nintendo', slug: 'nintendo', icon: Gamepad2, color: '#e4000f' },
-  { name: 'Mobile Games', slug: 'mobile-games', icon: Smartphone, color: '#f59e0b' },
-  { name: 'Esports', slug: 'esports', icon: Trophy, color: '#f72585' },
-  { name: 'Game Reviews', slug: 'game-reviews', icon: Star, color: '#22c55e' },
-  { name: 'Game Guides', slug: 'game-guides', icon: BookOpen, color: '#06b6d4' },
-  { name: 'Gaming Hardware', slug: 'gaming-hardware', icon: HardDrive, color: '#8b5cf6' },
-  { name: 'Indie Games', slug: 'indie-games', icon: Shuffle, color: '#ec4899' },
-  { name: 'Upcoming Games', slug: 'upcoming-games', icon: Rocket, color: '#14b8a6' },
+  { name: 'Gaming News',    slug: 'gaming-news',     icon: Zap,       color: '#ff1a1a' },
+  { name: 'PC Games',       slug: 'pc-games',         icon: Monitor,   color: '#ff4d6d' },
+  { name: 'PlayStation',    slug: 'playstation',      icon: Gamepad2,  color: '#cc0000' },
+  { name: 'Xbox',           slug: 'xbox',             icon: Gamepad2,  color: '#ff3344' },
+  { name: 'Nintendo',       slug: 'nintendo',         icon: Gamepad2,  color: '#ff1a1a' },
+  { name: 'Mobile Games',   slug: 'mobile-games',     icon: Smartphone, color: '#ff6680' },
+  { name: 'Esports',        slug: 'esports',          icon: Trophy,    color: '#ff4d6d' },
+  { name: 'Game Reviews',   slug: 'game-reviews',     icon: Star,      color: '#ff1a1a' },
+  { name: 'Game Guides',    slug: 'game-guides',      icon: BookOpen,  color: '#cc0000' },
+  { name: 'Gaming Hardware', slug: 'gaming-hardware', icon: HardDrive, color: '#ff3344' },
+  { name: 'Indie Games',    slug: 'indie-games',      icon: Shuffle,   color: '#ff6680' },
+  { name: 'Upcoming Games', slug: 'upcoming-games',   icon: Rocket,    color: '#ff1a1a' },
 ]
 
 interface SiteSettings {
@@ -103,10 +103,10 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
 
   return (
     <>
-      <nav
+      <div
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-black/95 backdrop-blur-xl border-b border-neon-red/20 shadow-2xl'
+            ? 'bg-black/95 backdrop-blur-xl border-b border-neon-red/25 shadow-[0_4px_40px_rgba(255,26,26,0.18)]'
             : 'bg-transparent'
         }`}
       >
@@ -117,18 +117,18 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
               {settings?.logo ? (
                 <Image src={settings.logo} alt={siteName} width={36} height={36} className="rounded-lg" />
               ) : (
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center shadow-neon-red group-hover:shadow-neon-red transition-all duration-300">
-                  <Gamepad2 size={20} className="text-black" />
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center shadow-neon-red group-hover:animate-pulse-neon transition-all duration-300">
+                  <Gamepad2 size={20} className="text-white" />
                 </div>
               )}
-              <span className="font-display font-black text-xl gradient-text hidden sm:block">
+              <span className="font-orbitron font-black text-xl gradient-text hidden sm:block tracking-wider">
                 {siteName}
               </span>
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
-              <Link href="/" className="nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
+            <nav className="hidden lg:flex items-center gap-1" aria-label="Primary navigation">
+              <Link href="/" className="nav-link px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-neon-red hover:bg-neon-red/5 transition-all">
                 Home
               </Link>
 
@@ -193,16 +193,16 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
               </div>
 
 
-              <Link href="/games" className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
+              <Link href="/games" className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-neon-red hover:bg-neon-red/5 transition-all">
                 Games
               </Link>
-              <Link href="/about" className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
+              <Link href="/about" className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-neon-red hover:bg-neon-red/5 transition-all">
                 About
               </Link>
-              <Link href="/contact" className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all">
+              <Link href="/contact" className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-neon-red hover:bg-neon-red/5 transition-all">
                 Contact
               </Link>
-            </div>
+            </nav>
 
             {/* Right Actions */}
             <div className="flex items-center gap-2">
@@ -251,54 +251,61 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="lg:hidden bg-dark-900/98 backdrop-blur-xl border-t border-white/5 max-h-[80vh] overflow-y-auto">
+          <nav
+            className="lg:hidden bg-black/98 backdrop-blur-xl border-t border-neon-red/15 max-h-[80vh] overflow-y-auto"
+            aria-label="Mobile navigation"
+          >
             <div className="px-4 py-4 space-y-1">
-              <Link href="/" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5" onClick={() => setMobileOpen(false)}>Home</Link>
-              <div className="px-3 py-1 text-xs font-bold text-gray-500 uppercase tracking-wider mt-2">Categories</div>
+              <Link href="/" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-neon-red hover:bg-neon-red/5" onClick={() => setMobileOpen(false)}>Home</Link>
+              <p className="px-3 py-1 text-xs font-bold text-gray-500 uppercase tracking-wider mt-2">Categories</p>
               {categories.slice(0, 8).map((cat) => (
-                <Link key={cat.slug} href={`/category/${cat.slug}`} className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5" onClick={() => setMobileOpen(false)}>
+                <Link key={cat.slug} href={`/category/${cat.slug}`} className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-neon-red hover:bg-neon-red/5" onClick={() => setMobileOpen(false)}>
                   {cat.name}
                 </Link>
               ))}
-              <Link href="/games" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5" onClick={() => setMobileOpen(false)}>Games</Link>
-              <Link href="/about" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5" onClick={() => setMobileOpen(false)}>About</Link>
-              <Link href="/contact" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5" onClick={() => setMobileOpen(false)}>Contact</Link>
+              <Link href="/games" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-neon-red hover:bg-neon-red/5" onClick={() => setMobileOpen(false)}>Games</Link>
+              <Link href="/about" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-neon-red hover:bg-neon-red/5" onClick={() => setMobileOpen(false)}>About</Link>
+              <Link href="/contact" className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-neon-red hover:bg-neon-red/5" onClick={() => setMobileOpen(false)}>Contact</Link>
               {/* Admin link in mobile — only for admins, only after mount */}
               {isAdmin && (
                 <Link href="/admin" className="block px-3 py-2 rounded-lg text-sm font-bold text-neon-red" onClick={() => setMobileOpen(false)}>⚙ Admin Panel</Link>
               )}
             </div>
-          </div>
+          </nav>
         )}
-      </nav>
+      </div>
 
       {/* Search Overlay */}
       {searchOpen && (
         <div
-          className="fixed inset-0 z-[100] bg-dark-950/90 backdrop-blur-xl flex items-start justify-center pt-24 px-4"
+          className="fixed inset-0 z-[100] bg-black/92 backdrop-blur-xl flex items-start justify-center pt-24 px-4"
           onClick={(e) => e.target === e.currentTarget && setSearchOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site search"
         >
-          <div className="w-full max-w-2xl">
-            <form onSubmit={handleSearch} className="relative">
-              <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+          <section className="w-full max-w-2xl">
+            <form onSubmit={handleSearch} className="relative" role="search">
+              <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
               <input
                 ref={searchRef}
-                type="text"
+                type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search articles, games, reviews..."
-                className="w-full bg-dark-800 border border-neon-red/30 rounded-2xl pl-12 pr-12 py-4 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-neon-red focus:shadow-neon-red"
+                className="w-full bg-black/80 border-2 border-neon-red/40 rounded-2xl pl-12 pr-12 py-4 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-neon-red focus:shadow-neon-red transition-all"
               />
               <button
                 type="button"
                 onClick={() => setSearchOpen(false)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-neon-red transition-colors"
+                aria-label="Close search"
               >
                 <X size={20} />
               </button>
             </form>
             <p className="text-center text-gray-500 text-sm mt-4">Press ESC to close</p>
-          </div>
+          </section>
         </div>
       )}
     </>

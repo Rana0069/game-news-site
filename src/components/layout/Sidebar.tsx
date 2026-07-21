@@ -1,5 +1,5 @@
-// Cache sidebar DB queries for 5 minutes — prevents 3 extra DB round-trips on every page
-export const revalidate = 300
+// Cache sidebar DB queries for 1 hour — sidebar data is not time-critical
+export const revalidate = 3600
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -41,7 +41,7 @@ export default async function Sidebar() {
     <aside className="space-y-6">
       {/* Recent Posts */}
       <section className="glass-card p-5">
-        <h3 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
+        <h3 className="font-orbitron font-bold text-lg text-white mb-4 flex items-center gap-2">
           <Clock size={16} className="text-neon-red" />
           Recent Posts
         </h3>
@@ -77,8 +77,8 @@ export default async function Sidebar() {
 
       {/* Popular Posts */}
       <section className="glass-card p-5">
-        <h3 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
-          <TrendingUp size={16} className="text-red-400" />
+        <h3 className="font-orbitron font-bold text-lg text-white mb-4 flex items-center gap-2">
+          <TrendingUp size={16} className="text-neon-red" />
           Popular Posts
         </h3>
         <ol className="space-y-4">
@@ -87,8 +87,16 @@ export default async function Sidebar() {
               <Link href={`/article/${post.slug}`} className="flex gap-3 group">
                 <div className="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center font-display font-black text-sm"
                   style={{
-                    background: index === 0 ? 'rgba(0,212,255,0.15)' : index === 1 ? 'rgba(168,85,247,0.15)' : 'rgba(255,255,255,0.05)',
-                    color: index === 0 ? '#00d4ff' : index === 1 ? '#a855f7' : '#6b7280',
+                    background: index === 0
+                      ? 'rgba(255,26,26,0.20)'
+                      : index === 1
+                      ? 'rgba(255,77,109,0.15)'
+                      : 'rgba(255,255,255,0.05)',
+                    color: index === 0
+                      ? '#ff1a1a'
+                      : index === 1
+                      ? '#ff4d6d'
+                      : '#6b7280',
                   }}
                 >
                   {index + 1}
@@ -110,8 +118,8 @@ export default async function Sidebar() {
 
       {/* Popular Tags */}
       <section className="glass-card p-5">
-        <h3 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
-          <Tag size={16} className="text-neon-green" />
+        <h3 className="font-orbitron font-bold text-lg text-white mb-4 flex items-center gap-2">
+          <Tag size={16} className="text-neon-red" />
           Popular Tags
         </h3>
         <div className="flex flex-wrap gap-2">
@@ -119,7 +127,7 @@ export default async function Sidebar() {
             <Link
               key={tag.id}
               href={`/tag/${tag.slug}`}
-              className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-400 hover:bg-neon-red/10 hover:border-neon-red/30 hover:text-neon-red transition-all"
+              className="px-3 py-1 rounded-full text-xs font-medium bg-neon-red/5 border border-neon-red/15 text-gray-400 hover:bg-neon-red/15 hover:border-neon-red/40 hover:text-neon-red transition-all"
             >
               #{tag.name}
               <span className="ml-1 text-gray-600">({tag._count.posts})</span>
@@ -129,8 +137,8 @@ export default async function Sidebar() {
       </section>
 
       {/* Newsletter mini */}
-      <section className="glass-card p-5 bg-gradient-to-br from-neon-red/5 to-red-700/5">
-        <h3 className="font-display font-bold text-lg text-white mb-2">🎮 Stay Updated</h3>
+      <section className="glass-card p-5 neon-border-animated" style={{ background: 'linear-gradient(135deg, rgba(255,26,26,0.06) 0%, rgba(0,0,0,0.95) 100%)' }}>
+        <h3 className="font-orbitron font-bold text-lg text-white mb-2">🎮 Stay Updated</h3>
         <p className="text-gray-400 text-sm mb-4">Get gaming news in your inbox weekly.</p>
         <form action="/api/newsletter" method="POST">
           <label htmlFor="sidebar-email" className="sr-only">Email address</label>

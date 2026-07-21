@@ -53,9 +53,9 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
   ].filter((s): s is { icon: typeof Twitter; href: string; label: string } => !!s.href)
 
   return (
-    <footer className="bg-dark-900 border-t border-white/5 mt-20">
+    <footer className="bg-black border-t border-neon-red/20 mt-20" style={{ boxShadow: '0 -4px 40px rgba(255,26,26,0.07)' }}>
       {/* Newsletter section */}
-      <section className="border-b border-white/5">
+      <section className="border-b border-neon-red/12" aria-label="Newsletter">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
@@ -100,10 +100,10 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
           {/* Brand */}
           <div className="md:col-span-12 lg:col-span-5">
             <Link href="/" className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center">
-                <Gamepad2 size={22} className="text-black" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-red to-red-700 flex items-center justify-center shadow-neon-red">
+                <Gamepad2 size={22} className="text-white" />
               </div>
-              <span className="font-display font-black text-xl gradient-text">{siteName}</span>
+              <span className="font-orbitron font-black text-xl gradient-text tracking-wider">{siteName}</span>
             </Link>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
               Your ultimate source for gaming news, reviews, guides, and exclusive content.
@@ -129,8 +129,8 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
           </div>
 
           {/* Categories */}
-          <div className="md:col-span-4 lg:col-span-3">
-            <h4 className="font-display font-bold text-sm text-white uppercase tracking-wider mb-4">Categories</h4>
+          <nav className="md:col-span-4 lg:col-span-3" aria-label="Footer categories">
+            <h4 className="font-orbitron font-bold text-sm text-neon-red uppercase tracking-widest mb-4">Categories</h4>
             <ul className="space-y-2">
               {footerLinks.categories.map((link) => (
                 <li key={link.href}>
@@ -140,11 +140,11 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Site links */}
-          <div className="md:col-span-4 lg:col-span-2">
-            <h4 className="font-display font-bold text-sm text-white uppercase tracking-wider mb-4">Site</h4>
+          <nav className="md:col-span-4 lg:col-span-2" aria-label="Footer site links">
+            <h4 className="font-orbitron font-bold text-sm text-neon-red uppercase tracking-widest mb-4">Site</h4>
             <ul className="space-y-2">
               {footerLinks.site.map((link) => (
                 <li key={link.href}>
@@ -154,11 +154,11 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Contact */}
-          <div className="md:col-span-4 lg:col-span-2">
-            <h4 className="font-display font-bold text-sm text-white uppercase tracking-wider mb-4">Contact</h4>
+          <address className="md:col-span-4 lg:col-span-2 not-italic">
+            <h4 className="font-orbitron font-bold text-sm text-neon-red uppercase tracking-widest mb-4">Contact</h4>
             {settings?.contactEmail && (
               <a
                 href={`mailto:${settings.contactEmail}`}
@@ -172,18 +172,18 @@ export default function Footer({ settings }: { settings?: SiteSettings }) {
               <Rss size={14} />
               RSS Feed
             </a>
-          </div>
+          </address>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-6 border-t border-neon-red/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-600 text-sm">
             {settings?.footerText || `© ${currentYear} ${siteName}. All rights reserved.`}
           </p>
-          <div className="flex gap-4 text-sm text-gray-600">
-            <Link href="/privacy" className="hover:text-gray-400 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-gray-400 transition-colors">Terms of Use</Link>
-          </div>
+          <nav className="flex gap-4 text-sm text-gray-600" aria-label="Legal links">
+            <Link href="/privacy" className="hover:text-neon-red transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-neon-red transition-colors">Terms of Use</Link>
+          </nav>
         </div>
       </div>
     </footer>
